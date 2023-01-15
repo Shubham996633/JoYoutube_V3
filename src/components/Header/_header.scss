@@ -1,0 +1,117 @@
+@import "../../_base.scss";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 3rem;
+
+  background-color: $black-primary;
+
+  height: 10vh;
+  width: 100%;
+
+  &__menu {
+    display: none;
+    transition: 0.3s;
+  }
+  &__menu:active,
+  button:active {
+    transform: scale(0.81);
+  }
+
+  &__logo {
+    width: 111px;
+    height: 111px;
+    object-fit: contain;
+    display: block;
+  }
+
+  form {
+    flex: 0.6;
+    display: flex;
+    padding: 0.1rem;
+    margin: 0 1rem;
+    border-radius: 75px 75px;
+    border: 0.9px solid #2e2e2e;
+    background-color: $black-secondary;
+
+    input {
+      width: 100%;
+      border: none;
+      font-weight: 500;
+      background: transparent;
+      padding: 0.3rem;
+      color: $text-color;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+        border-radius: 75px 75px;
+        border: 1px solid rgb(26, 106, 236);
+      }
+    }
+
+    button {
+      padding: 0 1.25rem;
+      color: $text-color;
+      background: #2e2e2e;
+      border: none;
+      border-left: 0.9px solid #5d5b5b;
+      border-radius: 75px 75px;
+      transition: 0.3s;
+      &:focus {
+        border: none;
+      }
+    }
+  }
+
+  &__icons {
+    flex: 0.15;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    img {
+      border-radius: 50%;
+      width: 40px;
+      object-fit: contain;
+      margin-left: 5px;
+    }
+  }
+  .apps,
+  .notify,
+  .avatar,
+  .header__logo {
+    transition: 0.3s;
+  }
+  .apps:active,
+  .notify:active,
+  .avatar:active,
+  .header__logo:active {
+    transform: scale(0.81);
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  .header {
+    padding: 1rem;
+
+    form {
+      flex: 1;
+    }
+
+    &__menu {
+      display: block;
+    }
+
+    &__logo {
+      display: none;
+    }
+
+    &__icons > *:not(img) {
+      display: none;
+    }
+  }
+}
