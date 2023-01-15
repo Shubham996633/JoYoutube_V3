@@ -1,9 +1,10 @@
 import React from 'react'
 import './_sidebar.scss';
 import { MdSubscriptions, MdExitToApp, MdThumbUp, MdHistory, MdLibraryBooks, MdHome, MdSentimentDissatisfied } from 'react-icons/md';
-const Sidebar = ({ sidebar }) => {
+const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     return (
-        <nav className={sidebar ? 'sidebar open' : 'sidebar'}>
+        <nav className={sidebar ? 'sidebar open' : 'sidebar'}
+            onClick={() => handleToggleSidebar(false)}>
             <li title='Home'>
                 <MdHome size={23} />
                 <span>Home</span>
