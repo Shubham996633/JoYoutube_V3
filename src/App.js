@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
@@ -7,6 +7,7 @@ import LoginScreen from './components/Screens/LoginScreen/LoginScreen'
 
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import HomeScreen from './components/Screens/Homescreen/HomeScreen'
+import { useSelector } from 'react-redux'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -28,6 +29,18 @@ const Layout = ({ children }) => {
   )
 }
 const App = () => {
+
+  const { accessToken, loading } = useSelector(state => state.auth)
+
+  const history = useHistory()
+
+  useEffect(() => {
+    if (!loading && !accessToken) {
+      history.push('/auth')
+
+    }
+
+  }, [accessToken, loading, history])
 
 
   return (
