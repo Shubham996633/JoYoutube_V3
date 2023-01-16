@@ -1,8 +1,7 @@
-import React from 'react'
-import './_homeScreen.scss'
-import { Container, Row, Col } from 'react-bootstrap'
-import CategoriesBar from '../CategoriesBar/CategoriesBar'
-import Video from '../video/Video'
+import React, { useEffect } from 'react'
+import { Col, Row, Container } from 'react-bootstrap'
+import Video from '../../video/Video'
+import CategoriesBar from '../../CategoriesBar/CategoriesBar'
 const HomeScreen = () => {
     return (
         <Container>
