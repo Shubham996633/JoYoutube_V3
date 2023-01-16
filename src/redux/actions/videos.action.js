@@ -1,4 +1,4 @@
-import { HOME_VIDEOS_REQUEST } from "../actionTypes"
+import { HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS } from "../actionTypes"
 
 import request from "../../apiCall"
 
@@ -10,7 +10,7 @@ export const getPopularVideos = () => async dispatch => {
 
         })
 
-        const res = request("/videos", {
+        const { data } = await request("/videos", {
             params: {
                 part: 'snippet,contentDetails,statistics',
                 chart: 'mostPopular',
@@ -19,10 +19,21 @@ export const getPopularVideos = () => async dispatch => {
                 pageToken: ''
             }
         })
-        console.log(res);
+        dispatch({
+            type: HOME_VIDEOS_SUCCESS,
+            payload: {
+                videos: data.items,
+                netxPageToken: data.netxPageToken,
+            },
+        })
 
 
     } catch (error) {
+        console.log(error.message)
+        dispatch({
+            type: HOME_VIDEOS_FAIL,
+            payload: error.message,
+        })
 
     }
 }
