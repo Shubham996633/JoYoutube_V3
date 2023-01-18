@@ -8,6 +8,7 @@ import LoginScreen from './components/Screens/LoginScreen/LoginScreen'
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import HomeScreen from './components/Screens/Homescreen/HomeScreen'
 import { useSelector } from 'react-redux'
+import WatchScreen from './components/Screens/WatchScreen/WatchScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -62,7 +63,7 @@ const App = () => {
       </Route>
       <Route path='/watch/:id'>
         <Layout>
-          {/* <WatchScreen /> */}
+          <WatchScreen />
         </Layout>
       </Route>
 

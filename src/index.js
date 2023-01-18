@@ -6,6 +6,7 @@ import React from 'react'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router } from 'react-router-dom'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './_base.scss'
 import store from './redux/store'
