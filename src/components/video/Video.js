@@ -6,7 +6,9 @@ import moment from 'moment/moment'
 import numeral from 'numeral'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useHistory } from 'react-router-dom'
 const Video = ({ video }) => {
+
 
     const {
         id,
@@ -56,8 +58,13 @@ const Video = ({ video }) => {
         }
         get_channel_icon()
     }, [channelId])
+
+    const history = useHistory()
+    const handleVideoClick = () => {
+        history.push(`/watch/${_videoId}`)
+    }
     return (
-        <div className='video'>
+        <div className='video' onClick={handleVideoClick}>
             <div className='video__top'>
                 {/* <img src={high.url} alt='' /> */}
                 <LazyLoadImage src={high.url} effect="blur" />

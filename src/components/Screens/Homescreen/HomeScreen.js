@@ -26,6 +26,7 @@ const HomeScreen = () => {
             dispatch(getVideosByCategory(activeCategory))
         }
     }
+
     return (
         <Container>
             <CategoriesBar />
@@ -38,22 +39,16 @@ const HomeScreen = () => {
                     <div className='spinner-border text-danger d-block mx-auto'></div>
                 }
                 className='row'>
-                {!loading
-                    ? videos.map(video => (
-                        <Col lg={3} md={4}>
-                            <Video video={video} key={video.id} />
-                        </Col>
-                    ))
-                    : [...Array(20)].map(() => (
-                        <Col lg={3} md={4}>
-                            <SkeletonVideo />
-                        </Col>
-                    ))}
+                {videos.map(video => (
+                    <Col lg={3} md={4}>
+                        <Video video={video} key={video.id} />
+                    </Col>
+                ))
+                }
             </InfiniteScroll>
         </Container>
     )
 }
-
 export default HomeScreen
 
 // 3:02:18

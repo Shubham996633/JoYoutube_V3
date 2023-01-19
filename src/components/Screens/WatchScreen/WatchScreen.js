@@ -4,13 +4,15 @@ import { Col, Row } from 'react-bootstrap'
 import VideoMetaData from '../../VideoMetaData/VideoMetaData'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import Comments from '../../Comments/Comments'
+import { useParams } from 'react-router-dom'
 
 const WatchScreen = () => {
+    const { id } = useParams()
     return (
         <Row>
             <Col lg={8}>
                 <div className='watchScreen__player'>
-                    <iframe src="https://www.youtube.com/embed/myQtYOx0up0"
+                    <iframe src={`https://www.youtube.com/embed/${id}`}
 
                         frameBorder="0"
                         title='Piya Tose Naina Laage Re'
@@ -32,3 +34,5 @@ const WatchScreen = () => {
 }
 
 export default WatchScreen
+
+// 4:01:57
