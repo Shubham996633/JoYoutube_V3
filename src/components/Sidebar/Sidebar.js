@@ -3,15 +3,21 @@ import './_sidebar.scss';
 import { MdSubscriptions, MdExitToApp, MdThumbUp, MdHistory, MdLibraryBooks, MdHome, MdSentimentDissatisfied } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { log_out } from '../../redux/actions/auth.action';
+import { useHistory } from 'react-router-dom';
 const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const logoutHandler = () => {
         dispatch(log_out())
+        history.push('/auth')
+    }
+    const handleClickHome = () => {
+        history.push('/')
     }
     return (
         <nav className={sidebar ? 'sidebar open' : 'sidebar'}
             onClick={() => handleToggleSidebar(false)}>
-            <li title='Home'>
+            <li title='Home' onClick={handleClickHome}>
                 <MdHome size={23} />
                 <span>Home</span>
             </li>
