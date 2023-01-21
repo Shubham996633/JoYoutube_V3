@@ -33,10 +33,10 @@ const WatchScreen = () => {
                 </div>
                 {
                     !loading ?
-                        <VideoMetaData video={video} id={id} />
+                        <VideoMetaData video={video} videoId={id} />
                         : <h6>Loading ...</h6>
                 }
-                <Comments />
+                <Comments videoId={id} />
             </Col>
             <Col lg={4}>
                 {[...Array(10)].map(() => (
