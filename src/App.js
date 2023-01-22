@@ -9,6 +9,7 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import HomeScreen from './components/Screens/Homescreen/HomeScreen'
 import { useSelector } from 'react-redux'
 import WatchScreen from './components/Screens/WatchScreen/WatchScreen'
+import SubscriptionsScreen from './components/Screens/SubscriptionScreen/SubscriptionScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -69,7 +70,7 @@ const App = () => {
 
       <Route path='/feed/subscriptions'>
         <Layout>
-          {/* <SubscriptionsScreen /> */}
+          <SubscriptionsScreen />
         </Layout>
       </Route>
       <Route path='/channel/:channelId'>

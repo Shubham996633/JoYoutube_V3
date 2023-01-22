@@ -14,6 +14,9 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     const handleClickHome = () => {
         history.push('/')
     }
+    const handleClickSubs = () => {
+        history.push('/feed/subscriptions')
+    }
     return (
         <nav className={sidebar ? 'sidebar open' : 'sidebar'}
             onClick={() => handleToggleSidebar(false)}>
@@ -23,7 +26,7 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
             </li>
 
 
-            <li title='Subscriptions'>
+            <li title='Subscriptions' onClick={handleClickSubs}>
                 <MdSubscriptions size={23} />
                 <span>Subscriptions</span>
             </li>

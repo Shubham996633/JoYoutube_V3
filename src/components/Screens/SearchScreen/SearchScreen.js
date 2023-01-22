@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getVideosBySearch } from '../../../redux/actions/videos.action'
 import { Container } from 'react-bootstrap'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 const SearchScreen = () => {
     const { query } = useParams()
 
@@ -34,7 +35,9 @@ const SearchScreen = () => {
                     />
                 ))
             ) : (
-                <h1>Loading...</h1>
+                <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
+                    <Skeleton width='100%' height='160px' count={20} />
+                </SkeletonTheme>
             )}
         </Container>
     )

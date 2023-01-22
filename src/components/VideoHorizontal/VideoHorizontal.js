@@ -81,10 +81,9 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
         <Row
             className='py-2 m-1 videoHorizontal align-items-center'
             onClick={handleClick}>
-            {/* //TODO refractor grid */}
             <Col
                 xs={6}
-                md={SearchScreen ? 4 : 6}
+                md={SearchScreen ? 4 : 5}
                 className='videoHorizontal__left'>
                 <LazyLoadImage
                     src={medium.url}

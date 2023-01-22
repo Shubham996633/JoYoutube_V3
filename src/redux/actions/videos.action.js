@@ -1,4 +1,4 @@
-import { HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS } from "../actionTypes"
+import { HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
 
 import request from "../../apiCall"
 
@@ -157,6 +157,35 @@ export const getVideosBySearch = keyword => async dispatch => {
         dispatch({
             type: SEARCHED_VIDEO_FAIL,
             payload: error.message,
+        })
+    }
+}
+
+
+export const getSubscribedChannels = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: SUBSCRIPTIONS_CHANNEL_REQUEST,
+        })
+        const { data } = await request('/subscriptions', {
+            params: {
+                part: 'snippet,contentDetails',
+
+                mine: true,
+            },
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+            },
+        })
+        dispatch({
+            type: SUBSCRIPTIONS_CHANNEL_SUCCESS,
+            payload: data.items,
+        })
+    } catch (error) {
+        console.log(error.response.data)
+        dispatch({
+            type: SUBSCRIPTIONS_CHANNEL_FAIL,
+            payload: error.response.data,
         })
     }
 }
