@@ -4,7 +4,7 @@ import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
 import './_app.scss'
 import LoginScreen from './components/Screens/LoginScreen/LoginScreen'
-
+import SearchScreen from './components/Screens/SearchScreen/SearchScreen'
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import HomeScreen from './components/Screens/Homescreen/HomeScreen'
 import { useSelector } from 'react-redux'
@@ -58,7 +58,7 @@ const App = () => {
 
       <Route path='/search/:query'>
         <Layout>
-          {/* <SearchScreen /> */}
+          <SearchScreen />
         </Layout>
       </Route>
       <Route path='/watch/:id'>

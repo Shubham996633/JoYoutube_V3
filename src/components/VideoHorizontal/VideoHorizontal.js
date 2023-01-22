@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './_VideoHorizontal.scss'
+
 import { AiFillEye } from 'react-icons/ai'
 import request from '../../apiCall'
-import moment from 'moment/moment'
-import numeral from 'numeral'
-import { Row, Col } from 'react-bootstrap'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { useHistory } from 'react-router-dom'
-const VideoHorizontal = ({ video }) => {
 
-    const [views, setViews] = useState(null)
-    const [duration, setDuration] = useState(null)
-    const [channelIcon, setChannelIcon] = useState(null)
+import moment from 'moment'
+import numeral from 'numeral'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { Col, Row } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+import SearchScreen from '../Screens/SearchScreen/SearchScreen'
+
+const VideoHorizontal = ({ video, SearchScreen }) => {
     const {
         id,
         snippet: {
@@ -20,34 +20,41 @@ const VideoHorizontal = ({ video }) => {
             description,
             title,
             publishedAt,
-            thumbnails: { high },
+            thumbnails: { medium },
+            resourceId,
         },
-
     } = video
 
+    const isVideo = !(id.kind === 'youtube#channel')
+
+    const [views, setViews] = useState(null)
+    const [duration, setDuration] = useState(null)
+    const [channelIcon, setChannelIcon] = useState(null)
 
     useEffect(() => {
         const get_video_details = async () => {
-            const { data: { items } } = await request('/videos', {
+            const {
+                data: { items },
+            } = await request('/videos', {
                 params: {
                     part: 'contentDetails,statistics',
                     id: id.videoId,
-
                 },
             })
             setDuration(items[0].contentDetails.duration)
             setViews(items[0].statistics.viewCount)
         }
-        get_video_details()
-    }, [id])
+        if (isVideo) get_video_details()
+    }, [id, isVideo])
 
     useEffect(() => {
         const get_channel_icon = async () => {
-            const { data: { items } } = await request('/channels', {
+            const {
+                data: { items },
+            } = await request('/channels', {
                 params: {
                     part: 'snippet',
                     id: channelId,
-
                 },
             })
             setChannelIcon(items[0].snippet.thumbnails.default)
@@ -55,45 +62,69 @@ const VideoHorizontal = ({ video }) => {
         get_channel_icon()
     }, [channelId])
 
-
-
-
     const seconds = moment.duration(duration).asSeconds()
     const _duration = moment.utc(seconds * 1000).format('mm:ss')
+
     const history = useHistory()
+
+    const _channelId = resourceId?.channelId || channelId
+
     const handleClick = () => {
-        history.push(`/watch/${id.videoId}`)
-
+        isVideo
+            ? history.push(`/watch/${id.videoId}`)
+            : history.push(`/channel/${_channelId}`)
     }
+
+    const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel'
+
     return (
-        <Row className="videoHorizontal m-1 py-2 align-align-items-center" onClick={
-            handleClick
-        }>
-            <Col xs={6} md={5} className="videoHorizontal__left">
-                <LazyLoadImage wrapperClassName="videoHorizontal__thumbnail-wrapper" className="videoHorizontal__thumbnail" src={high.url} effect="blur" />
-                <span className='videoHorizontal__duration'>{_duration}</span>
-
+        <Row
+            className='py-2 m-1 videoHorizontal align-items-center'
+            onClick={handleClick}>
+            {/* //TODO refractor grid */}
+            <Col
+                xs={6}
+                md={SearchScreen ? 4 : 6}
+                className='videoHorizontal__left'>
+                <LazyLoadImage
+                    src={medium.url}
+                    effect='blur'
+                    className={`videoHorizontal__thumbnail ${thumbnail} `}
+                    wrapperClassName='videoHorizontal__thumbnail-wrapper'
+                />
+                {isVideo && (
+                    <span className='videoHorizontal__duration'>{_duration}</span>
+                )}
             </Col>
-            <Col xs={6} md={6} className="videoHorizontal__right p-0">
-                <p className='videoHorizontal__title mb-1'>
-                    {title}
-                </p>
+            <Col
+                xs={6}
+                md={SearchScreen ? 8 : 6}
+                className='p-0 videoHorizontal__right'>
+                <p className='mb-1 videoHorizontal__title'>{title}</p>
 
-                <div className='videoHorizontal__details'>
-                    <span>
-                        <AiFillEye /> {numeral(views).format('0.a')} Views • {moment(publishedAt).fromNow()}
-                    </span>
+                {isVideo && (
+                    <div className='videoHorizontal__details'>
+                        <AiFillEye /> {numeral(views).format('0.a')} Views •
+                        {moment(publishedAt).fromNow()}
+                    </div>
+                )}
+
+                {(SearchScreen) && (
+                    <p className='mt-1 videoHorizontal__desc'>{description}</p>
+                )}
+
+                <div className='my-1 videoHorizontal__channel d-flex align-items-center'>
+                    {isVideo && (
+                        <LazyLoadImage src={channelIcon?.url} effect='blur' />
+                    )}
+                    <p className='mb-0'>{channelTitle}</p>
                 </div>
-
-                <div className='videoHorizontal__channel d-flex align-items-center my-1'>
-                    <LazyLoadImage src='https://yt3.ggpht.com/dxED1O-r5cRS73JBlUk4VS3pZHDfiHcuRjRbFMcf6KgYhxP4NUlD7x0h4TR1XTXkl-JGjTPTYQ=s88-c-k-c0x00ffffff-no-rj' effect="blur" />
-                    <p className='mb-0'>
-                        {channelTitle}
+                {/* {subScreen && (
+                    <p className='mt-2'>
+                        {video.contentDetails.totalItemCount} Videos
                     </p>
-                </div>
-
+                )} */}
             </Col>
-
         </Row>
     )
 }
