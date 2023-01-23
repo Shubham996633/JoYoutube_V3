@@ -10,6 +10,7 @@ import HomeScreen from './components/Screens/Homescreen/HomeScreen'
 import { useSelector } from 'react-redux'
 import WatchScreen from './components/Screens/WatchScreen/WatchScreen'
 import SubscriptionsScreen from './components/Screens/SubscriptionScreen/SubscriptionScreen'
+import ChannelScreen from './components/Screens/ChannelScreen/ChannelScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -75,7 +76,7 @@ const App = () => {
       </Route>
       <Route path='/channel/:channelId'>
         <Layout>
-          {/* <ChannelScreen /> */}
+          <ChannelScreen />
         </Layout>
       </Route>
 

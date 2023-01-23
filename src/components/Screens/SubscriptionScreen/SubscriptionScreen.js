@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { Container } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getSubscribedChannels } from '../../../redux/actions/videos.action'
 import './_SubscriptionScreen.scss'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 const SubscriptionScreen = () => {
 
     const dispatch = useDispatch()
@@ -10,8 +13,21 @@ const SubscriptionScreen = () => {
     useEffect(() => {
         dispatch(getSubscribedChannels())
     }, [dispatch])
+
+    const { loading, videos } = useSelector(state => state.subscriptionsChannel)
+
     return (
-        <div>SubscriptionScreen</div>
+        <Container fluid>
+            {!loading ? (
+                videos?.map(video => (
+                    <VideoHorizontal video={video} key={video.id} subScreen />
+                ))
+            ) : (
+                <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
+                    <Skeleton width='100%' height='160px' count={20} />
+                </SkeletonTheme>
+            )}
+        </Container>
     )
 }
 

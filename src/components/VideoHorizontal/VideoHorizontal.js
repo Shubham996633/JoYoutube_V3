@@ -9,9 +9,8 @@ import numeral from 'numeral'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Col, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import SearchScreen from '../Screens/SearchScreen/SearchScreen'
 
-const VideoHorizontal = ({ video, SearchScreen }) => {
+const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
     const {
         id,
         snippet: {
@@ -20,12 +19,12 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
             description,
             title,
             publishedAt,
-            thumbnails: { medium },
+            thumbnails: { high },
             resourceId,
         },
     } = video
 
-    const isVideo = !(id.kind === 'youtube#channel')
+    const isVideo = !(id.kind === 'youtube#channel' || subScreen)
 
     const [views, setViews] = useState(null)
     const [duration, setDuration] = useState(null)
@@ -83,10 +82,10 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
             onClick={handleClick}>
             <Col
                 xs={6}
-                md={SearchScreen ? 4 : 5}
+                md={SearchScreen || subScreen ? 4 : 6}
                 className='videoHorizontal__left'>
                 <LazyLoadImage
-                    src={medium.url}
+                    src={high.url}
                     effect='blur'
                     className={`videoHorizontal__thumbnail ${thumbnail} `}
                     wrapperClassName='videoHorizontal__thumbnail-wrapper'
@@ -97,7 +96,7 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
             </Col>
             <Col
                 xs={6}
-                md={SearchScreen ? 8 : 6}
+                md={SearchScreen || subScreen ? 8 : 6}
                 className='p-0 videoHorizontal__right'>
                 <p className='mb-1 videoHorizontal__title'>{title}</p>
 
@@ -108,7 +107,7 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
                     </div>
                 )}
 
-                {(SearchScreen) && (
+                {(SearchScreen || subScreen) && (
                     <p className='mt-1 videoHorizontal__desc'>{description}</p>
                 )}
 
@@ -118,11 +117,11 @@ const VideoHorizontal = ({ video, SearchScreen }) => {
                     )}
                     <p className='mb-0'>{channelTitle}</p>
                 </div>
-                {/* {subScreen && (
+                {subScreen && (
                     <p className='mt-2'>
                         {video.contentDetails.totalItemCount} Videos
                     </p>
-                )} */}
+                )}
             </Col>
         </Row>
     )
