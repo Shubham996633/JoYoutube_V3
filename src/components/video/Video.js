@@ -8,9 +8,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useHistory } from 'react-router-dom'
 import { getchannelDetails } from '../../redux/actions/channel.action'
-const Video = ({ video }) => {
-
-
+const Video = ({ video, channelScreen }) => {
     const {
         id,
         snippet: {
@@ -18,7 +16,7 @@ const Video = ({ video }) => {
             channelTitle,
             title,
             publishedAt,
-            thumbnails: { high },
+            thumbnails: { medium },
         },
         contentDetails,
     } = video
@@ -29,15 +27,19 @@ const Video = ({ video }) => {
 
     const seconds = moment.duration(duration).asSeconds()
     const _duration = moment.utc(seconds * 1000).format('mm:ss')
-    const _videoId = id?.videoId || id;
+
+    const _videoId = id?.videoId || contentDetails?.videoId || id
+
+    const history = useHistory()
 
     useEffect(() => {
         const get_video_details = async () => {
-            const { data: { items } } = await request('/videos', {
+            const {
+                data: { items },
+            } = await request('/videos', {
                 params: {
                     part: 'contentDetails,statistics',
                     id: _videoId,
-
                 },
             })
             setDuration(items[0].contentDetails.duration)
@@ -48,11 +50,12 @@ const Video = ({ video }) => {
 
     useEffect(() => {
         const get_channel_icon = async () => {
-            const { data: { items } } = await request('/channels', {
+            const {
+                data: { items },
+            } = await request('/channels', {
                 params: {
                     part: 'snippet',
                     id: channelId,
-
                 },
             })
             setChannelIcon(items[0].snippet.thumbnails.default)
@@ -60,31 +63,31 @@ const Video = ({ video }) => {
         get_channel_icon()
     }, [channelId])
 
-    const history = useHistory()
     const handleVideoClick = () => {
         history.push(`/watch/${_videoId}`)
     }
+
     return (
         <div className='video' onClick={handleVideoClick}>
             <div className='video__top'>
-                {/* <img src={high.url} alt='' /> */}
-                <LazyLoadImage src={high.url} effect="blur" />
+                {/* <img src={medium.url} alt='' /> */}
+                <LazyLoadImage src={medium.url} effect='blur' />
                 <span className='video__top__duration'>{_duration}</span>
-
             </div>
             <div className='video__title'>{title}</div>
             <div className='video__details'>
                 <span>
-                    <AiFillEye /> {numeral(views).format('0.a')} Views • </span>
-                <span className='time'>  {moment(publishedAt).fromNow()}</span>
+                    <AiFillEye /> {numeral(views).format('0.a')} Views •{' '}
+                </span>{' '}
+                <span> {moment(publishedAt).fromNow()} </span>
             </div>
-            <div className='video__channel'>
-                {/* <img src={channelIcon?.url} alt='' /> */}
-                <LazyLoadImage src={channelIcon?.url} effect="blur" />
+            {!channelScreen && (
+                <div className='video__channel'>
+                    <LazyLoadImage src={channelIcon?.url} effect='blur' />
 
-                <p>{channelTitle}</p>
-            </div>
-
+                    <p>{channelTitle}</p>
+                </div>
+            )}
         </div>
     )
 }

@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRelatedVideos, getVideoById } from '../../../redux/actions/videos.action'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { Helmet } from 'react-helmet'
+
 const WatchScreen = () => {
     const { id } = useParams()
 
@@ -23,7 +25,11 @@ const WatchScreen = () => {
 
     const { video, loading } = useSelector(state => state.selectedVideo)
     return (
+
         <Row>
+            <Helmet>
+                <title>{video?.snippet?.title}</title>
+            </Helmet>
             <Col lg={8}>
                 <div className='watchScreen__player'>
                     <iframe src={`https://www.youtube.com/embed/${id}`}

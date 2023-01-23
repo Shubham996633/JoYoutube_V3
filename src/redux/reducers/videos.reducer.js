@@ -178,8 +178,10 @@ export const subscriptionsChannelReducer = (
 
 export const channelVideosReducer = (
     state = {
-        loading: true,
+        loading: false,
         videos: [],
+        nextPageToken: null,
+
     },
     action
 ) => {
@@ -196,6 +198,7 @@ export const channelVideosReducer = (
                 ...state,
                 videos: payload,
                 loading: false,
+                nextPageToken: payload.nextPageToken,
             }
         case CHANNEL_VIDEOS_FAIL:
             return {

@@ -189,7 +189,7 @@ export const getSubscribedChannels = () => async (dispatch, getState) => {
         })
     }
 }
-export const getVideoByChannel = id => async dispatch => {
+export const getVideoByChannel = id => async (dispatch, getState) => {
     try {
         dispatch({
             type: CHANNEL_VIDEOS_REQUEST,
@@ -211,12 +211,16 @@ export const getVideoByChannel = id => async dispatch => {
                 part: 'snippet,contentDetails',
                 playlistId: uploadPlaylistId,
                 maxResults: 30,
+                pageToken: getState().channelVideos.nextPageToken
+
             },
         })
 
         dispatch({
             type: CHANNEL_VIDEOS_SUCCESS,
             payload: data.items,
+            nextPageToken: data.nextPageToken,
+
         })
     } catch (error) {
         console.log(error.response.data.message)

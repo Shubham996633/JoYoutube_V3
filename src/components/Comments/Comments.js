@@ -30,11 +30,12 @@ const Comments = ({ videoId, totalComments }) => {
 
         setText('')
     }
+
     return (
         <div className='comments'>
             <p>{totalComments} Comments</p>
             <div className='my-2 comments__form d-flex w-100'>
-                <img src='https://yt3.ggpht.com/yti/AJo0G0mswRqeSCaPK1wYyAy1erB3WAzsmGVv-8JOGfL7=s88-c-k-c0x00ffffff-no-rj' alt='avatar' className='mr-3 rounded-circle' />
+                <img src={photoURL} alt='avatar' className='mr-3 rounded-circle' />
                 <form className='d-flex flex-grow-1'>
                     <input
                         type='text'
