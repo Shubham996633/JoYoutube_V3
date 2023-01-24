@@ -22,12 +22,13 @@ const ChannelScreen = () => {
     const { snippet, statistics } = useSelector(
         state => state.channelDetails.channel
     )
+    console.log(videos)
 
     const fetchData = () => {
         dispatch(getVideoByChannel(channelId))
     }
     return (
-        <>
+        <Container>
             <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
                 <div className='d-flex align-items-center'>
                     <img src={snippet?.thumbnails?.default?.url} alt='' className='imgChannel' />
@@ -44,31 +45,32 @@ const ChannelScreen = () => {
                 <button>Subscribe</button>
             </div>
 
-            <Container>
 
 
-                <InfiniteScroll
-                    dataLength={videos.length}
-                    next={fetchData}
-                    hasMore={true}
-                    loader={
-                        <div className='spinner-border text-danger d-block mx-auto'></div>
-                    }
-                    className='row'>
-                    <Row className='mt-2'>
-                        {
-                            videos?.map(video => (
-                                <Col md={3} lg={3}>
-                                    <Video video={video} channelScreen />
-                                </Col>
 
 
-                            ))}
-                    </Row>
-                </InfiniteScroll>
+            <InfiniteScroll
+                dataLength={videos.length}
+                next={fetchData}
+                hasMore={true}
+                loader={
+                    <div className='spinner-border text-danger d-block mx-auto'></div>
+                }
+                className='row'>
+                <Row className='mt-2'>
+                    {
+                        videos?.map(video => (
+                            <Col md={3} lg={3}>
+                                <Video video={video} channelScreen />
+                            </Col>
 
-            </Container>
-        </>
+
+                        ))}
+                </Row>
+            </InfiniteScroll>
+
+        </Container>
+
     )
 }
 

@@ -27,6 +27,7 @@ const HomeScreen = () => {
         }
     }
 
+
     return (
         <Container>
             <CategoriesBar />

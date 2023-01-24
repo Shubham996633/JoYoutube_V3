@@ -31,6 +31,7 @@ export const getPopularVideos = () => async (dispatch, getState) => {
         })
 
 
+
     } catch (error) {
         console.log(error.message)
         dispatch({
@@ -133,7 +134,7 @@ export const getRelatedVideos = id => async dispatch => {
 }
 
 
-export const getVideosBySearch = keyword => async dispatch => {
+export const getVideosBySearch = keyword => async (dispatch, getState) => {
     try {
         dispatch({
             type: SEARCHED_VIDEO_REQUEST,
@@ -145,12 +146,16 @@ export const getVideosBySearch = keyword => async dispatch => {
                 maxResults: 20,
                 q: keyword,
                 type: 'video,channel',
+                pageToken: getState().nextPageToken
             },
         })
 
         dispatch({
             type: SEARCHED_VIDEO_SUCCESS,
-            payload: data.items,
+            payload: {
+                items: data.items,
+                nextPageToken: data.pageToken
+            },
         })
     } catch (error) {
         console.log(error.message)
@@ -210,7 +215,7 @@ export const getVideoByChannel = id => async (dispatch, getState) => {
             params: {
                 part: 'snippet,contentDetails',
                 playlistId: uploadPlaylistId,
-                maxResults: 30,
+                maxResults: 20,
                 pageToken: getState().channelVideos.nextPageToken
 
             },
@@ -218,8 +223,10 @@ export const getVideoByChannel = id => async (dispatch, getState) => {
 
         dispatch({
             type: CHANNEL_VIDEOS_SUCCESS,
-            payload: data.items,
-            nextPageToken: data.nextPageToken,
+            payload: {
+                videos: data.items,
+                nextPageToken: data.nextPageToken
+            },
 
         })
     } catch (error) {

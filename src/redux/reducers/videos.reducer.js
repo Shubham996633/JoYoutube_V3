@@ -127,8 +127,9 @@ export const searchedVideosReducer = (
         case SEARCHED_VIDEO_SUCCESS:
             return {
                 ...state,
-                videos: payload,
+                videos: payload.items,
                 loading: false,
+                pageToken: payload.nextPageToken
             }
         case SEARCHED_VIDEO_FAIL:
             return {
@@ -179,8 +180,8 @@ export const subscriptionsChannelReducer = (
 export const channelVideosReducer = (
     state = {
         loading: false,
-        videos: [],
         nextPageToken: null,
+        videos: [],
 
     },
     action
@@ -196,7 +197,7 @@ export const channelVideosReducer = (
         case CHANNEL_VIDEOS_SUCCESS:
             return {
                 ...state,
-                videos: payload,
+                videos: payload.videos,
                 loading: false,
                 nextPageToken: payload.nextPageToken,
             }
