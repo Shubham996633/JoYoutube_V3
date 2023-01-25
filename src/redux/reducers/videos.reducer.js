@@ -109,39 +109,78 @@ export const relatedVideoReducer = (
 }
 
 
+// export const searchedVideosReducer = (
+//     state = {
+//         items: [],
+//         loading: false,
+//         nextPageToken: null,
+//     },
+//     action
+// ) => {
+//     const { type, payload } = action
+
+//     switch (type) {
+
+//         case SEARCHED_VIDEO_SUCCESS:
+//             return {
+//                 ...state,
+//                 items: payload.items,
+//                 loading: false,
+//                 nextPageToken: payload.nextPageToken,
+//             }
+//         case SEARCHED_VIDEO_FAIL:
+//             return {
+//                 ...state,
+//                 loading: false,
+//                 error: payload,
+//             }
+//         case SEARCHED_VIDEO_REQUEST:
+//             return {
+//                 ...state,
+//                 loading: true,
+//             }
+
+//         default:
+//             return state
+//     }
+// }
+
 export const searchedVideosReducer = (
     state = {
-        loading: true,
         videos: [],
+        loading: false,
+        nextPageToken: null,
     },
     action
 ) => {
-    const { payload, type } = action
+    const { type, payload } = action
 
     switch (type) {
-        case SEARCHED_VIDEO_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
         case SEARCHED_VIDEO_SUCCESS:
             return {
                 ...state,
-                videos: payload.items,
+                videos: payload.videos,
+
                 loading: false,
-                pageToken: payload.nextPageToken
+                nextPageToken: payload.nextPageToken,
             }
+
         case SEARCHED_VIDEO_FAIL:
             return {
                 ...state,
                 loading: false,
                 error: payload,
             }
-
+        case SEARCHED_VIDEO_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
         default:
             return state
     }
 }
+
 
 
 export const subscriptionsChannelReducer = (

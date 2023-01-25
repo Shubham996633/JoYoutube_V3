@@ -6,7 +6,7 @@ import { getVideosBySearch } from '../../../redux/actions/videos.action'
 import { Container } from 'react-bootstrap'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const SearchScreen = () => {
     const { query } = useParams()
@@ -18,28 +18,33 @@ const SearchScreen = () => {
 
 
 
+    const { videos, loading } = useSelector(state => state.searchedVideos)
 
     useEffect(() => {
         dispatch(getVideosBySearch(query))
     }, [dispatch, query])
 
-    const { videos, loading } = useSelector(state => state.searchedVideos)
-    const fetch = () => {
+
+    const fetchData = () => {
         dispatch(getVideosBySearch(query))
+        console.log('hi')
 
     }
+    console.log(videos.length)
+
+
     return (
         <Container>
             <InfiniteScroll
                 dataLength={videos.length}
-                next={fetch}
+                next={fetchData}
                 hasMore={true}
-                loader={
-                    <div className='spinner-border text-danger d-block mx-auto'></div>
-                }
-                className='row'>
+                loader=<div className='spinner-border text-danger d-block mx-auto'></div>
+                className='row'
+            >
                 {
-                    videos?.map(video => (
+                    videos.map(video => (
+
                         <VideoHorizontal
                             video={video}
                             key={video.id.videoId}

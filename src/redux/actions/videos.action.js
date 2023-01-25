@@ -16,14 +16,14 @@ export const getPopularVideos = () => async (dispatch, getState) => {
                 chart: 'mostPopular',
                 regionCode: 'IN',
                 maxResults: 20,
-                pageToken: getState().homeVideos.netxPageToken
+                pageToken: getState().nextPageToken
             }
         })
         dispatch({
             type: HOME_VIDEOS_SUCCESS,
             payload: {
                 videos: data.items,
-                netxPageToken: data.netxPageToken,
+                nextPageToken: data.nextPageToken,
                 category: 'All',
 
 
@@ -55,7 +55,7 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
                 part: 'snippet',
                 maxResults: 20,
 
-                pageToken: getState().homeVideos.netxPageToken,
+                pageToken: getState().homeVideos.nextPageToken,
                 q: keyword,
                 type: 'video'
             }
@@ -64,7 +64,7 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
             type: HOME_VIDEOS_SUCCESS,
             payload: {
                 videos: data.items,
-                netxPageToken: data.netxPageToken,
+                nextPageToken: data.nextPageToken,
                 category: keyword
             },
         })
@@ -134,35 +134,74 @@ export const getRelatedVideos = id => async dispatch => {
 }
 
 
-export const getVideosBySearch = keyword => async (dispatch, getState) => {
+// export const getVideosBySearch = (keyword) => async (dispatch, getState) => {
+//     try {
+//         dispatch({
+//             type: SEARCHED_VIDEO_REQUEST,
+//         })
+//         const { data } = await request('/search', {
+//             params: {
+//                 part: 'snippet',
+
+//                 maxResults: 20,
+//                 q: keyword,
+//                 type: 'video,channel',
+//                 pageToken: getState().searchedVideos.nextPageToken
+//             }
+//         })
+
+//         dispatch({
+//             type: SEARCHED_VIDEO_SUCCESS,
+//             payload: {
+//                 items: data.items,
+//                 nextPageToken: data.nextPageToken,
+//             },
+//         })
+//     } catch (error) {
+//         console.log(error.message)
+//         dispatch({
+//             type: SEARCHED_VIDEO_FAIL,
+//             payload: error.message,
+//         })
+//     }
+// }
+
+
+export const getVideosBySearch = (keyword) => async (dispatch, getState) => {
     try {
+
         dispatch({
             type: SEARCHED_VIDEO_REQUEST,
+
         })
-        const { data } = await request('/search', {
+
+        const { data } = await request("/search", {
             params: {
                 part: 'snippet',
-
                 maxResults: 20,
-                q: keyword,
-                type: 'video,channel',
-                pageToken: getState().nextPageToken
-            },
-        })
 
+                pageToken: getState().homeVideos.nextPageToken,
+                q: keyword,
+                type: 'video,channel'
+            }
+        })
         dispatch({
             type: SEARCHED_VIDEO_SUCCESS,
             payload: {
-                items: data.items,
-                nextPageToken: data.pageToken
+                videos: data.items,
+                nextPageToken: data.nextPageToken,
+                category: keyword
             },
         })
+
+
     } catch (error) {
         console.log(error.message)
         dispatch({
             type: SEARCHED_VIDEO_FAIL,
             payload: error.message,
         })
+
     }
 }
 

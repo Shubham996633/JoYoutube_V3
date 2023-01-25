@@ -27,6 +27,8 @@ const HomeScreen = () => {
         }
     }
 
+    console.log(videos.length)
+
 
     return (
         <Container>
