@@ -17,6 +17,9 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     const handleClickSubs = () => {
         history.push('/feed/subscriptions')
     }
+    const handleLiked = () => {
+        history.push('/likedVideos')
+    }
     return (
         <nav className={sidebar ? 'sidebar open' : 'sidebar'}
             onClick={() => handleToggleSidebar(false)}>
@@ -32,7 +35,7 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
             </li>
 
 
-            <li title='Liked Video'>
+            <li title='Liked Video' onClick={handleLiked}>
                 <MdThumbUp size={23} />
                 <span>Liked Video</span>
             </li>

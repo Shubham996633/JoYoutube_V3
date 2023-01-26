@@ -10,7 +10,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Col, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
-const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
+const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
     const {
         id,
         snippet: {
@@ -24,12 +24,18 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
         },
     } = video
 
+
     const isVideo = !(id.kind === 'youtube#channel' || subScreen)
 
     const [views, setViews] = useState(null)
     const [duration, setDuration] = useState(null)
     const [channelIcon, setChannelIcon] = useState(null)
-
+    var videoIds = ''
+    if (likedScreen) {
+        videoIds = id
+    } else {
+        videoIds = id.videoId
+    }
     useEffect(() => {
         const get_video_details = async () => {
             const {
@@ -37,7 +43,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
             } = await request('/videos', {
                 params: {
                     part: 'contentDetails,statistics',
-                    id: id.videoId,
+                    id: videoIds,
                 },
             })
             setDuration(items[0].contentDetails.duration)
@@ -82,7 +88,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
             onClick={handleClick}>
             <Col
                 xs={6}
-                md={SearchScreen || subScreen ? 4 : 6}
+                md={SearchScreen || subScreen || likedScreen ? 4 : 6}
                 className='videoHorizontal__left'>
                 <LazyLoadImage
                     src={high.url}
@@ -96,7 +102,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
             </Col>
             <Col
                 xs={6}
-                md={SearchScreen || subScreen ? 8 : 6}
+                md={SearchScreen || subScreen || likedScreen ? 8 : 6}
                 className='p-0 videoHorizontal__right'>
                 <p className='mb-1 videoHorizontal__title'>{title}</p>
 
@@ -107,7 +113,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen }) => {
                     </div>
                 )}
 
-                {(SearchScreen || subScreen) && (
+                {(SearchScreen || subScreen || likedScreen) && (
                     <p className='mt-1 videoHorizontal__desc'>{description}</p>
                 )}
 

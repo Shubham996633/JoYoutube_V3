@@ -18,6 +18,11 @@ const Header = ({ handleToggleSidebar }) => {
 
         history.push(`/search/${input}`)
     }
+
+    const handleHome = e => {
+
+        history.push(`/`)
+    }
     const user = useSelector(state => state.auth?.user)
 
     return (
@@ -32,6 +37,7 @@ const Header = ({ handleToggleSidebar }) => {
                 src={icon}
                 alt=''
                 className='header__logo'
+                onClick={handleHome}
             />
 
             <form onSubmit={handleSubmit}>

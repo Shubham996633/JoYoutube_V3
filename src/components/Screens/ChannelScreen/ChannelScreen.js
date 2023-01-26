@@ -22,7 +22,6 @@ const ChannelScreen = () => {
     const { snippet, statistics } = useSelector(
         state => state.channelDetails.channel
     )
-    console.log(videos)
 
     const fetchData = () => {
         dispatch(getVideoByChannel(channelId))

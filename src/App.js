@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import WatchScreen from './components/Screens/WatchScreen/WatchScreen'
 import SubscriptionsScreen from './components/Screens/SubscriptionScreen/SubscriptionScreen'
 import ChannelScreen from './components/Screens/ChannelScreen/ChannelScreen'
+import LikedScreen from './components/Screens/LikedScreen/LikedScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -79,6 +80,15 @@ const App = () => {
           <ChannelScreen />
         </Layout>
       </Route>
+
+
+
+      <Route path='/likedVideos'>
+        <Layout>
+          <LikedScreen />
+        </Layout>
+      </Route>
+
 
       <Route>
         <Redirect to='/' />

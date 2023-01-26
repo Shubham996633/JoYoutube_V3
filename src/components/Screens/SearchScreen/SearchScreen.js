@@ -18,12 +18,12 @@ const SearchScreen = () => {
 
 
 
-    const { videos, loading } = useSelector(state => state.searchedVideos)
 
     useEffect(() => {
         dispatch(getVideosBySearch(query))
     }, [dispatch, query])
 
+    const { videos, loading } = useSelector(state => state.searchedVideos)
 
     const fetchData = () => {
         dispatch(getVideosBySearch(query))
