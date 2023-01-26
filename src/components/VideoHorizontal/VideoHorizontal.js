@@ -76,7 +76,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
 
     const handleClick = () => {
         isVideo
-            ? history.push(`/watch/${id.videoId}`)
+            ? history.push(`/watch/${videoIds}`)
             : history.push(`/channel/${_channelId}`)
     }
 
