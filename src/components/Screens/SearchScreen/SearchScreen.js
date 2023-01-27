@@ -27,10 +27,8 @@ const SearchScreen = () => {
 
     const fetchData = () => {
         dispatch(getVideosBySearch(query))
-        console.log('hi')
 
     }
-    console.log(videos.length)
 
 
     return (

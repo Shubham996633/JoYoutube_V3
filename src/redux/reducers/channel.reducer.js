@@ -1,4 +1,4 @@
-import { CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
 
 export const channelDetailReducer = (
     state = {
@@ -34,6 +34,43 @@ export const channelDetailReducer = (
                 ...state,
                 subscriptionStatus: payload
             }
+
+        default:
+            return state
+    }
+}
+
+
+
+export const playlistReducer = (
+    state = {
+        loading: true,
+        playlist: null,
+    },
+    action
+) => {
+    const { payload, type } = action
+
+    switch (type) {
+        case ALL_PLAYLIST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case ALL_PLAYLIST_SUCCESS:
+            return {
+                ...state,
+                playlist: payload,
+                loading: false,
+            }
+        case ALL_PLAYLIST_FAIL:
+            return {
+                ...state,
+                playlist: null,
+                loading: false,
+                error: payload,
+            }
+
 
         default:
             return state

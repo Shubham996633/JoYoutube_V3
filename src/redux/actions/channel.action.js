@@ -1,4 +1,4 @@
-import { CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 export const getchannelDetails = id => async dispatch => {
@@ -45,5 +45,36 @@ export const checkSubscriptionStatus = id => async (dispatch, getState) => {
         console.log(data)
     } catch (error) {
         console.log(error.response.data)
+    }
+}
+
+
+export const getAllPlaylist = id => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: ALL_PLAYLIST_REQUEST,
+        })
+        const { data } = await request('/playlists', {
+            params: {
+                part: 'snippet,contentDetails',
+                mine: true,
+                maxResults: '25',
+            },
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+            },
+        })
+        dispatch({
+            type: ALL_PLAYLIST_SUCCESS,
+            payload: {
+                playlists: data.items,
+            },
+        })
+    } catch (error) {
+        console.log(error.response.data)
+        dispatch({
+            type: ALL_PLAYLIST_FAIL,
+            payload: error.response.data,
+        })
     }
 }
