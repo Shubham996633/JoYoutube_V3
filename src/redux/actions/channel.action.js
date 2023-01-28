@@ -66,12 +66,9 @@ export const getAllPlaylist = id => async (dispatch, getState) => {
         })
         dispatch({
             type: ALL_PLAYLIST_SUCCESS,
-            payload: {
-                playlists: data.items,
-            },
+            payload: data.items,
         })
     } catch (error) {
-        console.log(error.response.data)
         dispatch({
             type: ALL_PLAYLIST_FAIL,
             payload: error.response.data,

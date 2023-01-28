@@ -11,6 +11,8 @@ import { selectedVideoReducer } from './reducers/videos.reducer'
 import { commentListReducer } from './reducers/comments.reducer'
 const rootReducer = combineReducers({
     auth: authReducer,
+    playlistItems: playlistReducer,
+
     homeVideos: homeVideoReducer,
     selectedVideo: selectedVideoReducer,
     channelDetails: channelDetailReducer,
@@ -20,7 +22,6 @@ const rootReducer = combineReducers({
     subscriptionsChannel: subscriptionsChannelReducer,
     channelVideos: channelVideosReducer,
     likedVideos: likedVideos,
-    playlistItems: playlistReducer,
 
 })
 

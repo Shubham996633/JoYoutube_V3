@@ -67,3 +67,6 @@
     z-index: 999;
   }
 }
+.Library {
+  @include line-clamp(1);
+}

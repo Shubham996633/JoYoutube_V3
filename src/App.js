@@ -12,6 +12,7 @@ import WatchScreen from './components/Screens/WatchScreen/WatchScreen'
 import SubscriptionsScreen from './components/Screens/SubscriptionScreen/SubscriptionScreen'
 import ChannelScreen from './components/Screens/ChannelScreen/ChannelScreen'
 import LikedScreen from './components/Screens/LikedScreen/LikedScreen'
+import PlaylistScreen from './components/Screens/PlaylistScreen/PlaylistScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -73,6 +74,11 @@ const App = () => {
       <Route path='/feed/subscriptions'>
         <Layout>
           <SubscriptionsScreen />
+        </Layout>
+      </Route>
+      <Route path='/playlist/:playlistId'>
+        <Layout>
+          <PlaylistScreen />
         </Layout>
       </Route>
       <Route path='/channel/:channelId'>

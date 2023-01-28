@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { log_out } from '../../redux/actions/auth.action';
 import { useHistory } from 'react-router-dom';
 import { getAllPlaylist } from '../../redux/actions/channel.action';
+import PlaylistScreen from '../Screens/PlaylistScreen/PlaylistScreen';
 const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     const dispatch = useDispatch()
-    const history = useHistory()
+
     useEffect(() => {
         dispatch(getAllPlaylist())
     }, [dispatch])
+
     const logoutHandler = () => {
         dispatch(log_out())
         history.push('/auth')
@@ -24,14 +26,17 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
     const handleLiked = () => {
         history.push('/likedVideos')
     }
-    const handlePlaylist = (id) => {
-        console.log(id)
-    }
+
+
 
 
 
     const { playlist } = useSelector(state => state.playlistItems)
-    const items = playlist.playlists
+    const handlePlaylist = (id) => {
+        history.push(`playlist/${id}`)
+    }
+    const history = useHistory()
+
     return (
         <nav className={sidebar ? 'sidebar open' : 'sidebar'}
             onClick={() => handleToggleSidebar(false)}>
@@ -59,17 +64,30 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
                 <span>Library</span>
             </li>
 
-            {
-                items.map(item => (
 
-                    <li title='Library' onClick={handlePlaylist(item.id)}>
+            {
+
+
+
+                playlist.map(item => (
+
+                    <li title={item.snippet.title} key={item.id} onClick={(e) => handlePlaylist(item.id)}>
                         <MdLibraryBooks size={23} />
-                        <span>{item.snippet.title}</span>
+                        <span >
+
+                            {item.snippet.title.length > 15 ? item.snippet.title.substring(0, 15) + '...' : item.snippet.title}</span>
                     </li>
 
 
 
                 ))
+
+
+            }
+            {
+                playlist.map(item => {
+                    <PlaylistScreen item={item} key={item.id} />
+                })
             }
 
 
