@@ -16,7 +16,7 @@ const Video = ({ video, channelScreen }) => {
             channelTitle,
             title,
             publishedAt,
-            thumbnails: { medium },
+            thumbnails: { high },
         },
         contentDetails,
     } = video
@@ -66,12 +66,16 @@ const Video = ({ video, channelScreen }) => {
     const handleVideoClick = () => {
         history.push(`/watch/${_videoId}`)
     }
+    var photoUrl = high.url
+    if (photoUrl === undefined) {
+        photoUrl = 'https://1.bp.blogspot.com/-zaoiLHspoKI/XeI_0uFAeCI/AAAAAAAAF38/CyHgdY8bdOQ7d979yOJ0voSIA8b5bAF2wCLcBGAsYHQ/s1600/Youtube-Icon-2000x2000.png'
+    }
 
     return (
         <div className='video' onClick={handleVideoClick}>
             <div className='video__top'>
                 {/* <img src={medium.url} alt='' /> */}
-                <LazyLoadImage src={medium.url} effect='blur' />
+                <LazyLoadImage src={photoUrl} effect='blur' />
                 <span className='video__top__duration'>{_duration}</span>
             </div>
             <div className='video__title'>{title}</div>

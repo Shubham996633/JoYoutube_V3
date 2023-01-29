@@ -36,6 +36,9 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
         history.push(`playlist/${id}`)
     }
     const history = useHistory()
+    const handleLibrary = () => {
+        history.push('/library')
+    }
 
     return (
         <nav className={sidebar ? 'sidebar open' : 'sidebar'}
@@ -59,13 +62,13 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
 
 
 
-            <li title='Library'>
+            <li title='Library' onClick={handleLibrary}>
                 <MdLibraryBooks size={23} />
                 <span>Library</span>
             </li>
 
 
-            {
+            {/* {
 
 
 
@@ -88,7 +91,7 @@ const Sidebar = ({ sidebar, handleToggleSidebar }) => {
                 playlist.map(item => {
                     <PlaylistScreen item={item} key={item.id} />
                 })
-            }
+            } */}
 
 
 

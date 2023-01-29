@@ -1,4 +1,4 @@
-import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
+import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
 
 export const homeVideoReducer = (
     state = {
@@ -131,7 +131,7 @@ export const searchedVideosReducer = (
                     : payload.videos,
 
                 loading: false,
-                nextPageToken: payload.nextPageToken,
+                searchKeyword: payload.searchKeyword,
             }
 
         case SEARCHED_VIDEO_FAIL:
@@ -246,6 +246,48 @@ export const likedVideos = (
                 loading: false,
             }
         case LIKED_VIDEOS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: payload,
+            }
+
+        default:
+            return state
+    }
+}
+
+
+export const playlistVideoReducer = (
+    state = {
+        videos: [],
+        loading: false,
+        nextPageToken: null,
+        playlistid: null,
+
+    },
+    action
+) => {
+    const { payload, type } = action
+
+    switch (type) {
+        case PLAYLIST_VIDOES_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case PLAYLIST_VIDOES_SUCCESS:
+            return {
+                ...state,
+                videos: state.playlistid === payload.playlistid
+                    ? [...state.videos, ...payload.videos]
+                    : payload.videos,
+                loading: false,
+                playlistid: payload.playlistid,
+
+
+            }
+        case PLAYLIST_VIDOES_FAIL:
             return {
                 ...state,
                 loading: false,

@@ -13,6 +13,7 @@ import SubscriptionsScreen from './components/Screens/SubscriptionScreen/Subscri
 import ChannelScreen from './components/Screens/ChannelScreen/ChannelScreen'
 import LikedScreen from './components/Screens/LikedScreen/LikedScreen'
 import PlaylistScreen from './components/Screens/PlaylistScreen/PlaylistScreen'
+import LibraryScreen from './components/Screens/LibraryScreen/LibraryScreen'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
 
@@ -95,6 +96,12 @@ const App = () => {
         </Layout>
       </Route>
 
+
+      <Route path='/library'>
+        <Layout>
+          <LibraryScreen />
+        </Layout>
+      </Route>
 
       <Route>
         <Redirect to='/' />

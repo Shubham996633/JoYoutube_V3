@@ -1,4 +1,4 @@
-import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
+import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
 
 import request from "../../apiCall"
 
@@ -278,6 +278,44 @@ export const getLikedVideos = () => async (dispatch, getState) => {
         console.log(error.response.data)
         dispatch({
             type: LIKED_VIDEOS_FAIL,
+            payload: error.response.data,
+        })
+    }
+}
+
+export const getVideoBypPlaylist = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: PLAYLIST_VIDOES_REQUEST,
+        })
+
+
+        const { data } = await request('/playlistItems', {
+            params: {
+                part: 'snippet,contentDetails',
+                playlistId: id,
+                maxResults: 20,
+                pageToken: getState().playlistVideos.nextPageToken
+
+            },
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+            },
+        })
+
+        dispatch({
+            type: PLAYLIST_VIDOES_SUCCESS,
+            payload: {
+                videos: data.items,
+                nextPageToken: data.nextPageToken,
+                playlistid: id,
+            },
+
+        })
+    } catch (error) {
+        console.log(error.response.data.message)
+        dispatch({
+            type: PLAYLIST_VIDOES_FAIL,
             payload: error.response.data,
         })
     }
