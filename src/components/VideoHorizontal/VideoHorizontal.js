@@ -5,7 +5,6 @@ import { AiFillEye } from 'react-icons/ai'
 import request from '../../apiCall'
 
 import moment from 'moment'
-import numeral from 'numeral'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Col, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
@@ -82,6 +81,18 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
 
     const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel'
 
+
+    const numeral = (vcount) => {
+        if (vcount > 1000 && vcount < 1000000) {
+            vcount = (vcount / 1000).toFixed(1) + 'K'
+        } else if (vcount > 1000000 && vcount < 1000000000) {
+            vcount = (vcount / 1000000).toFixed(0) + 'M'
+        } else if (vcount > 1000000000) {
+            vcount = (vcount / 1000000000).toFixed(0) + 'B'
+        }
+
+        return vcount;
+    }
     return (
         <Row
             className='py-2 m-1 videoHorizontal align-items-center'
@@ -108,7 +119,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
 
                 {isVideo && (
                     <div className='videoHorizontal__details'>
-                        <AiFillEye /> {numeral(views).format('0.a')} Views •
+                        <AiFillEye /> {numeral(views)} Views • {' '}
                         {moment(publishedAt).fromNow()}
                     </div>
                 )}

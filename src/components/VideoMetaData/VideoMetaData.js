@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import './_VideoMetaData.scss'
 import moment from 'moment'
-import numeral from 'numeral'
 
 import { MdThumbUp, MdThumbDown } from 'react-icons/md'
 import ShowMoreText from 'react-show-more-text'
@@ -34,7 +33,17 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
     const subscriptionStatus = useSelector(
         state => state.channelDetails.subscriptionStatus
     )
+    const numeral = (vcount) => {
+        if (vcount > 1000 && vcount < 1000000) {
+            vcount = (vcount / 1000).toFixed(2) + 'K'
+        } else if (vcount > 1000000 && vcount < 1000000000) {
+            vcount = (vcount / 1000000).toFixed(2) + 'M'
+        } else if (vcount > 1000000000) {
+            vcount = (vcount / 1000000000).toFixed(2) + 'B'
+        }
 
+        return vcount;
+    }
 
 
     return (
@@ -45,17 +54,17 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                 <h5>{title}</h5>
                 <div className='py-1 d-flex justify-content-between align-items-center'>
                     <span>
-                        {numeral(viewCount).format('0.a')} Views •{' '}
+                        {numeral(viewCount)} Views •{' '}
                         {moment(publishedAt).fromNow()}
                     </span>
 
                     <div>
                         <span className='mr-3'>
-                            <MdThumbUp size={26} /> {numeral(likeCount).format('0.a')}
+                            <MdThumbUp size={26} /> {numeral(likeCount)}
                         </span>
                         <span className='mr-3'>
                             <MdThumbDown size={26} />{' '}
-                            {numeral(dislikeCount).format('0.a')}
+                            {numeral(dislikeCount)}
                         </span>
                     </div>
                 </div>
@@ -71,9 +80,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                         <span>{channelTitle}</span>
                         <span>
                             {' '}
-                            {numeral(channelStatistics?.subscriberCount).format(
-                                '0.a'
-                            )}{' '}
+                            {numeral(channelStatistics?.subscriberCount)}{' '}
                             Subscribers
                         </span>
                     </div>

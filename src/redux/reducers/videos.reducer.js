@@ -271,6 +271,7 @@ export const playlistVideoReducer = (
     const { payload, type } = action
 
     switch (type) {
+
         case PLAYLIST_VIDOES_REQUEST:
             return {
                 ...state,

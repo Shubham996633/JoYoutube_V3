@@ -7,7 +7,6 @@ import { Col, Container, Row } from 'react-bootstrap'
 import Video from '../../video/Video'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { getchannelDetails } from '../../../redux/actions/channel.action'
-import numeral from 'numeral'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 const ChannelScreen = () => {
@@ -26,6 +25,18 @@ const ChannelScreen = () => {
     const fetchData = () => {
         dispatch(getVideoByChannel(channelId))
     }
+
+    const numeral = (vcount) => {
+        if (vcount > 1000 && vcount < 1000000) {
+            vcount = (vcount / 1000).toFixed(2) + 'K'
+        } else if (vcount > 1000000 && vcount < 1000000000) {
+            vcount = (vcount / 1000000).toFixed(2) + 'M'
+        } else if (vcount > 1000000000) {
+            vcount = (vcount / 1000000000).toFixed(2) + 'B'
+        }
+
+        return vcount;
+    }
     return (
         <Container>
             <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
@@ -35,7 +46,7 @@ const ChannelScreen = () => {
                     <div className='ml-3 channelHeader__details'>
                         <h3>{snippet?.title}</h3>
                         <span>
-                            {numeral(statistics?.subscriberCount).format('0.a')}{' '}
+                            {numeral(statistics?.subscriberCount)}{' '}
                             subscribers
                         </span>
                     </div>
