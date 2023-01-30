@@ -235,7 +235,8 @@ export const getVideoByChannel = id => async (dispatch, getState) => {
             type: CHANNEL_VIDEOS_SUCCESS,
             payload: {
                 videos: data.items,
-                nextPageToken: data.nextPageToken
+                nextPageToken: data.nextPageToken,
+                playlistId: uploadPlaylistId,
             },
 
         })

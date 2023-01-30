@@ -10,13 +10,14 @@ import {
     getchannelDetails,
 } from '../../redux/actions/channel.action'
 import HelmetCustom from '../HelmetCustom'
+import { useHistory } from 'react-router-dom'
 const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
     const { channelId, channelTitle, description, title, publishedAt } = snippet
     const { viewCount, likeCount, dislikeCount } = statistics
 
     const dispatch = useDispatch()
 
-
+    const history = useHistory()
 
 
     useEffect(() => {
@@ -44,6 +45,9 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
 
         return vcount;
     }
+    const handleChannelClick = (() => {
+        history.push(`/channel/${channelId}`)
+    })
 
 
     return (
@@ -70,7 +74,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                 </div>
             </div>
             <div className='py-3 my-2 videoMetaData__channel d-flex justify-content-between align-items-center'>
-                <div className='d-flex'>
+                <div className='d-flex' title={channelTitle} onClick={handleChannelClick}>
                     <img
                         src={channelSnippet?.thumbnails?.default?.url}
                         alt=''

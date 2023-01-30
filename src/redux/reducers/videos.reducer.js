@@ -190,6 +190,7 @@ export const channelVideosReducer = (
         videos: [],
         loading: false,
         nextPageToken: null,
+        playlistId: null,
 
     },
     action
@@ -205,9 +206,12 @@ export const channelVideosReducer = (
         case CHANNEL_VIDEOS_SUCCESS:
             return {
                 ...state,
-                videos: [...state.videos, ...payload.videos],
+                videos: state.playlistId === payload.playlistId
+                    ? [...state.videos, ...payload.videos]
+                    : payload.videos,
                 loading: false,
-                nextPageToken: payload.nextPageToken,
+                playlistId: payload.playlistId,
+
             }
         case CHANNEL_VIDEOS_FAIL:
             return {

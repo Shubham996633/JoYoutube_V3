@@ -72,6 +72,9 @@ const Video = ({ video, channelScreen }) => {
     if (photoUrl === undefined) {
         photoUrl = 'https://1.bp.blogspot.com/-zaoiLHspoKI/XeI_0uFAeCI/AAAAAAAAF38/CyHgdY8bdOQ7d979yOJ0voSIA8b5bAF2wCLcBGAsYHQ/s1600/Youtube-Icon-2000x2000.png'
     }
+    const handleChannelClick = (() => {
+        history.push(`/channel/${channelId}`)
+    })
 
 
     const numeral = (vcount) => {
@@ -86,20 +89,21 @@ const Video = ({ video, channelScreen }) => {
         return vcount;
     }
     return (
-        <div className='video' onClick={handleVideoClick}>
-            <div className='video__top'>
+        <div className='video'>
+
+            <div className='video__top' onClick={handleVideoClick}>
                 <LazyLoadImage src={photoUrl} effect='blur' />
                 <span className='video__top__duration'>{_duration}</span>
             </div>
-            <div className='video__title'>{title}</div>
-            <div className='video__details'>
+            <div className='video__title' onClick={handleVideoClick}>{title}</div>
+            <div className='video__details' onClick={handleVideoClick}>
                 <span>
                     <AiFillEye /> {numeral(views)} views • {' '}
                 </span>{' '}
                 <span>{' '} {moment(publishedAt).fromNow()} </span>
             </div>
             {!channelScreen && (
-                <div className='video__channel'>
+                <div className='video__channel' title={channelTitle} onClick={handleChannelClick}>
                     <LazyLoadImage src={channelIcon?.url} effect='blur' />
 
                     <p>{channelTitle}</p>
