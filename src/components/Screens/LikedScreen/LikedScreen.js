@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import './_LikedScreen.scss'
 import { useDispatch } from 'react-redux'
 import { getLikedVideos } from '../../../redux/actions/videos.action'
-import { Container } from 'react-bootstrap'
+import { Container, Col } from 'react-bootstrap'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSelector } from 'react-redux'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
+import Video from '../../video/Video'
 const LikedScreen = () => {
 
     const dispatch = useDispatch()
@@ -38,12 +39,15 @@ const LikedScreen = () => {
             >
                 {
                     videos.map(video => (
+                        <Col lg={3} md={4}>
 
-                        <VideoHorizontal
-                            video={video}
-                            key={video.id.videoId}
-                            likedScreen
-                        />
+                            <Video
+                                video={video}
+                                key={video.id.videoId}
+                                likedScreen
+                            />
+                        </Col>
+
                     ))
                 }
 

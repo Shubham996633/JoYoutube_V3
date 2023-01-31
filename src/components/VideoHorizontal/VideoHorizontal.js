@@ -77,6 +77,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
         isVideo
             ? history.push(`/watch/${videoIds}`)
             : history.push(`/channel/${_channelId}`)
+        { window.scrollTo(0, 0) }
     }
 
     const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel'

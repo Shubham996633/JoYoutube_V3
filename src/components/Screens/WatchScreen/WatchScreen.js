@@ -37,6 +37,7 @@ const WatchScreen = () => {
                         frameBorder="0"
                         title={video?.snippet?.title}
                         allowFullScreen
+                        autoplay
                         width="100%"
                         height="100%"></iframe>
                 </div>

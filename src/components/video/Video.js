@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useHistory } from 'react-router-dom'
 import { getchannelDetails } from '../../redux/actions/channel.action'
+import removed from '../../img/maxresdefault.jpg'
 const Video = ({ video, channelScreen }) => {
     const {
         id,
@@ -15,8 +16,9 @@ const Video = ({ video, channelScreen }) => {
             channelTitle,
             title,
             publishedAt,
-            thumbnails: { high },
+
         },
+        snippet,
         contentDetails,
     } = video
 
@@ -66,11 +68,16 @@ const Video = ({ video, channelScreen }) => {
     }, [channelId])
 
     const handleVideoClick = () => {
+
         history.push(`/watch/${_videoId}`)
+        { window.scrollTo(0, 0) }
     }
-    var photoUrl = high.url
-    if (photoUrl === undefined) {
-        photoUrl = 'https://1.bp.blogspot.com/-zaoiLHspoKI/XeI_0uFAeCI/AAAAAAAAF38/CyHgdY8bdOQ7d979yOJ0voSIA8b5bAF2wCLcBGAsYHQ/s1600/Youtube-Icon-2000x2000.png'
+    if (snippet?.thumbnails.hasOwnProperty('high')) {
+        var photoUrl = snippet.thumbnails.high.url
+    } else {
+        photoUrl = removed
+
+
     }
     const handleChannelClick = (() => {
         history.push(`/channel/${channelId}`)
@@ -89,7 +96,10 @@ const Video = ({ video, channelScreen }) => {
         return vcount;
     }
     return (
+
         <div className='video'>
+
+
 
             <div className='video__top' onClick={handleVideoClick}>
                 <LazyLoadImage src={photoUrl} effect='blur' />
@@ -114,3 +124,9 @@ const Video = ({ video, channelScreen }) => {
 }
 
 export default Video
+
+
+// Todo
+
+// show more format
+// fix comment issue

@@ -8,6 +8,7 @@ import { getAllPlaylist } from '../../../redux/actions/channel.action'
 import { MdLibraryBooks } from 'react-icons/md'
 import './libraryscreen.scss'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 const LibraryScreen = () => {
 
     const history = useHistory()
@@ -22,7 +23,7 @@ const LibraryScreen = () => {
         <Container className='playlist-container'>
             {playlist.map(item => (
 
-                <Row
+                <Col lg={10} md={10}
                     className={`py-2 m-1 videoHorizontal align-items-center ${item.id}`} onClick={(e) => handlePlaylist(item.id)}
                     key={item.id}
                 >
@@ -57,7 +58,8 @@ const LibraryScreen = () => {
                         </div>
 
                         <p className='mt-2'>
-                            Published At:  {item.snippet.publishedAt
+                            Published At:  {
+                                moment(item.snippet.publishedAt).fromNow()
                             }
                         </p>
 
@@ -67,7 +69,7 @@ const LibraryScreen = () => {
 
 
                     </Col>
-                </Row>
+                </Col>
             ))
             }
         </Container>
@@ -76,3 +78,5 @@ const LibraryScreen = () => {
 }
 
 export default LibraryScreen
+
+
