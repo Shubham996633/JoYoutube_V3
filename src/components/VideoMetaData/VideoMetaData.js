@@ -21,7 +21,6 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
 
 
     useEffect(() => {
-        console.log(channelId)
         dispatch(getchannelDetails(channelId))
         dispatch(checkSubscriptionStatus(channelId))
     }, [dispatch, channelId])
@@ -99,8 +98,8 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
             <div className='videoMetaData__description'>
                 <ShowMoreText
                     lines={3}
-                    more='SHOW MORE'
-                    less='SHOW LESS'
+                    more='Show More'
+                    less='Show Less'
                     anchorClass='showMoreText'
                     expanded={false}>
                     {description}
