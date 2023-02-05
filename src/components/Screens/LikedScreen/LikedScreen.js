@@ -7,6 +7,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSelector } from 'react-redux'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import Video from '../../video/Video'
+import { Helmet } from 'react-helmet'
+
 const LikedScreen = () => {
 
     const dispatch = useDispatch()
@@ -27,6 +29,9 @@ const LikedScreen = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Liked Vides</title>
+            </Helmet>
             <InfiniteScroll
                 dataLength={videos.length}
                 next={fetchData}

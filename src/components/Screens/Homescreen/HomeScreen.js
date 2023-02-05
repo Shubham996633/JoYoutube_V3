@@ -9,6 +9,7 @@ import {
     getVideosByCategory,
 } from '../../../redux/actions/videos.action'
 import SkeletonVideo from '../../skeletons/SkeletonVideo'
+import { Helmet } from 'react-helmet'
 
 const HomeScreen = () => {
     const dispatch = useDispatch()
@@ -31,6 +32,9 @@ const HomeScreen = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Youtube</title>
+            </Helmet>
             <CategoriesBar />
 
             <InfiniteScroll

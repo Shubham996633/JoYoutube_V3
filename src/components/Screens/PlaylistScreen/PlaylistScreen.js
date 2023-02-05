@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom'
 import { getVideoBypPlaylist } from '../../../redux/actions/videos.action'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Video from '../../video/Video'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
+import { Helmet } from 'react-helmet'
+
 const PlaylistScreen = ({ item }) => {
     const { playlistId } = useParams()
 
@@ -23,25 +25,31 @@ const PlaylistScreen = ({ item }) => {
     console.log(videos)
 
     return (
-        <InfiniteScroll
-            dataLength={videos.length}
-            next={fetchData}
-            hasMore={true}
-            loader={
-                <div className='spinner-border text-danger d-block mx-auto'></div>
-            }
-            className='row'>
-            <Row className='mt-2'>
-                {
-                    videos?.map(video => (
-                        <Col md={3} lg={3}>
-                            <Video video={video} channelScreen />
-                        </Col>
+        <Container>
+            <Helmet>
+                <title>Playlist</title>
+            </Helmet>
+
+            <InfiniteScroll
+                dataLength={videos.length}
+                next={fetchData}
+                hasMore={true}
+                loader={
+                    <div className='spinner-border text-danger d-block mx-auto'></div>
+                }
+                className='row'>
+                <Row className='mt-2'>
+                    {
+                        videos?.map(video => (
+                            <Col md={3} lg={3}>
+                                <Video video={video} channelScreen />
+                            </Col>
 
 
-                    ))}
-            </Row>
-        </InfiniteScroll>
+                        ))}
+                </Row>
+            </InfiniteScroll>
+        </Container>
     )
 }
 

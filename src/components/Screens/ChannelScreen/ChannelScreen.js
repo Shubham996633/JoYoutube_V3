@@ -8,6 +8,7 @@ import Video from '../../video/Video'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { getchannelDetails } from '../../../redux/actions/channel.action'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Helmet } from 'react-helmet'
 
 const ChannelScreen = () => {
     const dispatch = useDispatch()
@@ -42,6 +43,9 @@ const ChannelScreen = () => {
     }
     return (
         <Container>
+            <Helmet>
+                <title>{snippet?.title}</title>
+            </Helmet>
             <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
                 <div className='d-flex align-items-center'>
                     <img src={snippet?.thumbnails?.default?.url} alt='' className='imgChannel' />

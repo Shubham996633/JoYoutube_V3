@@ -9,6 +9,8 @@ import { MdLibraryBooks } from 'react-icons/md'
 import './libraryscreen.scss'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import { Helmet } from 'react-helmet'
+
 const LibraryScreen = () => {
 
     const history = useHistory()
@@ -21,6 +23,9 @@ const LibraryScreen = () => {
 
     return (
         <Container className='playlist-container'>
+            <Helmet>
+                <title>Library</title>
+            </Helmet>
             {playlist.map(item => (
 
                 <Col lg={10} md={10}

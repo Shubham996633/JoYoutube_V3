@@ -7,7 +7,7 @@ import { Container } from 'react-bootstrap'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import InfiniteScroll from 'react-infinite-scroll-component';
-
+import { Helmet } from 'react-helmet'
 const SearchScreen = () => {
     const { query } = useParams()
 
@@ -33,6 +33,9 @@ const SearchScreen = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>{query}</title>
+            </Helmet>
             <InfiniteScroll
                 dataLength={videos.length}
                 next={fetchData}

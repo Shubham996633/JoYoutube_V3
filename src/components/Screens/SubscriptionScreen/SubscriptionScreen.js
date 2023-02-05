@@ -6,6 +6,8 @@ import { getSubscribedChannels } from '../../../redux/actions/videos.action'
 import './_SubscriptionScreen.scss'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
+import { Helmet } from 'react-helmet'
+
 const SubscriptionScreen = () => {
 
     const dispatch = useDispatch()
@@ -17,7 +19,11 @@ const SubscriptionScreen = () => {
     const { loading, videos } = useSelector(state => state.subscriptionsChannel)
 
     return (
+
         <Container fluid>
+            <Helmet>
+                <title>Subscriptions</title>
+            </Helmet>
             {!loading ? (
                 videos?.map(video => (
                     <VideoHorizontal video={video} key={video.id} subScreen />
