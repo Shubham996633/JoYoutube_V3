@@ -1,53 +1,58 @@
-# Getting Started with Create React App
+# JoYoutubeV3 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ ### This is Youtube Clone Using React JS and CSS
+ 
+ ![image](https://user-images.githubusercontent.com/65014926/217881437-4685abe0-9d85-442f-b976-152f37c48083.png)
 
-## Available Scripts
+ 
+ 
+ 
+# To Visit Click Here: <a href ="https://joyoutube.netlify.app/">JoYoutube</a>
+ 
 
-In the project directory, you can run:
+ ### --> Login with Google
 
-### `npm start`
+ ![image](https://user-images.githubusercontent.com/65014926/217882059-4b6f7ada-2c7f-4581-8957-151e496c07c9.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You may also see any lint errors in the console.
+ ### --> Have all Videos to selected Category
 
-### `npm test`
+![image](https://user-images.githubusercontent.com/65014926/217882551-3f788f04-cfd2-41ec-a8ef-039aa1b9e618.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ ### --> Search any Video or Channel
 
-### `npm run build`
+ ![image](https://user-images.githubusercontent.com/65014926/217883007-5d548f50-6e22-48ff-a533-8f2e061606e5.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ ## --> Directly Fetch Your Subscribed Channels, Playlist and Liked Videos
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## --> Video View
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![image](https://user-images.githubusercontent.com/65014926/217883503-82d56679-6738-4730-9174-69795e2318c3.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+ 
+ 
+ 
+ # API Provider: <a href = "https://developers.google.com/youtube/v3/"> Youtube Data Api </a> 
+         
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Disclaimer : All the photos are in involved in this Readme are belong their respective owners.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   
 
-### Code Splitting
+   
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ ## Note
 
-### Analyzing the Bundle Size
+    
+ 
+   Some-time there is a clash between APIs so By that reason JoYoutube App can't  
+   able to complete your desired request so please visit after Some-time upto that it will be resolved by The Developer
+   If not resolved Then Drop a Mail here : ( <a href = "mailto:shubhammaurya996633+work@gmail.com"> Shubham_Maurya</a> )
+ <h3>Enjoy The JoYoutube App</h3>
 
 
