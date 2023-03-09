@@ -55,7 +55,7 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
                 part: 'snippet',
                 maxResults: 20,
 
-                pageToken: getState().homeVideos.nextPageToken,
+                pageToken: getState().searchedVideos.nextPageToken,
                 q: keyword,
                 type: 'video'
             }
@@ -204,7 +204,7 @@ export const getSubscribedChannels = () => async (dispatch, getState) => {
         })
     }
 }
-export const getVideoByChannel = id => async (dispatch, getState) => {
+export const getVideoByChannel = (id) => async (dispatch, getState) => {
     try {
         dispatch({
             type: CHANNEL_VIDEOS_REQUEST,

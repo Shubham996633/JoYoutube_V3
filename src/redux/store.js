@@ -2,13 +2,14 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { authReducer } from "./reducers/auth.reducer";
-import { channelDetailReducer, playlistReducer } from "./reducers/channel.reducer";
+import { channelDetailReducer, makeLikeReducer, playlistReducer, rateVideoReducer } from "./reducers/channel.reducer";
 import {
     channelVideosReducer,
     homeVideoReducer, likedVideos, playlistVideoReducer, relatedVideoReducer, searchedVideosReducer, subscriptionsChannelReducer,
 } from './reducers/videos.reducer'
 import { selectedVideoReducer } from './reducers/videos.reducer'
 import { commentListReducer } from './reducers/comments.reducer'
+import { getVideoRating } from "./actions/channel.action";
 const rootReducer = combineReducers({
     auth: authReducer,
     playlistItems: playlistReducer,
@@ -23,6 +24,8 @@ const rootReducer = combineReducers({
     channelVideos: channelVideosReducer,
     likedVideos: likedVideos,
     playlistVideos: playlistVideoReducer,
+    likecheck: makeLikeReducer,
+    ratecheck: rateVideoReducer,
 
 })
 

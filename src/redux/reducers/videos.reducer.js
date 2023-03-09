@@ -132,6 +132,8 @@ export const searchedVideosReducer = (
 
                 loading: false,
                 searchKeyword: payload.searchKeyword,
+                nextPageToken: payload.nextPageToken,
+
             }
 
         case SEARCHED_VIDEO_FAIL:
@@ -195,7 +197,7 @@ export const channelVideosReducer = (
     },
     action
 ) => {
-    const { payload, type } = action
+    const { type, payload } = action
 
     switch (type) {
         case CHANNEL_VIDEOS_REQUEST:
@@ -210,7 +212,10 @@ export const channelVideosReducer = (
                     ? [...state.videos, ...payload.videos]
                     : payload.videos,
                 loading: false,
+                nextPageToken: payload.nextPageToken,
                 playlistId: payload.playlistId,
+
+
 
             }
         case CHANNEL_VIDEOS_FAIL:
@@ -245,9 +250,9 @@ export const likedVideos = (
             return {
                 ...state,
                 videos: [...state.videos, ...payload.videos],
-                nextPageToken: payload.nextPageToken,
 
                 loading: false,
+                nextPageToken: payload.nextPageToken,
             }
         case LIKED_VIDEOS_FAIL:
             return {
@@ -288,6 +293,7 @@ export const playlistVideoReducer = (
                     ? [...state.videos, ...payload.videos]
                     : payload.videos,
                 loading: false,
+
                 playlistid: payload.playlistid,
 
 

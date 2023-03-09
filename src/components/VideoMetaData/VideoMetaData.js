@@ -1,16 +1,32 @@
 import React, { useEffect } from 'react'
 import './_VideoMetaData.scss'
+import { useState } from 'react';
 import moment from 'moment'
-
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { MdThumbUp, MdThumbDown } from 'react-icons/md'
 import ShowMoreText from 'react-show-more-text'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     checkSubscriptionStatus,
     getchannelDetails,
+    getVideoRating,
+    makeLike,
 } from '../../redux/actions/channel.action'
 import HelmetCustom from '../HelmetCustom'
 import { useHistory } from 'react-router-dom'
+
+import { AiFillLike } from "react-icons/ai";
+
+
+import { BiLike, BiDislike } from "react-icons/bi";
+import { getLikedVideos } from '../../redux/actions/videos.action';
+
+
 const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
     const { channelId, channelTitle, description, title, publishedAt } = snippet
     const { viewCount, likeCount, dislikeCount } = statistics
@@ -18,10 +34,24 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
     const dispatch = useDispatch()
 
     const history = useHistory()
+    const [open, setOpen] = useState(false);
 
+    const handleSubscribe = (status) => {
+        if (status) {
 
+            setOpen(true);
+        }
+        else {
+            console.log("task to unsubscribe")
+        }
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     useEffect(() => {
         dispatch(getchannelDetails(channelId))
+
         dispatch(checkSubscriptionStatus(channelId))
     }, [dispatch, channelId])
 
@@ -48,9 +78,47 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
         history.push(`/channel/${channelId}`)
     })
 
+    var like = 'none';
 
+    useEffect(() => {
+        dispatch(getVideoRating(videoId))
+    }, [dispatch, videoId])
+
+    const rate = useSelector(state => state.ratecheck.rating)
+    if (rate === 'like') {
+        like = "like";
+    } else if (rate === 'dislike') {
+        like = "dislike";
+    } else {
+        like = "none";
+    }
+
+
+    const handleLikeClick = (videoId, like) => {
+        if (like === 'none') {
+            const act = 'like'
+            dispatch(makeLike(videoId, act))
+        } else {
+            const act = 'none'
+            dispatch(makeLike(videoId, act))
+        }
+
+
+    }
+
+    const handleDisLikeClick = (videoId, like) => {
+        if (like === 'none') {
+            const act = 'dislike'
+            dispatch(makeLike(videoId, act))
+        } else {
+            const act = 'none'
+            dispatch(makeLike(videoId, act))
+        }
+
+
+    }
     return (
-        <div className='py-2 videoMetaData'>
+        <div className='py-2 videoMetaData '>
             <HelmetCustom title={title} description={description} />
 
             <div className='videoMetaData__top'>
@@ -62,11 +130,11 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                     </span>
 
                     <div>
-                        <span className='mr-3'>
-                            <MdThumbUp size={26} /> {numeral(likeCount)}
+                        <span className='mr-3' onClick={() => handleLikeClick(videoId, like)}>
+                            {like === 'like' ? <MdThumbUp size={26} /> : <BiLike size={26} />}  {numeral(likeCount)}
                         </span>
-                        <span className='mr-3'>
-                            <MdThumbDown size={26} />{' '}
+                        <span className='mr-3' onClick={() => handleDisLikeClick(videoId, like)}>
+                            {like === 'dislike' ? <MdThumbDown size={26} /> : <BiDislike size={26} disabled />}{' '}
                             {numeral(dislikeCount)}
                         </span>
                     </div>
@@ -80,7 +148,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                         className='mr-3 rounded-circle'
                     />
                     <div className='d-flex flex-column'>
-                        <span>{channelTitle}</span>
+                        <span className='text-2xl font-bold	'>{channelTitle}</span>
                         <span>
                             {' '}
                             {numeral(channelStatistics?.subscriberCount)}{' '}
@@ -89,11 +157,34 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                     </div>
                 </div>
 
-                <button
+                <button variant="outlined" onClick={() => handleSubscribe(subscriptionStatus)}
                     className={`p-2 m-2 border-0 btn ${subscriptionStatus && 'btn-gray'
                         }`}>
                     {subscriptionStatus ? 'Subscribed' : 'Subscribe'}
                 </button>
+
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+
+
+
+                >
+
+                    <DialogContent className='promptdark'>
+                        <DialogContentText id="alert-dialog-description" style={{ color: '#b5b7b3' }}>
+                            Unsubscribe from {channelTitle}?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className='promptdark'>
+                        <Button style={{ color: '#ffffff' }} onClick={handleClose}>Cancel</Button>
+                        <Button style={{ color: '#0f94d0' }} onClick={handleClose} autoFocus>
+                            Unsubscribe
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
             <div className='videoMetaData__description'>
                 <ShowMoreText
