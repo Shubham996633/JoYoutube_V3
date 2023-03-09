@@ -1,4 +1,4 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 import { getLikedVideos } from "./videos.action"
@@ -135,6 +135,76 @@ export const getVideoRating = id => async (dispatch, getState) => {
         dispatch({
             type: GET_RATE_FAIL,
             payload: error.response.data.message,
+        })
+    }
+}
+
+export const makeSubscribe = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: SET_SUBSCRIPTION_REQUEST,
+
+        })
+        const obj = {
+            snippet: {
+                resourceId: {
+                    "kind": "youtube#channel",
+                    "channelId": id,
+                }
+            }
+        }
+
+        await request.post('/subscriptions', obj, {
+            params: {
+                part: 'snippet',
+            },
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+
+            }
+        })
+        dispatch({
+            type: SET_SUBSCRIPTION_SUCCESS
+        })
+        dispatch(checkSubscriptionStatus(id))
+    } catch (error) {
+        console.log(error.response.data)
+        dispatch({
+            type: SET_SUBSCRIPTION_FAIL,
+            payload: error.response.data.message,
+        })
+    }
+}
+
+export const delSubscribe = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: DEL_SUBSCRIPTION_REQUEST,
+
+        })
+        const obj = {
+            id: id,
+        }
+        await request.delete('/subscriptions', {
+            params: {
+                id: id,
+            },
+
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+            },
+        })
+
+        dispatch({
+            type: DEL_SUBSCRIPTION_SUCCESS,
+        })
+        console.log('success')
+        dispatch(checkSubscriptionStatus(id))
+    } catch (error) {
+        dispatch({
+
+            type: DEL_SUBSCRIPTION_FAIL,
+            payload: error.response.data,
         })
     }
 }

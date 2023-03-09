@@ -13,9 +13,11 @@ import ShowMoreText from 'react-show-more-text'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     checkSubscriptionStatus,
+    delSubscribe,
     getchannelDetails,
     getVideoRating,
     makeLike,
+    makeSubscribe,
 } from '../../redux/actions/channel.action'
 import HelmetCustom from '../HelmetCustom'
 import { useHistory } from 'react-router-dom'
@@ -24,7 +26,7 @@ import { AiFillLike } from "react-icons/ai";
 
 
 import { BiLike, BiDislike } from "react-icons/bi";
-import { getLikedVideos } from '../../redux/actions/videos.action';
+import { getLikedVideos, getSubscribedChannels } from '../../redux/actions/videos.action';
 
 
 const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
@@ -43,14 +45,46 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
         }
         else {
             console.log("task to unsubscribe")
+            dispatch(makeSubscribe(channelId))
         }
     }
 
+
+    const { loading, videos } = useSelector(state => state.subscriptionsChannel)
+    var channelList = []
+    var channelSubId = []
+    videos.map((video) => {
+        channelList.push(video.snippet.title)
+        channelSubId.push(video.id)
+
+    })
+    console.log(videos)
     const handleClose = () => {
+
         setOpen(false);
+
     };
+    function findListId(name, lists) {
+        for (let i = 0; i < lists.length; i++) {
+            if (lists[i] === name) {
+                return i;
+            }
+        }
+
+    }
+
+    const handleUnSubscribe = () => {
+        var requiredId = channelSubId[(findListId(channelTitle, channelList))]
+        console.log(requiredId)
+        dispatch(delSubscribe(requiredId))
+        setOpen(false)
+
+    }
+
+
     useEffect(() => {
         dispatch(getchannelDetails(channelId))
+        dispatch(getSubscribedChannels())
 
         dispatch(checkSubscriptionStatus(channelId))
     }, [dispatch, channelId])
@@ -180,7 +214,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                     </DialogContent>
                     <DialogActions className='promptdark'>
                         <Button style={{ color: '#ffffff' }} onClick={handleClose}>Cancel</Button>
-                        <Button style={{ color: '#0f94d0' }} onClick={handleClose} autoFocus>
+                        <Button style={{ color: '#0f94d0' }} onClick={() => handleUnSubscribe()} autoFocus>
                             Unsubscribe
                         </Button>
                     </DialogActions>
