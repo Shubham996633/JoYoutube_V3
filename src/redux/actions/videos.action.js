@@ -217,7 +217,7 @@ export const getVideoByChannel = (id) => async (dispatch, getState) => {
             params: {
                 part: 'contentDetails',
                 id: id,
-            },
+            }
         })
         const uploadPlaylistId = items[0].contentDetails.relatedPlaylists.uploads
         // 2. get the videos using the id
@@ -228,7 +228,7 @@ export const getVideoByChannel = (id) => async (dispatch, getState) => {
                 maxResults: 20,
                 pageToken: getState().channelVideos.nextPageToken
 
-            },
+            }
         })
 
         dispatch({

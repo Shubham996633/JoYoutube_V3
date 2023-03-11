@@ -200,20 +200,18 @@ export const channelVideosReducer = (
     const { type, payload } = action
 
     switch (type) {
-        case CHANNEL_VIDEOS_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
+
         case CHANNEL_VIDEOS_SUCCESS:
             return {
                 ...state,
-                videos: state.playlistId === payload.playlistId
-                    ? [...state.videos, ...payload.videos]
-                    : payload.videos,
-                loading: false,
-                nextPageToken: payload.nextPageToken,
                 playlistId: payload.playlistId,
+                videos:
+                    state.playlistId === payload.playlistId
+                        ? [...state.videos, ...payload.videos]
+                        : payload.videos,
+                loading: false,
+                nextPageToken: state.playlistId === payload.playlistId ? payload.nextPageToken : null,
+
 
 
 
@@ -223,6 +221,12 @@ export const channelVideosReducer = (
                 ...state,
                 loading: false,
                 error: payload,
+            }
+
+        case CHANNEL_VIDEOS_REQUEST:
+            return {
+                ...state,
+                loading: true,
             }
 
         default:
