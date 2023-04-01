@@ -1,0 +1,46 @@
+/* Set the font and font size for the tabs */
+.nav-tabs {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    border: none;
+
+  }
+  
+  /* Set the color of the tabs */
+  .nav-tabs .nav-link {
+    color: #bdbcbc;
+    border: none;
+
+  }
+  
+  /* Set the active tab color */
+  .nav-tabs .nav-link.active {
+    color: #cfcbcb;
+    border: none;
+
+  }
+  
+  /* Set the hover color for the tabs */
+  .nav-tabs .nav-link:hover {
+    color: #ffffff;
+    border: none;
+
+  }
+  
+  /* Remove the border from the active tab */
+  .nav-tabs .nav-link.active {
+    border-radius: 3%;
+    border-bottom: 3.9px solid rgb(103, 103, 103);
+    background-color: #000000;
+
+  }
+  
+  /* Set the background color for the tabs */
+  .nav-tabs {
+    background-color: #000000;
+  }
+  .nav-tabs.active{
+    background-color: #000000;
+  }
+
+ 

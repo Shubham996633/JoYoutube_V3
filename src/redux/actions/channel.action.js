@@ -1,4 +1,4 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_CHANNEL_IMAGE_REQUEST, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 import { getLikedVideos } from "./videos.action"
@@ -10,7 +10,7 @@ export const getchannelDetails = id => async dispatch => {
 
         const { data } = await request('/channels', {
             params: {
-                part: 'snippet,statistics,contentDetails',
+                part: 'snippet,statistics,contentDetails,brandingSettings',
                 id,
             },
         })
@@ -208,3 +208,4 @@ export const delSubscribe = (id) => async (dispatch, getState) => {
         })
     }
 }
+
