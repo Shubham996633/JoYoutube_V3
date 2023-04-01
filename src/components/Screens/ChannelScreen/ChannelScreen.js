@@ -1,47 +1,62 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { getVideoByChannel } from '../../../redux/actions/videos.action'
-import './video.css'
-import './_ChannelScreen.scss'
-import { Col, Container, Row } from 'react-bootstrap'
-import Video from '../../video/Video'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import { checkSubscriptionStatus, getchannelDetails } from '../../../redux/actions/channel.action'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import { Helmet } from 'react-helmet'
-import Videos from './Videos'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import './video.css';
+import './_ChannelScreen.scss';
+import { Col, Container, Row } from 'react-bootstrap';
+import { checkSubscriptionStatus, getchannelDetails } from '../../../redux/actions/channel.action';
+import { Helmet } from 'react-helmet';
+import Videos from './Videos';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { RiMusicFill } from 'react-icons/ri';
+import About from './About';
+
 const ChannelScreen = () => {
-
-
-    const dispatch = useDispatch()
-    const { channelId = '' } = useParams()
-
-    
+    const { channelId = '' } = useParams();
+    const dispatch = useDispatch();
+  
+    const [isArtist, setIsArtist] = useState(false);
+    const [aboutData, setAboutData] = useState([]);
+  
     useEffect(() => {
-        dispatch(getchannelDetails(channelId))
-        dispatch(checkSubscriptionStatus(channelId))
-    }, [dispatch, channelId])
-
-    const { snippet, statistics,brandingSettings } = useSelector(
-        state => state.channelDetails.channel
-    )
-    const subscriptionStatus = useSelector(
-        state => state.channelDetails.subscriptionStatus
-    )
-    const numeral = (vcount) => {
-        if (vcount > 1000 && vcount < 1000000) {
-            vcount = (vcount / 1000).toFixed(2) + 'K'
-        } else if (vcount > 1000000 && vcount < 1000000000) {
-            vcount = (vcount / 1000000).toFixed(2) + 'M'
-        } else if (vcount > 1000000000) {
-            vcount = (vcount / 1000000000).toFixed(2) + 'B'
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,about,approval&id=${channelId}&handle=HANDLE`);
+          console.log(response)
+          setAboutData(response.data.items[0].about);
+          setIsArtist(response.data.items[0].approval === 'Official Artist Channel');
+        } catch (error) {
+          console.error(error);
         }
+      };
+      fetchData();
+      dispatch(getchannelDetails(channelId));
+      dispatch(checkSubscriptionStatus(channelId));
+    }, [dispatch, channelId]);
+  
+  const { snippet, statistics, brandingSettings } = useSelector(
+    (state) => state.channelDetails.channel
+  );
+  const subscriptionStatus = useSelector((state) => state.channelDetails.subscriptionStatus);
 
-        return vcount;
+  const numeral = (vcount) => {
+    if (vcount > 1000 && vcount < 1000000) {
+      vcount = (vcount / 1000).toFixed(2) + 'K';
+    } else if (vcount > 1000000 && vcount < 1000000000) {
+      vcount = (vcount / 1000000).toFixed(2) + 'M';
+    } else if (vcount > 1000000000) {
+      vcount = (vcount / 1000000000).toFixed(2) + 'B';
     }
+
+    return vcount;
+  };
+
+  const isLoading = !snippet;
+  console.log(aboutData)
+console.log(isArtist)
+
 
    
     return (
@@ -51,30 +66,30 @@ const ChannelScreen = () => {
             </Helmet>
 
             <div className='flex'>
-
+            {!isLoading && (
                 <img src ={`${brandingSettings.image.bannerExternalUrl}=w2120-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj` } width={'111%'} />
+            )}
+            <br/>
+        <br/>
             </div>
-    <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
+            {!isLoading && ( // Render the channel header only when the data is ready
             
-            <div className='d-flex align-items-center'>
-                <img src={snippet?.thumbnails?.default?.url} alt='' className='imgChannel' />
-        
-                <div className='ml-3 channelHeader__details'>
-                    <h3>{snippet?.title}</h3>
-                    <span>
-                        {numeral(statistics?.subscriberCount)}{' '}
-                        subscribers
-                    </span>
+                <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
+         
+                    <div className='d-flex align-items-center'>
+                        <img src={snippet?.thumbnails?.high?.url} alt='' className='imgChannel' style={{ width: '150px', height: '150px' }}/>
+                        <div className='ml-3 channelHeader__details'>
+                            <h3>{snippet?.title} {'  '}  {isArtist ? <RiMusicFill style={{color:'#b7b6b4'}}/>:null}</h3>
+                            <p style={{color:'#b7b6b4'}}>{aboutData.handle} { '  '} { '  '} {numeral(statistics?.subscriberCount)} subscribers { '  '}  { '  '} {statistics?.videoCount} videos</p>
+                        </div>
+                    </div>
+                    <button className={`p-2 m-2 border-0 btn ${subscriptionStatus && 'btn-gray'}`}>
+                        {subscriptionStatus ? 'Subscribed' : 'Subscribe'}
+                    </button>
+       
                 </div>
-            </div>
-        
-            <button
-                className={`p-2 m-2 border-0 btn ${subscriptionStatus && 'btn-gray'
-                    }`}>
-                {subscriptionStatus ? 'Subscribed' : 'Subscribe'}
-            </button>
-        </div>
-        
+            )}
+        <br/>
             <Tabs
       defaultActiveKey="VIDEOS"
       id="uncontrolled-tab-example"
@@ -91,17 +106,20 @@ const ChannelScreen = () => {
         channels
         </Tab>
         <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link">
-        about
+        <About channelId = {channelId}/>
         </Tab>
     </Tabs>
+
+    <br/>
     <style>
   {`
     .nav-tabs .nav-link.active {
-      background-color: black;
+      background-color: #0c0c0c;
       color: white;
     }
   `}
 </style>
+
   
           
 

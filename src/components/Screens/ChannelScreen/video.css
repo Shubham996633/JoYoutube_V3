@@ -31,16 +31,19 @@
   .nav-tabs .nav-link.active {
     border-radius: 3%;
     border-bottom: 3.9px solid rgb(103, 103, 103);
-    background-color: #000000;
+    background-color: #0c0c0c;
 
   }
   
   /* Set the background color for the tabs */
   .nav-tabs {
-    background-color: #000000;
+    background-color: #0c0c0c;
   }
   .nav-tabs.active{
-    background-color: #000000;
+    background-color: #0c0c0c;
   }
-
+.links{
+    text-decoration: none;
+    color: rgb(96, 88, 238);
+}
  
