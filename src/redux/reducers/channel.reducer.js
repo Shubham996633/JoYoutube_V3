@@ -1,4 +1,4 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
 
 export const channelDetailReducer = (
     state = {
@@ -144,4 +144,41 @@ export const rateVideoReducer = (
         default:
             return state
     }
+}
+
+export const channelGetReducer = (
+    state={
+        loading:true,
+        channel:{},
+        
+    },
+    action
+)=> {
+    const {payload, type } = action
+    switch(type) {
+        case GET_CHANNEL_REQUEST:
+            return{
+                ...state,
+                loading:true,
+
+            }
+
+        case GET_CHANNEL_SUCCESS:
+            return {
+                ...state,
+                channel:payload,
+                loading:false,
+            }
+
+        case GET_CHANNEL_FAIL:
+            return{
+                ...state,
+                channel:null,
+                loading:true,
+            }
+
+        default:
+            return state
+    }
+
 }

@@ -1,7 +1,8 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_CHANNEL_IMAGE_REQUEST, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_IMAGE_REQUEST, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 import { getLikedVideos } from "./videos.action"
+import axios from "axios"
 export const getchannelDetails = id => async dispatch => {
     try {
         dispatch({
@@ -209,3 +210,24 @@ export const delSubscribe = (id) => async (dispatch, getState) => {
     }
 }
 
+
+export const getChannels = id => async dispatch => {
+    try{
+        dispatch({
+            type:GET_CHANNEL_REQUEST,
+        })
+        const response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,channels,approval&id=${id}&handle=HANDLE`);
+        dispatch({
+            type:GET_CHANNEL_SUCCESS,
+            payload:response.data,
+
+        })
+
+    }catch(error){
+        console.log(error)
+        dispatch({
+            type:GET_CHANNEL_FAIL,
+            payload:error
+        })
+    }
+}

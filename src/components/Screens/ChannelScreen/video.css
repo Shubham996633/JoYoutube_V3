@@ -44,6 +44,9 @@
   }
 .links{
     text-decoration: none;
-    color: rgb(96, 88, 238);
+    color: skyblue;
 }
- 
+.links:hover{
+  text-decoration: none;
+  color: rgb(92, 203, 247);
+}
