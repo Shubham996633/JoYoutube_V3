@@ -14,7 +14,9 @@ import { RiMusicFill } from 'react-icons/ri';
 import About from './About';
 import Channels from './Channels';
 import Community from './Community';
-
+import { MdVerified } from "react-icons/md";
+import request from '../../../apiCall';
+import { getVideoByChannel } from '../../../redux/actions/videos.action';
 const ChannelScreen = () => {
     const { channelId = '' } = useParams();
     const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const ChannelScreen = () => {
           const response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,about,approval&id=${channelId}&handle=HANDLE`);
           console.log(response)
           setAboutData(response.data.items[0].about);
-          setIsArtist(response.data.items[0].approval === 'Official Artist Channel');
+          setIsArtist(response.data.items[0].approval);
         } catch (error) {
           console.error(error);
         }
@@ -36,6 +38,8 @@ const ChannelScreen = () => {
       fetchData();
       dispatch(getchannelDetails(channelId));
       dispatch(checkSubscriptionStatus(channelId));
+        dispatch(getVideoByChannel(channelId))
+
     }, [dispatch, channelId]);
   
   const { snippet, statistics, brandingSettings } = useSelector(
@@ -56,9 +60,39 @@ const ChannelScreen = () => {
   };
 
   const isLoading = !snippet;
-  console.log(aboutData)
-console.log(isArtist)
+  var shorts = []
+  var longs = []
+  const timeCheck = (id, video) => {
+    const get_video_details = async () => {
+      const {
+          data: { items },
+      } = await request('/videos', {
+          params: {
+              part: 'contentDetails,statistics',
+              id: id,
+          },
+      })
+      var duration = items[0].contentDetails.duration
+      if(duration.startsWith("PT") && (duration.endsWith("S") && !duration.includes("M"))){
+        console.log('shorts')
+        shorts.push(video)
+      }else{
+        console.log('long')
+        longs.push(video)
 
+      }
+  }
+  get_video_details()
+
+  }
+    const { videos, loading } = useSelector(state => state.channelVideos)
+    
+   
+    console.log(shorts)
+    console.log(longs)
+    videos.map((video)=> (
+      timeCheck(video.snippet.resourceId.videoId, video)
+    ))
 
    
     return (
@@ -81,7 +115,7 @@ console.log(isArtist)
                     <div className='d-flex align-items-center'>
                         <img src={snippet?.thumbnails?.high?.url} alt='' className='imgChannel' style={{ width: '150px', height: '150px' }}/>
                         <div className='ml-3 channelHeader__details'>
-                            <h3>{snippet?.title} {'  '}  {isArtist ? <RiMusicFill style={{color:'#b7b6b4'}}/>:null}</h3>
+                            <h3>{snippet?.title} {'  '}  {isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null}</h3>
                             <p style={{color:'#b7b6b4'}}>{aboutData.handle} { '  '} { '  '} {numeral(statistics?.subscriberCount)} subscribers { '  '}  { '  '} {statistics?.videoCount} videos</p>
                         </div>
                     </div>
@@ -99,7 +133,10 @@ console.log(isArtist)
     >
       
             <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link">
-        <Videos />
+        <Videos videos = {longs} />
+        </Tab>
+        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link">
+        <Videos videos = {shorts} />
         </Tab>
         <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link">
         <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>

@@ -41,14 +41,12 @@ const Community = ({handle,icon,channelId}) => {
         <br/>
             <span>{post.contentText.map((postText) => {
   if (postText.text && (postText.text.startsWith('http://') || postText.text.startsWith('https://'))) {
-    // If the text starts with http:// or https://, assume it is a link and render it as such
     return (
       <div>
         <a href={postText.text} target="_blank" rel="noopener noreferrer" style={{ marginLeft:'3rem'}}>{postText.text}</a>
       </div>
     );
   } else {
-    // Otherwise, assume it is plain text and render it as such
     return (
       <div style={{ marginLeft:'3rem'}}>
         {postText.text}
@@ -59,7 +57,7 @@ const Community = ({handle,icon,channelId}) => {
 </span>
     <br/>
 
-{post.images.length != 0 ? <img style={{ marginLeft:'3rem' }} src={post.images[0].thumbnails[post.images[0].thumbnails.length-1].url} />
+{post.images.length != 0 ? <img style={{ marginLeft:'3rem', }} src={post.images[0].thumbnails[post.images[0].thumbnails.length-2].url} />
 
 
     

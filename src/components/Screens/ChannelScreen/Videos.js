@@ -10,40 +10,28 @@ import { getchannelDetails } from '../../../redux/actions/channel.action'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Helmet } from 'react-helmet'
 import { useEffect } from 'react'
-const Videos = () => {
+const Videos = ({videos}) => {
     const dispatch = useDispatch()
     const { channelId } = useParams()
-    useEffect(() => {
-        dispatch(getVideoByChannel(channelId))
-    }, [dispatch], channelId)
-    const { videos, loading } = useSelector(state => state.channelVideos)
+    const items =[...videos]
+
+   console.log(items)
+
    
 
     const fetchData = () => {
         dispatch(getVideoByChannel(channelId))
     }
 
-    const numeral = (vcount) => {
-        if (vcount > 1000 && vcount < 1000000) {
-            vcount = (vcount / 1000).toFixed(2) + 'K'
-        } else if (vcount > 1000000 && vcount < 1000000000) {
-            vcount = (vcount / 1000000).toFixed(2) + 'M'
-        } else if (vcount > 1000000000) {
-            vcount = (vcount / 1000000000).toFixed(2) + 'B'
-        }
 
-        return vcount;
-    }
+
+
   return (
     <>
 
 
-
-
-
-
 <InfiniteScroll
-    dataLength={videos.length}
+    dataLength={items.length}
     next={fetchData}
     hasMore={true}
     loader={
@@ -52,7 +40,7 @@ const Videos = () => {
     className='row'>
     <Row className='mt-2'>
         {
-            videos?.map(video => (
+            items?.map(video => (
                 <Col md={3} lg={3}>
                     <Video video={video} channelScreen />
                 </Col>
