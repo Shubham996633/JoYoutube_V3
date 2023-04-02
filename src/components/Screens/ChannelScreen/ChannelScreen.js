@@ -13,6 +13,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { RiMusicFill } from 'react-icons/ri';
 import About from './About';
 import Channels from './Channels';
+import Community from './Community';
 
 const ChannelScreen = () => {
     const { channelId = '' } = useParams();
@@ -101,7 +102,7 @@ console.log(isArtist)
         <Videos />
         </Tab>
         <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link">
-        community
+        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
         </Tab>
         <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link">
         <Channels channelId={channelId}/>

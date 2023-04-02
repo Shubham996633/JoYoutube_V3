@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { authReducer } from "./reducers/auth.reducer";
-import { channelDetailReducer, channelGetReducer, makeLikeReducer, playlistReducer, rateVideoReducer } from "./reducers/channel.reducer";
+import { channelDetailReducer, channelGetReducer, communityGetReducer, makeLikeReducer, playlistReducer, rateVideoReducer } from "./reducers/channel.reducer";
 import {
     channelVideosReducer,
     homeVideoReducer, likedVideos, playlistVideoReducer, relatedVideoReducer, searchedVideosReducer, subscriptionsChannelReducer,
@@ -26,7 +26,8 @@ const rootReducer = combineReducers({
     playlistVideos: playlistVideoReducer,
     likecheck: makeLikeReducer,
     ratecheck: rateVideoReducer,
-    getchannel: channelGetReducer
+    getchannel: channelGetReducer,
+    getCommunity: communityGetReducer,
 
 })
 
