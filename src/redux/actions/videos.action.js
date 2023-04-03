@@ -137,45 +137,39 @@ export const getRelatedVideos = id => async dispatch => {
 
 
 
-export const getVideosBySearch = (keyword) => async (dispatch, getState) => {
+export const getVideosBySearch = (keyword, nextPageToken = null) => async (dispatch, getState) => {
     try {
-
-        dispatch({
-            type: SEARCHED_VIDEO_REQUEST,
-
-        })
-
-        const { data } = await request("/search", {
-            params: {
-                part: 'snippet',
-                maxResults: 20,
-
-                pageToken: getState().searchedVideos.nextPageToken,
-                q: keyword,
-                type: 'video,channel'
-            }
-        })
-        dispatch({
-            type: SEARCHED_VIDEO_SUCCESS,
-            payload: {
-                videos: data.items,
-                nextPageToken: data.nextPageToken,
-                searchKeyword: keyword,
-
-            },
-        })
-
-
+      dispatch({
+        type: SEARCHED_VIDEO_REQUEST,
+      })
+  
+      const { data } = await request("/search", {
+        params: {
+          part: 'snippet',
+          maxResults: 20,
+          pageToken: nextPageToken, // Use the nextPageToken parameter
+          q: keyword,
+          type: 'video,channel'
+        }
+      })
+  
+      dispatch({
+        type: SEARCHED_VIDEO_SUCCESS,
+        payload: {
+          videos: nextPageToken ? [...getState().searchedVideos.videos, ...data.items] : data.items, // Add new items to existing videos array
+          nextPageToken: data.nextPageToken,
+          searchKeyword: keyword,
+        },
+      })
     } catch (error) {
-        console.log(error.message)
-        dispatch({
-            type: SEARCHED_VIDEO_FAIL,
-            payload: error.message,
-        })
-
+      console.log(error.message)
+      dispatch({
+        type: SEARCHED_VIDEO_FAIL,
+        payload: error.message,
+      })
     }
-}
-
+  }
+  
 
 export const getSubscribedChannels = () => async (dispatch, getState) => {
     try {

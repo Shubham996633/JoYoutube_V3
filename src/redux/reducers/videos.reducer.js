@@ -113,44 +113,49 @@ export const relatedVideoReducer = (
 
 export const searchedVideosReducer = (
     state = {
-        videos: [],
-        loading: false,
-        nextPageToken: null,
-        searchKeyword: '',
+      videos: [],
+      loading: false,
+      nextPageToken: null,
+      searchKeyword: '',
     },
     action
-) => {
-    const { type, payload } = action
-
+  ) => {
+    const { type, payload } = action;
+  
     switch (type) {
-        case SEARCHED_VIDEO_SUCCESS:
-            return {
-                ...state,
-                videos: state.searchKeyword === payload.searchKeyword
-                    ? [...state.videos, ...payload.videos]
-                    : payload.videos,
-
-                loading: false,
-                searchKeyword: payload.searchKeyword,
-                nextPageToken: payload.nextPageToken,
-
-            }
-
-        case SEARCHED_VIDEO_FAIL:
-            return {
-                ...state,
-                loading: false,
-                error: payload,
-            }
-        case SEARCHED_VIDEO_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
-        default:
-            return state
+      case SEARCHED_VIDEO_SUCCESS:
+        return {
+          ...state,
+          videos:
+            state.searchKeyword === payload.searchKeyword
+              ? [...state.videos, ...payload.videos]
+              : payload.videos,
+          loading: false,
+          searchKeyword: payload.searchKeyword,
+          nextPageToken: payload.nextPageToken,
+        };
+  
+      case SEARCHED_VIDEO_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: payload,
+        };
+        
+      case SEARCHED_VIDEO_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      // Always update the search keyword, even if no new videos are added
+     
+  
+      default:
+        return state;
     }
-}
+  };
+  
 
 
 

@@ -60,8 +60,8 @@ const ChannelScreen = () => {
   };
 
   const isLoading = !snippet;
-  var shorts = []
-  var longs = []
+  const shorts =  new Array()
+  const longs =  new Array()
   const timeCheck = (id, video) => {
     const get_video_details = async () => {
       const {
@@ -74,10 +74,8 @@ const ChannelScreen = () => {
       })
       var duration = items[0].contentDetails.duration
       if(duration.startsWith("PT") && (duration.endsWith("S") && !duration.includes("M"))){
-        console.log('shorts')
         shorts.push(video)
       }else{
-        console.log('long')
         longs.push(video)
 
       }
@@ -88,12 +86,18 @@ const ChannelScreen = () => {
     const { videos, loading } = useSelector(state => state.channelVideos)
     
    
-    console.log(shorts)
     console.log(longs)
     videos.map((video)=> (
       timeCheck(video.snippet.resourceId.videoId, video)
     ))
+   const [vshorts, setVshorts] = useState(null);
+   const [vlongs, setVlongs] = useState(null);
+   useEffect(()=>{
+    setVshorts(shorts)
+    setVlongs(longs)
 
+   },[videos])
+     
    
     return (
         <Container>
@@ -130,22 +134,23 @@ const ChannelScreen = () => {
       defaultActiveKey="VIDEOS"
       id="uncontrolled-tab-example"
       className="mb-3 nav-tabs "
+      
     >
       
-            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link">
-        <Videos videos = {longs} />
+            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link" onSelect={ <Videos videos = {vlongs} />}>
+       
         </Tab>
-        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link">
-        <Videos videos = {shorts} />
+        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" onSelect={<Videos videos = {vshorts} />}>
+        
         </Tab>
-        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link">
-        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
+        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link" onSelect={        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>}>
+
         </Tab>
-        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link">
-        <Channels channelId={channelId}/>
+        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" onSelect={   <Channels channelId={channelId}/>}>
+     
         </Tab>
-        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link">
-        <About channelId = {channelId}/>
+        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" onSelect={    <About channelId = {channelId}/>}>
+    
         </Tab>
     </Tabs>
 

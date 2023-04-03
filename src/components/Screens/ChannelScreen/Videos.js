@@ -13,9 +13,7 @@ import { useEffect } from 'react'
 const Videos = ({videos}) => {
     const dispatch = useDispatch()
     const { channelId } = useParams()
-    const items =[...videos]
-
-   console.log(items)
+    
 
    
 
@@ -24,14 +22,16 @@ const Videos = ({videos}) => {
     }
 
 
-
-
+console.log(videos)
+if(!videos){
+    return(<h1>Loading</h1>)
+}
   return (
     <>
 
 
 <InfiniteScroll
-    dataLength={items.length}
+    dataLength={videos.length}
     next={fetchData}
     hasMore={true}
     loader={
@@ -40,7 +40,7 @@ const Videos = ({videos}) => {
     className='row'>
     <Row className='mt-2'>
         {
-            items?.map(video => (
+            videos?.map(video => (
                 <Col md={3} lg={3}>
                     <Video video={video} channelScreen />
                 </Col>
