@@ -17,6 +17,7 @@ import Community from './Community';
 import { MdVerified } from "react-icons/md";
 import request from '../../../apiCall';
 import { getVideoByChannel } from '../../../redux/actions/videos.action';
+import Playlist from './Playlist';
 const ChannelScreen = () => {
     const { channelId = '' } = useParams();
     const dispatch = useDispatch();
@@ -97,7 +98,11 @@ const ChannelScreen = () => {
     setVlongs(longs)
 
    },[videos])
-     
+    const [activeTab, setActiveTab] = useState('tab1');
+  
+    const handleTabSelect = (tabKey) => {
+      setActiveTab(tabKey);
+    };
    
     return (
         <Container>
@@ -134,23 +139,27 @@ const ChannelScreen = () => {
       defaultActiveKey="VIDEOS"
       id="uncontrolled-tab-example"
       className="mb-3 nav-tabs "
+      activeKey={activeTab} onSelect={handleTabSelect}
       
     >
       
-            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link" onSelect={ <Videos videos = {vlongs} />}>
-       
+            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link">
+            {/* <Videos videos = {vlongs} /> */}
         </Tab>
-        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" onSelect={<Videos videos = {vshorts} />}>
-        
+        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" >
+        {/* <Videos videos = {vshorts} /> */}
         </Tab>
-        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link" onSelect={        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>}>
-
+        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  >
+        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
         </Tab>
-        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" onSelect={   <Channels channelId={channelId}/>}>
-     
+        <Tab eventKey="PLAYLIST" title="PLAYLIST" className="tab nav-link"  >
+        <Playlist channelId = {channelId} />
         </Tab>
-        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" onSelect={    <About channelId = {channelId}/>}>
-    
+        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" >
+        {/* <Channels channelId={channelId}/> */}
+        </Tab>
+        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" >
+        <About channelId = {channelId}/>
         </Tab>
     </Tabs>
 

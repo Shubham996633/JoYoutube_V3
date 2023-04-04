@@ -284,13 +284,15 @@ export const getVideoBypPlaylist = (id) => async (dispatch, getState) => {
             type: PLAYLIST_VIDOES_REQUEST,
         })
 
-
+console.log('Before API call: nextPageToken=', getState().playlistVideos.nextPageToken)
+console.log('Before API call: nextPageToken=', getState().playlistVideos.playlistid)
+console.log(id)
         const { data } = await request('/playlistItems', {
             params: {
                 part: 'snippet,contentDetails',
                 playlistId: id,
                 maxResults: 20,
-                pageToken: getState().playlistVideos.nextPageToken
+                pageToken:  getState().playlistVideos.playlistid !=id?null:getState().playlistVideos.nextPageToken
 
             },
             headers: {

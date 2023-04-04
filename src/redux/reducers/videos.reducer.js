@@ -304,6 +304,7 @@ export const playlistVideoReducer = (
                 loading: false,
 
                 playlistid: payload.playlistid,
+                nextPageToken:payload.nextPageToken ,
 
 
             }

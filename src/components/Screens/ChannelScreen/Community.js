@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCommunityPost } from '../../../redux/actions/channel.action'
 import './_ChannelScreen.scss'
-
+import InfiniteScroll from 'react-infinite-scroll-component'
 const Community = ({handle,icon,channelId}) => {
 
     const dispatch = useDispatch()
@@ -11,7 +11,7 @@ const Community = ({handle,icon,channelId}) => {
     },[dispatch])
 
 
-    const {loading, community} = useSelector(state=>state.getCommunity)
+    const {loading, community,nextPageToken} = useSelector(state=>state.getCommunity)
     const numeral = (vcount) => {
         if (vcount > 1000 && vcount < 1000000) {
           vcount = (vcount / 1000).toFixed(2) + 'K';
@@ -28,10 +28,26 @@ const Community = ({handle,icon,channelId}) => {
       if (loading) {
         return <p>Loading...</p>
       }
+      console.log(nextPageToken)
+      
+      const fetchData = () => {
+        dispatch(getCommunityPost(channelId, nextPageToken))
+      };
+      
   return (
+  
+    <InfiniteScroll
+        dataLength={community.length}
+        next={fetchData}
+        hasMore={true}
+        loader={<div className='spinner-border text-danger d-block mx-auto'></div>}
+        className='row'
+        key={community.join()}
+      >
+
     <>
     <br/>
-    {community.community.map((post) => (
+    {community.map((post) => (
         <div style={{border:'0.5px solid #d5d5d5', borderRadius :'1%', padding:'15px', marginBottom:'3rem'}}>
         <div style={{display:'flex'}} >
 
@@ -68,6 +84,7 @@ const Community = ({handle,icon,channelId}) => {
     ))}
     
     </>
+      </InfiniteScroll>
   )
 }
 

@@ -233,18 +233,26 @@ export const getChannels = id => async dispatch => {
 }
 
 
-export const getCommunityPost = id => async dispatch=>{
+export const getCommunityPost = (id, nextPageToken=null) => async  (dispatch, getState)=>{
     try{
         dispatch({
             type:GET_COMMUNITY_REQUEST,
 
         })
-        const reponse = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community,playlists&id=${id}&handle=HANDLE`)
-        console.log(reponse)
+        var reponse = null
+        nextPageToken===null ? reponse = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&handle=HANDLE`) : reponse = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&pageToken=${nextPageToken}`)
+        console.log(getState().getCommunity.nextPageToken)
+        const community = reponse.data.items ?  reponse.data.items[0].community : null
+
         dispatch({
             type:GET_COMMUNITY_SUCCESS,
-            payload:reponse.data.items[0],
-
+            payload:{
+                
+                community: community,
+                nextPageToken:reponse.data.items? reponse.data.items[0].nextPageToken:"stop",
+                channelId:id,
+            }
+            
         })
 
     }catch(error){
