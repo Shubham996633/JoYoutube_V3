@@ -320,37 +320,3 @@ export const playlistVideoReducer = (
     }
 }
 
-export const shortsGetReducer = (
-    state={
-        loading:true,
-        shorts : [],
-        nextPageToken:null,
-        channelId: null,
-        
-    },
-    action
-)=> {
-    const { type,payload} = action
-    switch(type){
-        case GET_SHORTS_REQUEST:
-            return {
-                ...state,
-                loading:true,
-            };
-        case GET_SHORTS_SUCCESS:
-            return {
-                ...state,
-                loading:false,
-                shorts: state.channelId === payload.channelId ? [...state.shorts, ...payload.shorts] : payload.shorts,
-                nextPageToken:payload.nextPageToken,
-                channelId:payload.channelId,
-            };
-        case GET_SHORTS_FAIL:
-            return {
-                ...state,
-                loading:true
-            };
-        default:
-            return state;
-    }
-}

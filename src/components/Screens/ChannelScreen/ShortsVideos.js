@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getShortsChannel } from '../../../redux/actions/videos.action'
 import Video from '../../video/Video'
 import { Row, Col } from 'react-bootstrap'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './video.scss'
 import { useHistory } from 'react-router-dom'
+import { getShortsChannel } from '../../../redux/actions/comments.action'
 const ShortsVideos = ({channelId}) => {
     const history = useHistory()
     const dispatch = useDispatch()
     const fetchShortsChannel = useCallback(() => {
-        dispatch(getShortsChannel(channelId));
+        dispatch(getShortsChannel(channelId))
       }, [dispatch, channelId]);
       useEffect(() => {
         fetchShortsChannel();
-      }, [fetchShortsChannel]);
+      }, [fetchShortsChannel,channelId]);
 
 
 

@@ -16,9 +16,11 @@ import Channels from './Channels';
 import Community from './Community';
 import { MdVerified } from "react-icons/md";
 import request from '../../../apiCall';
-import { getShortsChannel, getVideoByChannel } from '../../../redux/actions/videos.action';
+import {  getVideoByChannel } from '../../../redux/actions/videos.action';
 import Playlist from './Playlist';
 import ShortsVideos from './ShortsVideos';
+import PlaylistScreen from '../PlaylistScreen/PlaylistScreen';
+import ChannelPlaylist from './ChannelPlaylist';
 const ChannelScreen = () => {
     const { channelId = '' } = useParams();
     const dispatch = useDispatch();
@@ -41,7 +43,6 @@ const ChannelScreen = () => {
       dispatch(getchannelDetails(channelId));
       dispatch(checkSubscriptionStatus(channelId));
       dispatch(getVideoByChannel(channelId))
-      dispatch(getShortsChannel(channelId))
 
     }, [dispatch, channelId]);
   
@@ -149,13 +150,13 @@ const ChannelScreen = () => {
             {/* <Videos videos = {vlongs} /> */}
         </Tab>
         <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" >
-        <ShortsVideos channelId = {channelId} />
+        {/* <ShortsVideos channelId = {channelId} /> */}
         </Tab>
         <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  >
-        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
+        {/* <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/> */}
         </Tab>
         <Tab eventKey="PLAYLIST" title="PLAYLIST" className="tab nav-link"  >
-        <Playlist channelId = {channelId} />
+        <ChannelPlaylist channelId = {channelId} />
         </Tab>
         <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" >
         {/* <Channels channelId={channelId}/> */}

@@ -320,37 +320,3 @@ console.log(id)
 
 
 }
-
-export const getShortsChannel = (id, nextPageToken = null) => async (dispatch, getState) => {
-    try{
-        dispatch({
-            type:GET_SHORTS_REQUEST,
-        })
-
-        var response = null
-        nextPageToken===null ? response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,shorts&id=${id}&handle=HANDLE`) : response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,shorts&id=${id}&pageToken=${nextPageToken}`)
-        const shorts = response.data.items[0].shorts.length!=0 ?  response.data.items[0].shorts : []
-        console.log(response)
-        dispatch({
-            type:GET_SHORTS_SUCCESS,
-            payload:{
-
-                shorts:shorts,
-                nextPageToken:response.data.items[0].shorts.length!=0 ? response.data.items[0].nextPageToken :"stop",
-                channelId:id,
-                
-
-            }
-        })
-        
-        
-
-    }catch(error){
-        console.log(error)
-        dispatch({
-            type:GET_SHORTS_FAIL,
-            payload:error
-        })
-            
-    }
-}

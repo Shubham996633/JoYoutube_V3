@@ -1,4 +1,4 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_IMAGE_REQUEST, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_COMMUNITY_FAIL, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, DEL_SUBSCRIPTION_FAIL, DEL_SUBSCRIPTION_REQUEST, DEL_SUBSCRIPTION_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_IMAGE_REQUEST, GET_CHANNEL_PLAYLIST_FAIL, GET_CHANNEL_PLAYLIST_REQUEST, GET_CHANNEL_PLAYLIST_SUCCESS, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_COMMUNITY_FAIL, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_FAIL, SET_SUBSCRIPTION_REQUEST, SET_SUBSCRIPTION_STATUS, SET_SUBSCRIPTION_SUCCESS } from "../actionTypes"
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 import { getLikedVideos } from "./videos.action"
@@ -260,5 +260,33 @@ export const getCommunityPost = (id, nextPageToken=null) => async  (dispatch, ge
             type:GET_COMMUNITY_FAIL,
             payload:error,
         })
+    }
+}
+
+export const getChannelPlaylist =(id, nextPageToken = null) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:GET_CHANNEL_PLAYLIST_REQUEST,
+        })
+        var response = null
+        nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,playlists&id=${id}&handle=HANDLE`) : response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&handle=HANDLE&pageToken=${nextPageToken}`)
+        const playlists = response.data.items ? response.data.items[0].playlistSections : []
+        console.log(response)
+        dispatch({
+            type:GET_CHANNEL_PLAYLIST_SUCCESS,
+            payload:{
+                playlists:playlists,
+                nextPageToken:response.data.items ? response.data.items[0].nextPageToken: "stop",
+                channelId:id,
+            }
+        })
+
+    }catch(error){
+        console.log(error)
+        dispatch({
+            type:GET_CHANNEL_PLAYLIST_FAIL,
+            payload:error,
+        })
+
     }
 }
