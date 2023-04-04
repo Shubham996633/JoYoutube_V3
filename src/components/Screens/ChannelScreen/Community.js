@@ -31,7 +31,10 @@ const Community = ({handle,icon,channelId}) => {
       console.log(nextPageToken)
       
       const fetchData = () => {
-        dispatch(getCommunityPost(channelId, nextPageToken))
+        if(nextPageToken!="stop"){
+
+          dispatch(getCommunityPost(channelId, nextPageToken))
+        }
       };
       
   return (

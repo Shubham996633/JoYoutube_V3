@@ -1,0 +1,6 @@
+@import "../../../_base.scss";
+
+
+.videoTitle{
+    @include line-clamp(2);
+}

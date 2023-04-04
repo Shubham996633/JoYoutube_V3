@@ -241,8 +241,7 @@ export const getCommunityPost = (id, nextPageToken=null) => async  (dispatch, ge
         })
         var reponse = null
         nextPageToken===null ? reponse = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&handle=HANDLE`) : reponse = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&pageToken=${nextPageToken}`)
-        console.log(getState().getCommunity.nextPageToken)
-        const community = reponse.data.items ?  reponse.data.items[0].community : null
+        const community = reponse.data.items ?  reponse.data.items[0].community : []
 
         dispatch({
             type:GET_COMMUNITY_SUCCESS,

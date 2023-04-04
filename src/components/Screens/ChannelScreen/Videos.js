@@ -23,9 +23,9 @@ const Videos = ({videos}) => {
 
 
 console.log(videos)
-if(!videos){
-    return(<h1>Loading</h1>)
-}
+// if(!videos){
+//     return(<h1>Loading</h1>)
+// }
   return (
     <>
 

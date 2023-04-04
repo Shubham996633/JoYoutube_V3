@@ -184,7 +184,7 @@ export const channelGetReducer = (
 }
 
 export const communityGetReducer = (
-    state = {
+    state={
       loading: true,
       community: [],
       nextPageToken: null,
@@ -192,35 +192,29 @@ export const communityGetReducer = (
     },
     action
   ) => {
-    const { payload, type } = action;
+    const {payload, type} = action;
     switch (type) {
       case GET_COMMUNITY_REQUEST:
         return {
           ...state,
           loading: true,
         };
-  
       case GET_COMMUNITY_SUCCESS:
         return {
           ...state,
-          community:
-            state.channelId === payload.channelId
-              ? [...state.community, ...payload.community]
-              : payload.community,
+          community: state.channelId === payload.channelId ? [...state.community, ...payload.community] : payload.community,
           nextPageToken: payload.nextPageToken,
           channelId: payload.channelId,
           loading: false,
         };
-  
       case GET_COMMUNITY_FAIL:
         return {
           ...state,
           community: [],
           loading: true,
         };
-  
       default:
         return state;
     }
-  };
+  }
   

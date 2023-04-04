@@ -16,8 +16,9 @@ import Channels from './Channels';
 import Community from './Community';
 import { MdVerified } from "react-icons/md";
 import request from '../../../apiCall';
-import { getVideoByChannel } from '../../../redux/actions/videos.action';
+import { getShortsChannel, getVideoByChannel } from '../../../redux/actions/videos.action';
 import Playlist from './Playlist';
+import ShortsVideos from './ShortsVideos';
 const ChannelScreen = () => {
     const { channelId = '' } = useParams();
     const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const ChannelScreen = () => {
       fetchData();
       dispatch(getchannelDetails(channelId));
       dispatch(checkSubscriptionStatus(channelId));
-        dispatch(getVideoByChannel(channelId))
+      dispatch(getVideoByChannel(channelId))
+      dispatch(getShortsChannel(channelId))
 
     }, [dispatch, channelId]);
   
@@ -119,7 +121,7 @@ const ChannelScreen = () => {
             </div>
             {!isLoading && ( // Render the channel header only when the data is ready
             
-                <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader'>
+                <div className='px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader '>
          
                     <div className='d-flex align-items-center'>
                         <img src={snippet?.thumbnails?.high?.url} alt='' className='imgChannel' style={{ width: '150px', height: '150px' }}/>
@@ -136,9 +138,9 @@ const ChannelScreen = () => {
             )}
         <br/>
             <Tabs
-      defaultActiveKey="VIDEOS"
+      // defaultActiveKey="VIDEOS"
       id="uncontrolled-tab-example"
-      className="mb-3 nav-tabs "
+      className="mb-3 nav-tabs sticky-top"
       activeKey={activeTab} onSelect={handleTabSelect}
       
     >
@@ -147,7 +149,7 @@ const ChannelScreen = () => {
             {/* <Videos videos = {vlongs} /> */}
         </Tab>
         <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" >
-        {/* <Videos videos = {vshorts} /> */}
+        <ShortsVideos channelId = {channelId} />
         </Tab>
         <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  >
         <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
