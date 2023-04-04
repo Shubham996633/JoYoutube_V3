@@ -150,7 +150,7 @@ export const getVideosBySearch = (keyword, nextPageToken = null) => async (dispa
           maxResults: 20,
           pageToken: nextPageToken, // Use the nextPageToken parameter
           q: keyword,
-          type: 'video,channel'
+          type: 'channel'
         }
       })
   

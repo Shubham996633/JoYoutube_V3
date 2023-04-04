@@ -1,0 +1,6 @@
+@import "../../../_base.scss";
+.subScreenChannelDes{
+    @include line-clamp(2);
+    font-size: 0.9rem;
+
+}

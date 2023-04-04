@@ -1,4 +1,4 @@
-import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_PLAYLIST_FAIL, GET_CHANNEL_PLAYLIST_SUCCESS, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_COMMUNITY_FAIL, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
+import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_DETAILS_FAIL, CHANNEL_DETAILS_REQUEST, CHANNEL_DETAILS_SUCCESS, GET_CHANNEL_FAIL, GET_CHANNEL_PLAYLIST_FAIL, GET_CHANNEL_PLAYLIST_SCREEN_FAIL, GET_CHANNEL_PLAYLIST_SCREEN_REQUEST, GET_CHANNEL_PLAYLIST_SCREEN_SUCCESS, GET_CHANNEL_PLAYLIST_SUCCESS, GET_CHANNEL_REQUEST, GET_CHANNEL_SUCCESS, GET_COMMUNITY_FAIL, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_RATE_FAIL, GET_RATE_REQUEST, GET_RATE_SUCCESS, MAKE_LIKE_FAIL, MAKE_LIKE_REQUEST, MAKE_LIKE_SUCCESS, SET_SUBSCRIPTION_STATUS } from "../actionTypes"
 
 export const channelDetailReducer = (
     state = {
@@ -254,3 +254,33 @@ export const channelPlaylistGetReducer = (
             return state;
     }
 }
+const initialState = {
+    loading: true,
+    details: []
+};
+
+export const getChannelPlaylistReducer = (state = initialState, action) => {
+    const { payload, type } = action;
+    switch (type) {
+        case GET_CHANNEL_PLAYLIST_SCREEN_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+        case GET_CHANNEL_PLAYLIST_SCREEN_SUCCESS:
+            return {
+                ...state,
+                details: payload,
+                loading: false
+            };
+        case GET_CHANNEL_PLAYLIST_SCREEN_FAIL:
+            return {
+                ...state,
+                details: [],
+                loading: false,
+                error: payload
+            };
+        default:
+            return state;
+    }
+};

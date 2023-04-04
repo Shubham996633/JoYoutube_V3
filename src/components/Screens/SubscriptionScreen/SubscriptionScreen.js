@@ -17,7 +17,7 @@ const SubscriptionScreen = () => {
     }, [dispatch])
 
     const { loading, videos } = useSelector(state => state.subscriptionsChannel)
-
+    console.log(videos)
     return (
 
         <Container fluid>
