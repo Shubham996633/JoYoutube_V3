@@ -3,7 +3,9 @@ import { GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS } from "../acti
 export const commentListReducer = (
     state = {
         loading: true,
-        comments: null,
+        comments: [],
+        nextPageToken:null,
+        videoId:null,
     },
     action
 ) => {
@@ -18,8 +20,10 @@ export const commentListReducer = (
         case COMMENT_LIST_SUCCESS:
             return {
                 ...state,
-                comments: payload,
+                comments: state.videoId === payload.videoId ? [...state.comments,...payload.comments]: payload.comments,
                 loading: false,
+                nextPageToken:payload.nextPageToken,
+                videoId:payload.videoId,
             }
         case COMMENT_LIST_FAIL:
             return {

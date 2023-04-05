@@ -110,7 +110,7 @@ const ChannelScreen = () => {
     return (
         <Container>
             <Helmet>
-                <title>{snippet?.title}</title>
+                <title>{snippet?.title} - YouTube</title>
             </Helmet>
 
             <div className='flex'>

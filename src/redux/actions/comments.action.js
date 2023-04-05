@@ -2,22 +2,24 @@ import { COMMENT_LIST_FAIL, COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, CREATE_C
 import { GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS } from "../actionTypes"
 import axios from "axios"
 import request from "../../apiCall"
-export const getCommentsOfVideoById = id => async dispatch => {
+export const getCommentsOfVideoById = (id,nextPageToken = null) => async (dispatch,getState) => {
     try {
         dispatch({
             type: COMMENT_LIST_REQUEST,
         })
-
-        const { data } = await request('/commentThreads', {
-            params: {
-                part: 'snippet',
-                videoId: id,
-            },
-        })
+        var response = null
+        nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance`) : response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance&pageToken=${nextPageToken}`)
+        const data = response.data.items ? response.data.items :[]
         console.log(data)
+        console.log(getState().commentList.nextPageToken)
         dispatch({
             type: COMMENT_LIST_SUCCESS,
-            payload: data.items,
+            payload:{
+            comments :  data,
+            nextPageToken:response.data.items? response.data.nextPageToken:"stop",
+            videoId: id,
+            }  
+
         })
     } catch (error) {
         console.log(error.response.data)

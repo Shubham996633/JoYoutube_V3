@@ -296,9 +296,9 @@ console.log(id)
                 pageToken:  getState().playlistVideos.playlistid !=id?null:getState().playlistVideos.nextPageToken
 
             },
-            headers: {
-                Authorization: `Bearer ${getState().auth.accessToken}`,
-            },
+            // headers: {
+            //     Authorization: `Bearer ${getState().auth.accessToken}`,
+            // },
         })
 
         dispatch({

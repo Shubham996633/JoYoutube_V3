@@ -307,7 +307,7 @@ export const getChannelPlaylistDetails =(id ) => async(dispatch, getState) => {
         })
         dispatch({
             type:GET_CHANNEL_PLAYLIST_SCREEN_SUCCESS,
-            payload:data,
+            payload:data.items[0],
         })
 
 

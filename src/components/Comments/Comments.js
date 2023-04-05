@@ -6,14 +6,15 @@ import {
 } from '../../redux/actions/comments.action'
 import Comment from '../comment/Comment'
 import './_Comments.scss'
-const Comments = ({ videoId, totalComments }) => {
+import InfiniteScroll from 'react-infinite-scroll-component'
+const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getCommentsOfVideoById(videoId))
     }, [videoId, dispatch])
 
-    const comments = useSelector(state => state.commentList.comments)
+    const {comments,nextPageToken} = useSelector(state => state.commentList)
     const { photoURL } = useSelector(state => state.auth?.user)
 
     const [text, setText] = useState('')
@@ -21,15 +22,22 @@ const Comments = ({ videoId, totalComments }) => {
     const _comments = comments?.map(
         comment => comment.snippet.topLevelComment.snippet
     )
+    console.log(nextPageToken)
 
     const handleComment = e => {
         e.preventDefault()
         if (text.length === 0) return
 
         dispatch(addComment(videoId, text))
-
         setText('')
     }
+    const fetchData = () => {
+        if(nextPageToken){
+            dispatch(getCommentsOfVideoById(videoId,nextPageToken))
+        }
+
+    }
+    
 
     return (
         <div className='comments'>
@@ -47,11 +55,21 @@ const Comments = ({ videoId, totalComments }) => {
                     <button className='p-2 border-0' onClick={handleComment}>Comment</button>
                 </form>
             </div>
+
+            <InfiniteScroll
+        dataLength={_comments.length}
+        next={fetchData}
+        hasMore={true}
+        loader={
+            <div className='spinner-border text-danger d-block mx-auto'></div>
+        }
+        className='row'>
             <div className='comments__list'>
                 {_comments?.map((comment, i) => (
-                    <Comment comment={comment} key={i} />
+                    <Comment comment={comment} key={i} channelIcon={channelIcon} channelName ={channelName}/>
                 ))}
             </div>
+            </InfiniteScroll>
         </div>
     )
 }

@@ -30,7 +30,7 @@ const SearchScreen = () => {
   return (
     <Container>
       <Helmet>
-        <title>{query}</title>
+        <title>{query} - YouTube</title>
       </Helmet>
       <InfiniteScroll
         dataLength={videos.length}

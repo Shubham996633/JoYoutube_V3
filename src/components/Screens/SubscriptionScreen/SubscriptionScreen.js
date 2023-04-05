@@ -22,7 +22,7 @@ const SubscriptionScreen = () => {
 
         <Container fluid>
             <Helmet>
-                <title>Subscriptions</title>
+                <title>Subscriptions - YouTube</title>
             </Helmet>
             {!loading ? (
                 videos?.map(video => (

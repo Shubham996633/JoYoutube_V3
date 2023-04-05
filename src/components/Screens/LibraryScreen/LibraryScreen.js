@@ -23,6 +23,10 @@ const LibraryScreen = () => {
 
     return (
         <>
+
+        <Helmet>
+          <title>Library - YouTube</title>
+        </Helmet>
         <Container style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
           {playlist.map((list) => (
             <div style={{ margin: '10px' }}>
