@@ -8,6 +8,10 @@ import './video.scss'
 import { useHistory } from 'react-router-dom'
 import { getShortsChannel } from '../../../redux/actions/comments.action'
 const ShortsVideos = ({channelId}) => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     const history = useHistory()
     const dispatch = useDispatch()
     const fetchShortsChannel = useCallback(() => {

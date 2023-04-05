@@ -6,7 +6,10 @@ import { Container, Row,Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 const ChannelPlaylist = ({channelId}) => {
-
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getChannelPlaylist(channelId))

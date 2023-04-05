@@ -4,6 +4,10 @@ import { getCommunityPost } from '../../../redux/actions/channel.action'
 import './_ChannelScreen.scss'
 import InfiniteScroll from 'react-infinite-scroll-component'
 const Community = ({handle,icon,channelId}) => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 
     const dispatch = useDispatch()
     useEffect(() => {

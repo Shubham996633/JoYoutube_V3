@@ -5,6 +5,7 @@ import { authReducer } from "./reducers/auth.reducer";
 import { channelDetailReducer, channelGetReducer, channelPlaylistGetReducer, communityGetReducer, getChannelPlaylistReducer, makeLikeReducer, playlistReducer, rateVideoReducer } from "./reducers/channel.reducer";
 import {
     channelVideosReducer,
+    getVideoKeywordReducer,
     homeVideoReducer, likedVideos, playlistVideoReducer, relatedVideoReducer, searchedVideosReducer, subscriptionsChannelReducer,
 } from './reducers/videos.reducer'
 import { selectedVideoReducer } from './reducers/videos.reducer'
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     getCommunity: communityGetReducer,
     getShorts:shortsGetReducer,
     getChannelPlaylist: channelPlaylistGetReducer,
-    getChannelPlaylistDetails: getChannelPlaylistReducer
+    getChannelPlaylistDetails: getChannelPlaylistReducer,
+    getKeywordVid:getVideoKeywordReducer,
 
 })
 

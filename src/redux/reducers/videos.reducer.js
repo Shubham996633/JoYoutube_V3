@@ -1,4 +1,4 @@
-import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
+import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS, GET_VIDEOS_KEYWORD_FAIL, GET_VIDEOS_KEYWORD_REQUEST, GET_VIDEOS_KEYWORD_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
 
 export const homeVideoReducer = (
     state = {
@@ -72,6 +72,42 @@ export const selectedVideoReducer = (
 
         default:
             return state
+    }
+}
+
+export const getVideoKeywordReducer =(
+    state ={
+        loading:true,
+        videos:[],
+        nextPageToken:null,
+        keyword:'',
+
+    },
+    action
+)=> {
+    const {payload, type} = action;
+    switch (type){
+        case GET_VIDEOS_KEYWORD_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+        case GET_VIDEOS_KEYWORD_SUCCESS:
+            return{
+                ...state,
+                videos: state.keyword === payload.keyword ? [...state.videos, payload.videos] : payload.videos,
+                nextPageToken:payload.nextPageToken,
+                keyword:payload.keyword,
+                loading:false,
+            }
+        case GET_VIDEOS_KEYWORD_FAIL:
+            return{
+                ...state,
+                videos:[],
+                loading:true
+            }
+        default:
+            return state;
     }
 }
 

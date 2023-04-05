@@ -5,8 +5,12 @@ import './_ChannelScreen.scss'
 import { Col, Container, Row } from 'react-bootstrap';
 import { getChannels } from '../../../redux/actions/channel.action';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 const Channels = ({channelId}) => {
-
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 const dispatch = useDispatch()
     useEffect(() => {
        dispatch(getChannels(channelId))
@@ -28,6 +32,11 @@ const {loading, channel} = useSelector(state=>state.getchannel)
 
     return vcount;
   };
+  const history = useHistory()
+  const handleClick = (id) =>{
+    history.push(`/channel/${id}`)
+
+  }
   
 console.log(channel)
 if (loading) {
@@ -44,7 +53,7 @@ if (loading) {
     <Row style={{ display: 'flex' }}>
         {type.sectionChannels.map((channel) => (
           <Col lg={3} md={4}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }} onClick={()=>handleClick(channel.channelId)}>
               <img src={channel.thumbnails[2].url} className='imgChannel' style={{ width: '111px', height: '111px', marginRight:'0rem' }}/>
               <br/>
               <p>{channel.title}</p>

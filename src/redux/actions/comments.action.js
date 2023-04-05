@@ -10,8 +10,6 @@ export const getCommentsOfVideoById = (id,nextPageToken = null) => async (dispat
         var response = null
         nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance`) : response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance&pageToken=${nextPageToken}`)
         const data = response.data.items ? response.data.items :[]
-        console.log(data)
-        console.log(getState().commentList.nextPageToken)
         dispatch({
             type: COMMENT_LIST_SUCCESS,
             payload:{

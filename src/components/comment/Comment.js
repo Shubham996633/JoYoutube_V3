@@ -17,7 +17,6 @@ const Comment = ({ comment,channelIcon,channelName }) => {
     
         return vcount;
       };
-
     return (
         <div className='comment p-2 d-flex'>
             <img src={comment.authorProfileImageUrls[2].url} alt="" className='rounded-circle mr-3' />

@@ -23,6 +23,7 @@ const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
         comment => comment.snippet.topLevelComment.snippet
     )
     console.log(nextPageToken)
+    console.log(comments)
 
     const handleComment = e => {
         e.preventDefault()
@@ -37,6 +38,7 @@ const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
         }
 
     }
+    
     
 
     return (

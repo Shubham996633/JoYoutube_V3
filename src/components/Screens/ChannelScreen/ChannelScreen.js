@@ -47,7 +47,7 @@ const ChannelScreen = () => {
     }, [dispatch, channelId]);
   
   const { snippet, statistics, brandingSettings } = useSelector(
-    (state) => state.channelDetails.channel
+    (state => state.channelDetails.channel)
   );
   const subscriptionStatus = useSelector((state) => state.channelDetails.subscriptionStatus);
 
@@ -110,7 +110,7 @@ const ChannelScreen = () => {
     return (
         <Container>
             <Helmet>
-                <title>{snippet?.title} - YouTube</title>
+                <title>{snippet?.title ? `${snippet?.title} - Youtube` : "- YouTube"} </title>
             </Helmet>
 
             <div className='flex'>
@@ -139,7 +139,7 @@ const ChannelScreen = () => {
             )}
         <br/>
             <Tabs
-      // defaultActiveKey="VIDEOS"
+      defaultActiveKey="VIDEOS"
       id="uncontrolled-tab-example"
       className="mb-3 nav-tabs sticky-top"
       activeKey={activeTab} onSelect={handleTabSelect}
@@ -150,16 +150,16 @@ const ChannelScreen = () => {
             {/* <Videos videos = {vlongs} /> */}
         </Tab>
         <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" >
-        {/* <ShortsVideos channelId = {channelId} /> */}
+        <ShortsVideos channelId = {channelId} />
         </Tab>
         <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  >
-        {/* <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/> */}
+        <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
         </Tab>
         <Tab eventKey="PLAYLIST" title="PLAYLIST" className="tab nav-link"  >
         <ChannelPlaylist channelId = {channelId} />
         </Tab>
         <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" >
-        {/* <Channels channelId={channelId}/> */}
+        <Channels channelId={channelId}/>
         </Tab>
         <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" >
         <About channelId = {channelId}/>

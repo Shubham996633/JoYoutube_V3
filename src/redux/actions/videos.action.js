@@ -1,4 +1,4 @@
-import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
+import { CHANNEL_VIDEOS_FAIL, CHANNEL_VIDEOS_REQUEST, CHANNEL_VIDEOS_SUCCESS, GET_COMMUNITY_REQUEST, GET_COMMUNITY_SUCCESS, GET_SHORTS_FAIL, GET_SHORTS_REQUEST, GET_SHORTS_SUCCESS, GET_VIDEOS_KEYWORD_FAIL, GET_VIDEOS_KEYWORD_REQUEST, GET_VIDEOS_KEYWORD_SUCCESS, HOME_VIDEOS_FAIL, HOME_VIDEOS_REQUEST, HOME_VIDEOS_SUCCESS, LIKED_VIDEOS_FAIL, LIKED_VIDEOS_REQUEST, LIKED_VIDEOS_SUCCESS, PLAYLIST_VIDOES_FAIL, PLAYLIST_VIDOES_REQUEST, PLAYLIST_VIDOES_SUCCESS, RELATED_VIDEO_FAIL, RELATED_VIDEO_REQUEST, RELATED_VIDEO_SUCCESS, SEARCHED_VIDEO_FAIL, SEARCHED_VIDEO_REQUEST, SEARCHED_VIDEO_SUCCESS, SELECTED_VIDEO_FAIL, SELECTED_VIDEO_REQUEST, SELECTED_VIDEO_SUCCESS, SUBSCRIPTIONS_CHANNEL_FAIL, SUBSCRIPTIONS_CHANNEL_REQUEST, SUBSCRIPTIONS_CHANNEL_SUCCESS } from "../actionTypes"
 
 import request from "../../apiCall"
 import axios from "axios"
@@ -81,6 +81,33 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
     }
 }
 
+export const getVideoBykeyword = (keyword, nextPageToken = null) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:GET_VIDEOS_KEYWORD_REQUEST,
+        })
+        var response 
+        nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/search?part=id,snippet&q=${keyword}`) : response = await axios.get(`https://yt.lemnoslife.com/search?part=id,snippet&q=${keyword}&pageToken=${nextPageToken}`)
+        const data = response.data.items? response.data.items : []
+        dispatch({
+            type:GET_VIDEOS_KEYWORD_SUCCESS,
+            payload:{
+                videos:data,
+                nextPageToken:response.data.items? response.data.nextPageToken:"stop",
+                keyword:keyword,
+            }
+        })
+
+    }catch(error){
+        console.log(error.response.data)
+        dispatch({
+            type:GET_VIDEOS_KEYWORD_FAIL,
+            payload:error.response.data.message
+        })
+
+    }
+}
+
 export const getVideoById = id => async dispatch => {
     try {
         dispatch({
@@ -150,7 +177,7 @@ export const getVideosBySearch = (keyword, nextPageToken = null) => async (dispa
           maxResults: 20,
           pageToken: nextPageToken, // Use the nextPageToken parameter
           q: keyword,
-          type: 'channel'
+          type: 'video,channel'
         }
       })
   
@@ -299,6 +326,7 @@ console.log(id)
             // headers: {
             //     Authorization: `Bearer ${getState().auth.accessToken}`,
             // },
+            // just on for the user playlist
         })
 
         dispatch({

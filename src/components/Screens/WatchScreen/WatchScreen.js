@@ -20,18 +20,19 @@ const WatchScreen = () => {
 
         dispatch(getVideoById(id))
         dispatch(getchannelDetails(video.snippet.channelId))
-        // dispatch(getRelatedVideos(id))
+        dispatch(getRelatedVideos(id))
     }, [dispatch, id])
-    
 
-    // const { videos, loading: relatedVideosLoading } = useSelector(state => state.relatedVideos)
+
+    const { videos, loading: relatedVideosLoading } = useSelector(state => state.relatedVideos)
+
+
 
     const { video, loading } = useSelector(state => state.selectedVideo)
     const {
         snippet: channelSnippet,
         statistics: channelStatistics,
     } = useSelector(state => state.channelDetails.channel)
-    console.log(channelSnippet)
     return (
 
         <Row>
@@ -39,7 +40,7 @@ const WatchScreen = () => {
                 <title>{video?.snippet?.title}</title>
             </Helmet>
             <Col lg={8}>
-                {/* <div className='watchScreen__player'>
+                <div className='watchScreen__player'>
                     <iframe src={`https://www.youtube.com/embed/${id}`}
 
                         frameBorder="0"
@@ -53,11 +54,11 @@ const WatchScreen = () => {
                     !loading ?
                         <VideoMetaData video={video} videoId={id} />
                         : <h6>Loading ...</h6>
-                } */}
+                }
                 <Comments videoId={id} totalComments={video?.statistics?.commentCount} channelName={channelSnippet?.localized?.title } channelIcon={channelSnippet?.thumbnails?.high?.url} />
             </Col>
             <Col lg={4}>
-                {/* {!loading ? (
+                {!loading ? (
                     videos
                         ?.filter(video => video.snippet)
                         .map(video => (
@@ -67,7 +68,7 @@ const WatchScreen = () => {
                     <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
                         <Skeleton width='100%' height='130px' count={15} />
                     </SkeletonTheme>
-                )} */}
+                )}
 
             </Col>
         </Row>

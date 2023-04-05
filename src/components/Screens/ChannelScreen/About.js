@@ -8,6 +8,10 @@ import './video.css'
 const About = (
     {channelId}
 ) => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
     
   const [channelData, setChannelData] = useState(null);
   useEffect(() => {
