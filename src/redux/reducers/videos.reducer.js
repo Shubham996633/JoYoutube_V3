@@ -6,6 +6,8 @@ export const homeVideoReducer = (
         loading: false,
         nextPageToken: null,
         activeCategory: 'All',
+        error1:null,
+
     },
     action
 ) => {
@@ -29,7 +31,7 @@ export const homeVideoReducer = (
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error1: payload,
             }
         case HOME_VIDEOS_REQUEST:
             return {
@@ -45,6 +47,8 @@ export const selectedVideoReducer = (
     state = {
         loading: true,
         video: null,
+        error3:null,
+
     },
     action
 ) => {
@@ -67,7 +71,7 @@ export const selectedVideoReducer = (
                 ...state,
                 video: null,
                 loading: false,
-                error: payload,
+                error3: payload,
             }
 
         default:
@@ -115,6 +119,8 @@ export const relatedVideoReducer = (
     state = {
         loading: true,
         videos: [],
+        error4:null,
+
     },
     action
 ) => {
@@ -136,7 +142,7 @@ export const relatedVideoReducer = (
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error4: payload,
             }
 
         default:
@@ -153,6 +159,8 @@ export const searchedVideosReducer = (
       loading: false,
       nextPageToken: null,
       searchKeyword: '',
+      error5:null,
+
     },
     action
   ) => {
@@ -175,7 +183,7 @@ export const searchedVideosReducer = (
         return {
           ...state,
           loading: false,
-          error: payload,
+          error5: payload,
         };
         
       case SEARCHED_VIDEO_REQUEST:
@@ -234,6 +242,8 @@ export const channelVideosReducer = (
         loading: false,
         nextPageToken: null,
         playlistId: null,
+        error6:null,
+
 
     },
     action
@@ -261,7 +271,7 @@ export const channelVideosReducer = (
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error6: payload,
             }
 
         case CHANNEL_VIDEOS_REQUEST:
@@ -280,6 +290,8 @@ export const likedVideos = (
     state = {
         loading: true,
         videos: [],
+        error7:null,
+
     },
     action
 ) => {
@@ -303,7 +315,7 @@ export const likedVideos = (
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error7: payload,
             }
 
         default:

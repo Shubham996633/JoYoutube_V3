@@ -4,7 +4,9 @@ export const channelDetailReducer = (
     state = {
         loading: true,
         channel: {},
-        subscriptionStatus: false
+        subscriptionStatus: false,
+        error:null,
+
     },
     action
 ) => {
@@ -46,6 +48,7 @@ export const playlistReducer = (
     state = {
         loading: true,
         playlist: null,
+        error2:null,
     },
     action
 ) => {
@@ -68,7 +71,7 @@ export const playlistReducer = (
                 ...state,
                 playlist: null,
                 loading: false,
-                error: payload,
+                error2: payload,
             }
 
 

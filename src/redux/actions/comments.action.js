@@ -23,7 +23,7 @@ export const getCommentsOfVideoById = (id,nextPageToken = null) => async (dispat
         console.log(error.response.data)
         dispatch({
             type: COMMENT_LIST_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.error,
         })
     }
 }
@@ -57,7 +57,7 @@ export const addComment = (id, text) => async (dispatch, getState) => {
         console.log(error.response.data)
         dispatch({
             type: CREATE_COMMENT_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.error,
         })
     }
 }

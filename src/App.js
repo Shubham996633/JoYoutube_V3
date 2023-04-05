@@ -14,9 +14,11 @@ import ChannelScreen from './components/Screens/ChannelScreen/ChannelScreen'
 import LikedScreen from './components/Screens/LikedScreen/LikedScreen'
 import PlaylistScreen from './components/Screens/PlaylistScreen/PlaylistScreen'
 import LibraryScreen from './components/Screens/LibraryScreen/LibraryScreen'
+import Offline from './Offline'
+import ApiFull from './ApiFull'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
-
+  
   const handleToggleSidebar = () => toggleSidebar(value => !value)
 
   return (
@@ -47,10 +49,51 @@ const App = () => {
     }
 
   }, [accessToken, loading, history])
+ 
 
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
 
+  React.useEffect(() => {
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+
+  function handleOffline() {
+    setIsOnline(false);
+  }
+
+  function handleOnline() {
+    setIsOnline(true);
+  }
+  const {error} = useSelector(state=>state.channelDetails)
+  const {error1} = useSelector(state=>state.homeVideos)
+  const {error4} = useSelector(state=>state.relatedVideos)
+  const {error5} = useSelector(state=>state.searchedVideos)
+  const {error6} = useSelector(state=>state.channelVideos)
+  const {error7} = useSelector(state=>state.likedVideos)
+ 
+
+  if(error?.code === 403||
+    error1?.code === 403||
+    error4?.code === 403||
+    error5?.code === 403||
+    error6?.code === 403||
+    error7?.code === 403
+    ){
+    return(
+      <ApiFull/>
+    )
+  }
   return (
-    <Switch>
+    <div>
+    {isOnline ? (
+      /* Render your main app components here */
+      <Switch>
       <Route path='/' exact>
         <Layout>
           <HomeScreen />
@@ -107,6 +150,11 @@ const App = () => {
         <Redirect to='/' />
       </Route>
     </Switch>
+    ) : (
+      <Offline />
+    )}
+  </div>
+   
 
   )
 

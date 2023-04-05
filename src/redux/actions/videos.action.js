@@ -37,7 +37,7 @@ export const getPopularVideos = () => async (dispatch, getState) => {
         console.log(error.message)
         dispatch({
             type: HOME_VIDEOS_FAIL,
-            payload: error.message,
+            payload: error.response.data.error,
         })
 
     }
@@ -75,7 +75,7 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
         console.log(error.message)
         dispatch({
             type: HOME_VIDEOS_FAIL,
-            payload: error.message,
+            payload: error.response.data.error,
         })
 
     }
@@ -102,7 +102,7 @@ export const getVideoBykeyword = (keyword, nextPageToken = null) => async (dispa
         console.log(error.response.data)
         dispatch({
             type:GET_VIDEOS_KEYWORD_FAIL,
-            payload:error.response.data.message
+            payload: error.response.data.error,
         })
 
     }
@@ -128,7 +128,7 @@ export const getVideoById = id => async dispatch => {
         console.log(error.message)
         dispatch({
             type: SELECTED_VIDEO_FAIL,
-            payload: error.message,
+            payload: error.response.data.error,
         })
     }
 }
@@ -156,7 +156,7 @@ export const getRelatedVideos = id => async dispatch => {
         console.log(error.response.data.message)
         dispatch({
             type: RELATED_VIDEO_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.error,
         })
     }
 }
@@ -193,8 +193,8 @@ export const getVideosBySearch = (keyword, nextPageToken = null) => async (dispa
       console.log(error.message)
       dispatch({
         type: SEARCHED_VIDEO_FAIL,
-        payload: error.message,
-      })
+        payload: error.response.data.error,
+    })
     }
   }
   
@@ -222,7 +222,7 @@ export const getSubscribedChannels = () => async (dispatch, getState) => {
         console.log(error.response.data)
         dispatch({
             type: SUBSCRIPTIONS_CHANNEL_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -266,7 +266,7 @@ export const getVideoByChannel = (id) => async (dispatch, getState) => {
         console.log(error.response.data.message)
         dispatch({
             type: CHANNEL_VIDEOS_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -301,7 +301,7 @@ export const getLikedVideos = () => async (dispatch, getState) => {
         console.log(error.response.data)
         dispatch({
             type: LIKED_VIDEOS_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -342,7 +342,7 @@ console.log(id)
         console.log(error.response.data.message)
         dispatch({
             type: PLAYLIST_VIDOES_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 

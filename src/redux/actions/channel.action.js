@@ -2,6 +2,7 @@ import { ALL_PLAYLIST_FAIL, ALL_PLAYLIST_REQUEST, ALL_PLAYLIST_SUCCESS, CHANNEL_
 import request from "../../apiCall"
 import { REACT_APP_YT_API_AUTHKEY } from "../../api"
 import { getLikedVideos } from "./videos.action"
+import Offline from "../../Offline"
 import axios from "axios"
 export const getchannelDetails = id => async dispatch => {
     try {
@@ -20,10 +21,12 @@ export const getchannelDetails = id => async dispatch => {
             payload: data.items[0],
         })
     } catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data.error.code)
+       
+
         dispatch({
             type: CHANNEL_DETAILS_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -46,6 +49,11 @@ export const checkSubscriptionStatus = id => async (dispatch, getState) => {
         })
     } catch (error) {
         console.log(error.response.data)
+        dispatch({
+            type: SET_SUBSCRIPTION_FAIL,
+            payload: error.response.data.error,
+        })
+        
     }
 }
 
@@ -72,7 +80,7 @@ export const getAllPlaylist = id => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: ALL_PLAYLIST_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -104,7 +112,7 @@ export const makeLike = (id, act) => async (dispatch, getState) => {
         dispatch({
 
             type: MAKE_LIKE_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -135,7 +143,7 @@ export const getVideoRating = id => async (dispatch, getState) => {
         console.log(error)
         dispatch({
             type: GET_RATE_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.error,
         })
     }
 }
@@ -172,7 +180,7 @@ export const makeSubscribe = (id) => async (dispatch, getState) => {
         console.log(error.response.data)
         dispatch({
             type: SET_SUBSCRIPTION_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.error,
         })
     }
 }
@@ -205,7 +213,7 @@ export const delSubscribe = (id) => async (dispatch, getState) => {
         dispatch({
 
             type: DEL_SUBSCRIPTION_FAIL,
-            payload: error.response.data,
+            payload: error.response.data.error,
         })
     }
 }
@@ -314,7 +322,7 @@ export const getChannelPlaylistDetails =(id ) => async(dispatch, getState) => {
     }catch(error){
         dispatch({
             type:GET_CHANNEL_PLAYLIST_SCREEN_FAIL,
-            payload:error.response.data
+            payload: error.response.data.error,
         })
     }
 }
