@@ -67,7 +67,7 @@ export const getAllPlaylist = id => async (dispatch, getState) => {
             params: {
                 part: 'snippet,contentDetails',
                 mine: true,
-                maxResults: '25',
+                maxResults: '90',
             },
             headers: {
                 Authorization: `Bearer ${getState().auth.accessToken}`,

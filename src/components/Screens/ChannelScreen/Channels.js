@@ -7,10 +7,7 @@ import { getChannels } from '../../../redux/actions/channel.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 const Channels = ({channelId}) => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+ 
 const dispatch = useDispatch()
     useEffect(() => {
        dispatch(getChannels(channelId))

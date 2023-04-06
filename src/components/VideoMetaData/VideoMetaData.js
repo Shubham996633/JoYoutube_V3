@@ -151,11 +151,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
 
 
     }
-    const {error} = useSelector(state=>state.ratecheck || {})
-    if(error.code===401){
-
-        console.log('error catched')
-    }
+  
     return (
         <div className='py-2 videoMetaData '>
             <HelmetCustom title={title} description={description} />

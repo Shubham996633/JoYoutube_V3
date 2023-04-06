@@ -64,48 +64,46 @@ const ChannelScreen = () => {
   };
 
   const isLoading = !snippet;
-  const shorts =  new Array()
-  const longs =  new Array()
-  const timeCheck = (id, video) => {
-    const get_video_details = async () => {
-      const {
-          data: { items },
-      } = await request('/videos', {
-          params: {
-              part: 'contentDetails,statistics',
-              id: id,
-          },
-      })
-      var duration = items[0].contentDetails.duration
-      if(duration.startsWith("PT") && (duration.endsWith("S") && !duration.includes("M"))){
-        shorts.push(video)
-      }else{
-        longs.push(video)
+  
 
-      }
-  }
-  get_video_details()
-
-  }
     const { videos, loading } = useSelector(state => state.channelVideos)
+    const {shorts} = useSelector(state=>state.getShorts)
     
+
+
+    const videoIds = []
+    const shortIds = []
    
-    console.log(longs)
     videos.map((video)=> (
-      timeCheck(video.snippet.resourceId.videoId, video)
+      videoIds.push(video.contentDetails.videoId)
     ))
+    shorts.map((video)=> (
+      shortIds.push(video.videoId)
+    ))
+
+// console.log(videoIds)
+// console.log(shortIds)
+let newList = videoIds.filter(item => !shortIds.includes(item));
+// console.log(newList)
+
+const filteredVideos = videos.filter(video => newList.includes(video.contentDetails.videoId))
+
+console.log(filteredVideos)
+
    const [vshorts, setVshorts] = useState(null);
    const [vlongs, setVlongs] = useState(null);
-   useEffect(()=>{
-    setVshorts(shorts)
-    setVlongs(longs)
-
-   },[videos])
-    const [activeTab, setActiveTab] = useState('tab1');
+  
+    const [activeTab, setActiveTab] = useState('ABOUT');
   
     const handleTabSelect = (tabKey) => {
       setActiveTab(tabKey);
     };
+    const handleTabClick = ()=>{
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
    
     return (
         <Container>
@@ -147,22 +145,33 @@ const ChannelScreen = () => {
       
     >
       
-            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link">
-            {/* <Videos videos = {vlongs} /> */}
+            <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link" onClick={() =>handleTabClick()}>
+          
+            <Videos videos = {filteredVideos} />
         </Tab>
-        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" >
+        <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" onClick={() =>handleTabClick()} >
+      
+            
         <ShortsVideos channelId = {channelId} />
         </Tab>
-        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  >
+        <Tab eventKey="COMMUNITY" title="COMMUNITY" className="tab nav-link"  onClick={() =>handleTabClick()}>
+       
+            
         <Community handle = {aboutData.handle} icon={snippet?.thumbnails?.high?.url} channelId={channelId}/>
         </Tab>
-        <Tab eventKey="PLAYLIST" title="PLAYLIST" className="tab nav-link"  >
+        <Tab eventKey="PLAYLIST" title="PLAYLIST" className="tab nav-link" onClick={() =>handleTabClick()} >
+      
+            
         <ChannelPlaylist channelId = {channelId} />
         </Tab>
-        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" >
+        <Tab eventKey="CHANNELS" title="CHANNELS" className="tab nav-link" onClick={() =>handleTabClick()}>
+      
+            
         <Channels channelId={channelId}/>
         </Tab>
-        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" >
+        <Tab eventKey="ABOUT" title="ABOUT" className="tab nav-link" onClick={() =>handleTabClick()}>
+      
+            
         <About channelId = {channelId}/>
         </Tab>
     </Tabs>

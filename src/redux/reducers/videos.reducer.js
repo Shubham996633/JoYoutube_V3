@@ -120,6 +120,8 @@ export const relatedVideoReducer = (
         loading: true,
         videos: [],
         error4:null,
+        nextPageToken:null,
+        videoId:null,
 
     },
     action
@@ -135,8 +137,10 @@ export const relatedVideoReducer = (
         case RELATED_VIDEO_SUCCESS:
             return {
                 ...state,
-                videos: payload,
+                videos: state.videoId === payload.videoId ? [...state.videos, ...payload.videos] : payload.videos,
                 loading: false,
+                videoId:payload.videoId,
+                nextPageToken:payload.nextPageToken,
             }
         case RELATED_VIDEO_FAIL:
             return {
@@ -261,7 +265,7 @@ export const channelVideosReducer = (
                         ? [...state.videos, ...payload.videos]
                         : payload.videos,
                 loading: false,
-                nextPageToken: state.playlistId === payload.playlistId ? payload.nextPageToken : null,
+                nextPageToken:  payload.nextPageToken,
 
 
 
@@ -291,6 +295,7 @@ export const likedVideos = (
         loading: true,
         videos: [],
         error7:null,
+        check:false,
 
     },
     action
@@ -306,7 +311,7 @@ export const likedVideos = (
         case LIKED_VIDEOS_SUCCESS:
             return {
                 ...state,
-                videos: [...state.videos, ...payload.videos],
+                videos: state.check === payload.check ?[...state.videos, ...payload.videos]:payload.videos,
 
                 loading: false,
                 nextPageToken: payload.nextPageToken,

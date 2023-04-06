@@ -134,7 +134,7 @@ export const getVideoById = id => async dispatch => {
 }
 
 
-export const getRelatedVideos = id => async dispatch => {
+export const getRelatedVideos = id => async (dispatch,getState) => {
     try {
         dispatch({
             type: RELATED_VIDEO_REQUEST,
@@ -145,12 +145,17 @@ export const getRelatedVideos = id => async dispatch => {
                 part: 'snippet',
                 relatedToVideoId: id,
                 maxResults: 21,
-                type: 'video'
+                type: 'video',
+                pageToken:getState().relatedVideos.nextPageToken,
             },
         })
         dispatch({
             type: RELATED_VIDEO_SUCCESS,
-            payload: data.items,
+            payload: {
+                videos:  data.items,
+                nextPageToken:data.nextPageToken,
+                videoId:id,
+            },
         })
     } catch (error) {
         console.log(error.response.data.message)
@@ -248,7 +253,7 @@ export const getVideoByChannel = (id) => async (dispatch, getState) => {
                 part: 'snippet,contentDetails',
                 playlistId: uploadPlaylistId,
                 maxResults: 20,
-                pageToken: getState().channelVideos.nextPageToken
+                pageToken:  getState().channelVideos.playlistId !=uploadPlaylistId?null:getState().channelVideos.nextPageToken
 
             }
         })
@@ -272,7 +277,7 @@ export const getVideoByChannel = (id) => async (dispatch, getState) => {
 }
 
 
-export const getLikedVideos = () => async (dispatch, getState) => {
+export const getLikedVideos = (check=false) => async (dispatch, getState) => {
     try {
         dispatch({
             type: LIKED_VIDEOS_REQUEST,
@@ -283,7 +288,7 @@ export const getLikedVideos = () => async (dispatch, getState) => {
                 maxResults: 20,
 
                 myRating: 'like',
-                pageToken: getState().likedVideos.nextPageToken,
+                pageToken: getState().likedVideos.check === check ? getState().likedVideos.nextPageToken : null,
             },
             headers: {
                 Authorization: `Bearer ${getState().auth.accessToken}`,
@@ -294,6 +299,7 @@ export const getLikedVideos = () => async (dispatch, getState) => {
             payload: {
                 videos: data.items,
                 nextPageToken: data.nextPageToken,
+                check:check,
 
             },
         })

@@ -14,9 +14,9 @@ const LikedScreen = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getLikedVideos())
+        dispatch(getLikedVideos(true))
     }, [dispatch])
-    const { videos } = useSelector(state => state.likedVideos)
+    const { videos } = useSelector(state => state.likedVideos || {})
 
 
 
@@ -24,7 +24,9 @@ const LikedScreen = () => {
         dispatch(getLikedVideos())
 
     }
-
+    if(!videos){
+        return(null)
+    }
 
 
     return (

@@ -10,7 +10,7 @@ import { getRelatedVideos, getVideoById } from '../../../redux/actions/videos.ac
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Helmet } from 'react-helmet'
 import { getchannelDetails } from '../../../redux/actions/channel.action'
-
+import InfiniteScroll from 'react-infinite-scroll-component'
 const WatchScreen = () => {
     const { id } = useParams()
 
@@ -32,7 +32,10 @@ const WatchScreen = () => {
         snippet: channelSnippet,
         statistics: channelStatistics,
     } = useSelector(state => state.channelDetails.channel || {});
-    
+    const fetchData = () => {
+        dispatch(getRelatedVideos(id))
+
+    }
 
 
     return (
@@ -59,20 +62,28 @@ const WatchScreen = () => {
                 }
                 <Comments videoId={id} totalComments={video?.statistics?.commentCount} channelName={channelSnippet?.localized?.title } channelIcon={channelSnippet?.thumbnails?.high?.url} />
             </Col>
-            {/* <Col lg={4}>
-                {!loading ? (
+            <Col lg={4}>
+            <InfiniteScroll
+                dataLength={videos.length}
+                next={fetchData}
+                hasMore={true}
+                loader={
+                    <div className='spinner-border text-danger d-block mx-auto'></div>
+
+                }
+                className='row'
+            >
+                { (
                     videos
                         ?.filter(video => video.snippet)
                         .map(video => (
                             <VideoHorizontal video={video} key={video.id.videoId} />
                         ))
-                ) : (
-                    <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
-                        <Skeleton width='100%' height='130px' count={15} />
-                    </SkeletonTheme>
                 )}
 
-            </Col> */}
+                </InfiniteScroll>
+
+            </Col>
         </Row>
     )
 }

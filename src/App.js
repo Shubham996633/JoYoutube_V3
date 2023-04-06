@@ -16,6 +16,7 @@ import PlaylistScreen from './components/Screens/PlaylistScreen/PlaylistScreen'
 import LibraryScreen from './components/Screens/LibraryScreen/LibraryScreen'
 import Offline from './Offline'
 import ApiFull from './ApiFull'
+import AuthorizationFail from './AuthorizationFail'
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false)
   
@@ -87,6 +88,18 @@ const App = () => {
     ){
     return(
       <ApiFull/>
+    )
+  }
+
+  if(error?.code === 401||
+    error1?.code === 401||
+    error4?.code === 401||
+    error5?.code === 401||
+    error6?.code === 401||
+    error7?.code === 401
+    ){
+    return(
+      <AuthorizationFail/>
     )
   }
   return (

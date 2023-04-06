@@ -28,7 +28,7 @@ const LibraryScreen = () => {
           <title>Library - YouTube</title>
         </Helmet>
         <Container style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-          {playlist.map((list) => (
+          { playlist && playlist.map((list) => (
             <div style={{ margin: '10px' }}>
               <div className='playlist-container origin-center' onClick={() => handlePlaylist(list.id)}>
                 <div className='playlist-image'>
