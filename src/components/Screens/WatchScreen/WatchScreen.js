@@ -16,10 +16,11 @@ const WatchScreen = () => {
 
     const dispatch = useDispatch()
 
+    const { video, loading } = useSelector(state => state.selectedVideo)
     useEffect(() => {
 
         dispatch(getVideoById(id))
-        dispatch(getchannelDetails(video.snippet.channelId))
+        dispatch(getchannelDetails(video?.snippet.channelId))
         dispatch(getRelatedVideos(id))
     }, [dispatch, id])
 
@@ -27,12 +28,13 @@ const WatchScreen = () => {
     const { videos, loading: relatedVideosLoading } = useSelector(state => state.relatedVideos)
 
 
-
-    const { video, loading } = useSelector(state => state.selectedVideo)
     const {
         snippet: channelSnippet,
         statistics: channelStatistics,
-    } = useSelector(state => state.channelDetails.channel)
+    } = useSelector(state => state.channelDetails.channel || {});
+    
+
+
     return (
 
         <Row>
@@ -57,7 +59,7 @@ const WatchScreen = () => {
                 }
                 <Comments videoId={id} totalComments={video?.statistics?.commentCount} channelName={channelSnippet?.localized?.title } channelIcon={channelSnippet?.thumbnails?.high?.url} />
             </Col>
-            <Col lg={4}>
+            {/* <Col lg={4}>
                 {!loading ? (
                     videos
                         ?.filter(video => video.snippet)
@@ -70,7 +72,7 @@ const WatchScreen = () => {
                     </SkeletonTheme>
                 )}
 
-            </Col>
+            </Col> */}
         </Row>
     )
 }

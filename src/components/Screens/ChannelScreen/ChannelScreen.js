@@ -47,7 +47,7 @@ const ChannelScreen = () => {
     }, [dispatch, channelId]);
   
   const { snippet, statistics, brandingSettings } = useSelector(
-    (state => state.channelDetails.channel)
+    (state => state.channelDetails.channel || {}) 
   );
   const subscriptionStatus = useSelector((state) => state.channelDetails.subscriptionStatus);
 

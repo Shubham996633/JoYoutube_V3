@@ -8,7 +8,7 @@ export const getCommentsOfVideoById = (id,nextPageToken = null) => async (dispat
             type: COMMENT_LIST_REQUEST,
         })
         var response = null
-        nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance`) : response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance&pageToken=${nextPageToken}`)
+        nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=time`) : response = await axios.get(`https://yt.lemnoslife.com/commentThreads?part=snippet,replies&videoId=${id}&order=relevance&pageToken=${nextPageToken}`)
         const data = response.data.items ? response.data.items :[]
         dispatch({
             type: COMMENT_LIST_SUCCESS,
@@ -51,8 +51,11 @@ export const addComment = (id, text) => async (dispatch, getState) => {
         dispatch({
             type: CREATE_COMMENT_SUCCESS,
         })
+        setTimeout(() => {
+            
+            dispatch(getCommentsOfVideoById(id,null))
+        }, 6930);
 
-        dispatch(getCommentsOfVideoById(id))
     } catch (error) {
         console.log(error.response.data)
         dispatch({

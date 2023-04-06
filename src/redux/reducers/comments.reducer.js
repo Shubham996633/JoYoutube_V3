@@ -20,7 +20,7 @@ export const commentListReducer = (
         case COMMENT_LIST_SUCCESS:
             return {
                 ...state,
-                comments: state.videoId === payload.videoId ? [...state.comments,...payload.comments]: payload.comments,
+                comments: (state.videoId === payload.videoId && payload.nextPageToken!=null)  ? [...state.comments,...payload.comments]: payload.comments,
                 loading: false,
                 nextPageToken:payload.nextPageToken,
                 videoId:payload.videoId,

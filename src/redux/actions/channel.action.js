@@ -309,7 +309,10 @@ export const getChannelPlaylistDetails =(id ) => async(dispatch, getState) => {
                 part:'snippet,contentDetails',
                 id:id,
 
-            }
+            },
+            headers: {
+                Authorization: `Bearer ${getState().auth.accessToken}`,
+            },
             
             
         })

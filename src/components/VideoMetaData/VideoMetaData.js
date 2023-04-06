@@ -92,7 +92,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
     const {
         snippet: channelSnippet,
         statistics: channelStatistics,
-    } = useSelector(state => state.channelDetails.channel)
+    } = useSelector(state => state.channelDetails.channel || {})
 
     const subscriptionStatus = useSelector(
         state => state.channelDetails.subscriptionStatus
@@ -150,6 +150,11 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
         }
 
 
+    }
+    const {error} = useSelector(state=>state.ratecheck || {})
+    if(error.code===401){
+
+        console.log('error catched')
     }
     return (
         <div className='py-2 videoMetaData '>

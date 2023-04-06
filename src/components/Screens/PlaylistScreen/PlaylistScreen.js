@@ -39,7 +39,7 @@ const PlaylistScreen = ({ item }) => {
     return (
         <Container>
             <Helmet>
-                <title>{details?.snippet?.title} - YouTube</title>
+                <title>{`${details?.snippet?.title} - YouTube`}</title>
             </Helmet>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 
