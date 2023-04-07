@@ -143,7 +143,7 @@ console.log(isArtist)
                 xs={6}
                 md={SearchScreen || subScreen || likedScreen ? 8 : 6}
                 className={`${PlaylistScreen ? 'playlistscreen-details-right':'videoHorizontal__right'}`}>
-                <p className={!PlaylistScreen? `mb-1 videoHorizontal__title`:``}>{title} {" "}  {isChannel || subScreen && isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null} {' '}</p>
+                <p className={!PlaylistScreen? `mb-1 videoHorizontal__title`:``}>{title} {" "}  {(isChannel || subScreen)? isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null :null}  {' '}</p>
 
                 {isVideo  &&  (
                     <div className='videoHorizontal__details'>
@@ -151,6 +151,7 @@ console.log(isArtist)
                          video?.snippet?.videoOwnerChannelTitle ? video?.snippet?.videoOwnerChannelTitle :channelTitle  + " • "  :"" }   {' ' 
                    
                     }
+                    {PlaylistScreen ? " • ":null}
                         {numeral(views)} Views • {' '}
                         {moment(publishedAt).fromNow()}
                         <br/>
@@ -176,7 +177,6 @@ console.log(isArtist)
                     {/* {  && (
                         <LazyLoadImage src={channelIcon?.url} effect='blur' />
                     )} */}
-                    {!SearchScreen|| !subScreen && <p className='mb-0'>{channelTitle} {" "}  {isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null}</p>} 
                 </div>
                 }
                 {subScreen  && (
