@@ -117,42 +117,41 @@ export const getVideoKeywordReducer =(
 
 export const relatedVideoReducer = (
     state = {
-        loading: true,
-        videos: [],
-        error4:null,
-        nextPageToken:null,
-        videoId:null,
-
+      loading: true,
+      videos: [],
+      error4: null,
     },
     action
-) => {
-    const { payload, type } = action
-
+  ) => {
+    const { payload, type } = action;
+  
     switch (type) {
-        case RELATED_VIDEO_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
-        case RELATED_VIDEO_SUCCESS:
-            return {
-                ...state,
-                videos: state.videoId === payload.videoId ? [...state.videos, ...payload.videos] : payload.videos,
-                loading: false,
-                videoId:payload.videoId,
-                nextPageToken:payload.nextPageToken,
-            }
-        case RELATED_VIDEO_FAIL:
-            return {
-                ...state,
-                loading: false,
-                error4: payload,
-            }
-
-        default:
-            return state
+      case RELATED_VIDEO_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+      case RELATED_VIDEO_SUCCESS:
+        // Check if the videoId has changed
+  
+        return {
+          ...state,
+          // If the videoId has changed, replace the existing videos with the new ones
+          // Otherwise, concatenate the new videos with the existing ones
+          videos: payload.videos,
+          loading: false,
+        };
+      case RELATED_VIDEO_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error4: payload,
+        };
+      default:
+        return state;
     }
-}
+  };
+  
 
 
 

@@ -134,7 +134,7 @@ export const getVideoById = id => async dispatch => {
 }
 
 
-export const getRelatedVideos = id => async (dispatch,getState) => {
+export const getRelatedVideos = (id) => async (dispatch,getState) => {
     try {
         dispatch({
             type: RELATED_VIDEO_REQUEST,
@@ -144,17 +144,14 @@ export const getRelatedVideos = id => async (dispatch,getState) => {
             params: {
                 part: 'snippet',
                 relatedToVideoId: id,
-                maxResults: 21,
+                maxResults: 69,
                 type: 'video',
-                pageToken:getState().relatedVideos.nextPageToken,
             },
         })
         dispatch({
             type: RELATED_VIDEO_SUCCESS,
             payload: {
                 videos:  data.items,
-                nextPageToken:data.nextPageToken,
-                videoId:id,
             },
         })
     } catch (error) {
@@ -329,9 +326,9 @@ console.log(id)
                 pageToken:  getState().playlistVideos.playlistid !=id?null:getState().playlistVideos.nextPageToken
 
             },
-            headers: {
-                Authorization: `Bearer ${getState().auth.accessToken}`,
-            },
+            // headers: {
+            //     Authorization: `Bearer ${getState().auth.accessToken}`,
+            // },
             // just on for the user playlist
         })
 

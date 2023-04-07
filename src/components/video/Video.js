@@ -8,6 +8,9 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useHistory } from 'react-router-dom'
 import { getchannelDetails } from '../../redux/actions/channel.action'
 import removed from '../../img/maxresdefault.jpg'
+import { MdVerified } from "react-icons/md";
+import { RiMusicFill } from 'react-icons/ri';
+import axios from 'axios'
 const Video = ({ video, channelScreen }) => {
     const {
         id,
@@ -35,8 +38,20 @@ const Video = ({ video, channelScreen }) => {
 
 
     const history = useHistory()
+    const [isArtist, setIsArtist] = useState(false);
 
     useEffect(() => {
+        const fetchHandle = async () => {
+            try {
+              const channelHandle = await axios.get(`https://yt.lemnoslife.com/channels?part=status,approval&id=${channelId}&handle=HANDLE`);
+              console.log(channelHandle)
+              
+              setIsArtist(channelHandle.data.items[0].approval);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          fetchHandle();
         const get_video_details = async () => {
             const {
                 data: { items },
@@ -97,27 +112,39 @@ const Video = ({ video, channelScreen }) => {
     }
     return (
 
-        <div className='video'>
+        <div className='video' style={{borderRadius:"9px"}}>
 
 
 
             <div className='video__top' onClick={handleVideoClick}>
-                <LazyLoadImage src={photoUrl} effect='blur' />
+                <LazyLoadImage style={{borderRadius:"18px",objectFit:'cover'}} src={photoUrl} effect='blur' />
                 <span className='video__top__duration'>{_duration}</span>
             </div>
-            <div className='video__title' onClick={handleVideoClick}>{title}</div>
-            <div className='video__details' onClick={handleVideoClick}>
-                <span>
-                    <AiFillEye /> {numeral(views)} views • {' '}
-                </span>{' '}
-                <span>{' '} {moment(publishedAt).fromNow()} </span>
-            </div>
+             
             {!channelScreen && (
                 <div className='video__channel' title={channelTitle} onClick={handleChannelClick}>
                     <LazyLoadImage src={channelIcon?.url} effect='blur' />
 
-                    <p>{channelTitle}</p>
+            <div className='video__title' onClick={handleVideoClick}>{title}</div>
                 </div>
+                
+            )}
+           
+            {!channelScreen && (
+                <div className='details'>
+
+                <div style={{marginleft:'3rem'}} className='video__channel' title={channelTitle} onClick={handleChannelClick}>
+
+                    <p style={{marginleft:'3rem'}}>{channelTitle} {" "}  {isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null}</p>
+                </div>
+            <div className='video__details' style={{marginleft:'3rem'}} onClick={handleVideoClick}>
+                <span>
+                     {numeral(views)} views • {' '} {' '}{moment(publishedAt).fromNow()} 
+                </span>
+                
+            </div>
+                </div>
+                
             )}
         </div>
     )

@@ -96,3 +96,25 @@
     }
   }
 }
+.videoHorizontal__duration--playlist{
+  position: absolute;
+
+bottom: 0.2rem;
+right: 1.2rem;
+margin-left: -6rem;
+margin-right: 6.1rem;
+font-size: 0.9rem;
+padding: 0.2rem;
+background: #080808ec;
+border-radius: 3px;
+}
+.playlistscreen-details{
+  margin-left: -9.1rem;
+  position: relative;
+    text-align: center;
+    // padding-left: 0 !important;t
+}
+.playlistscreen-details-right{
+  margin-left: -7rem;
+  margin-top: -5.1rem;
+}

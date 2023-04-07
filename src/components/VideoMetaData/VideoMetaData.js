@@ -175,8 +175,8 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
                     </div>
                 </div>
             </div>
-            <div className='py-3 my-2 videoMetaData__channel d-flex justify-content-between align-items-center'>
-                <div className='d-flex' title={channelTitle} onClick={handleChannelClick}>
+            <div className='py-3 my-2 videoMetaData__channel d-flex justify-content-between align-items-center' >
+                <div className='d-flex' title={channelTitle} onClick={handleChannelClick} style={{cursor:'pointer'}}>
                     <img
                         src={channelSnippet?.thumbnails?.default?.url}
                         alt=''
@@ -223,6 +223,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
             </div>
             <div className='videoMetaData__description'>
                 <ShowMoreText
+                style={{color:'skyblue'}}
                     lines={3}
                     more='Show More'
                     less='Show Less'

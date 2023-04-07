@@ -4,6 +4,7 @@ import youtube from '../../Images/youtube.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../../redux/actions/auth.action'
 import { useHistory } from 'react-router-dom'
+import { Button } from '@mui/material'
 const LoginScreen = () => {
 
     const dispatch = useDispatch()
@@ -25,7 +26,7 @@ const LoginScreen = () => {
         <div className='login'>
             <div className='login__container'>
                 <img src={youtube} alt='' />
-                <button onClick={handleLogin}>Login with Google</button>
+                <Button size= "large" variant="contained" onClick={handleLogin}>Login with Google</Button>
                 <p>This Project is developed by using Youtube Data API</p>
             </div>
         </div>

@@ -3,13 +3,17 @@ import './_VideoHorizontal.scss'
 
 import { AiFillEye } from 'react-icons/ai'
 import request from '../../apiCall'
-
+import privateVideo from '../../img/maxresdefault.jpg'
 import moment from 'moment'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Col, Row } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-
-const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
+import axios from 'axios'
+import { MdVerified } from "react-icons/md";
+import { RiMusicFill } from 'react-icons/ri';
+import { getchannelDetails } from '../../redux/actions/channel.action'
+import { useSelector } from 'react-redux'
+const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen,PlaylistScreen,WatchScreen }) => {
     const {
         id,
         snippet: {
@@ -23,8 +27,10 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
         },
     } = video
 
+    const [isArtist, setIsArtist] = useState(false);
 
     const isVideo = !(id.kind === 'youtube#channel' || subScreen)
+    const isChannel = (id.kind === 'youtube#channel' || subScreen)
 
     const [views, setViews] = useState(null)
     const [duration, setDuration] = useState(null)
@@ -32,10 +38,19 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
     var videoIds = ''
     if (likedScreen) {
         videoIds = id
-    } else {
+    }else if(PlaylistScreen){
+        videoIds = video.snippet.resourceId.videoId
+    }
+    
+     else {
         videoIds = id.videoId
     }
+    console.log(channelId)
+
+    const _channelId = resourceId?.channelId || channelId
+   
     useEffect(() => {
+       
         const get_video_details = async () => {
             const {
                 data: { items },
@@ -64,14 +79,25 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
             setChannelIcon(items[0].snippet.thumbnails.default)
         }
         get_channel_icon()
+        const fetchHandle = async () => {
+            try {
+              const channelHandle = await axios.get(`https://yt.lemnoslife.com/channels?part=status,approval&id=${_channelId}&handle=HANDLE`);
+              
+              setIsArtist(channelHandle.data.items[0].approval);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          fetchHandle();
+
+        
+       
     }, [channelId])
 
     const seconds = moment.duration(duration).asSeconds()
     const _duration = moment.utc(seconds * 1000).format('mm:ss')
-
     const history = useHistory()
 
-    const _channelId = resourceId?.channelId || channelId
 
     const handleClick = () => {
         isVideo
@@ -81,7 +107,7 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
     }
 
     const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel'
-
+console.log(isArtist)
 
     const numeral = (vcount) => {
         if (vcount > 1000 && vcount < 1000000) {
@@ -98,49 +124,82 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen }) => {
         <Row
             className='py-2 m-1 videoHorizontal align-items-center'
             onClick={handleClick}>
-            <Col
+            <Col className={`${PlaylistScreen ? ' playlistscreen-details':'videoHorizontal__left'}`}
                 xs={6}
                 md={SearchScreen || subScreen || likedScreen ? 4 : 6}
-                className='videoHorizontal__left'>
+             >
                 <LazyLoadImage
-                    src={high.url}
+                    src={high?.url ? high?.url :privateVideo }
                     effect='blur'
-                    className={`videoHorizontal__thumbnail ${thumbnail} `}
+                    className={`videoHorizontal__thumbnail ${thumbnail} ${PlaylistScreen ? 'videoHorizontal__thumbnail--playlist' : '' }`}
                     wrapperClassName='videoHorizontal__thumbnail-wrapper'
+                    
                 />
                 {isVideo && (
-                    <span className='videoHorizontal__duration'>{_duration}</span>
+                    <span className= {` ${PlaylistScreen ? 'videoHorizontal__duration--playlist' : 'videoHorizontal__duration' }`}>{_duration}</span>
                 )}
             </Col>
-            <Col
+            <Col 
                 xs={6}
                 md={SearchScreen || subScreen || likedScreen ? 8 : 6}
-                className='p-0 videoHorizontal__right'>
-                <p className='mb-1 videoHorizontal__title'>{title}</p>
+                className={`${PlaylistScreen ? 'playlistscreen-details-right':'videoHorizontal__right'}`}>
+                <p className={!PlaylistScreen? `mb-1 videoHorizontal__title`:``}>{title} {" "}  {isChannel || subScreen && isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null} {' '}</p>
 
-                {isVideo && (
+                {isVideo  &&  (
                     <div className='videoHorizontal__details'>
-                        <AiFillEye /> {numeral(views)} Views • {' '}
+                    {PlaylistScreen ? 
+                         video?.snippet?.videoOwnerChannelTitle ? video?.snippet?.videoOwnerChannelTitle :channelTitle  + " • "  :"" }   {' ' 
+                   
+                    }
+                        {numeral(views)} Views • {' '}
                         {moment(publishedAt).fromNow()}
+                        <br/>
+                        {SearchScreen? <br/>:null}
+
+                        {SearchScreen  &&  (
+                        <LazyLoadImage src={channelIcon?.url} effect='blur' className='imgChannel' style={{width:'40px',height:'40px',marginRight:'0.6rem'}} />
+                    )}
+                    
+                     {!PlaylistScreen ?  video?.snippet?.videoOwnerChannelTitle ? video?.snippet?.videoOwnerChannelTitle :channelTitle :""}   {!PlaylistScreen ?  isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null :""} {' '}
+                     <br/> 
+                     <br/>
                     </div>
                 )}
-
-                {(SearchScreen || subScreen || likedScreen) && (
+                {(SearchScreen || subScreen || likedScreen ) && (
+                    
                     <p className='mt-1 videoHorizontal__desc'>{description}</p>
                 )}
 
+
+                {!PlaylistScreen && !WatchScreen &&
                 <div className='my-1 videoHorizontal__channel d-flex align-items-center'>
-                    {isVideo && (
+                    {/* {  && (
                         <LazyLoadImage src={channelIcon?.url} effect='blur' />
-                    )}
-                    <p className='mb-0'>{channelTitle}</p>
+                    )} */}
+                    {!SearchScreen|| !subScreen && <p className='mb-0'>{channelTitle} {" "}  {isArtist === 'Official Artist Channel' ? <RiMusicFill style={{color:'#b7b6b4'}}/>:isArtist === 'Verified' ? <MdVerified style={{color:'#b7b6b4'}} /> : null}</p>} 
                 </div>
-                {subScreen && (
+                }
+                {subScreen  && (
                     <p className='mt-2'>
                         {video.contentDetails.totalItemCount} Videos
                     </p>
                 )}
             </Col>
+        <style>
+{`
+.videoHorizontal__thumbnail--playlist {
+  width: 200px;
+  height: 160px;
+  
+
+
+}
+
+.playlistscreen-details-right{
+  margin-left: -7rem;
+}
+`}
+        </style>
         </Row>
     )
 }

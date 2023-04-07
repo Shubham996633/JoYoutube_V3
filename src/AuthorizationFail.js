@@ -11,7 +11,7 @@ const AuthorizationFail = () => {
 const handleClick =() =>{
     dispatch(log_out())
     history.push('/auth')
-    window.reload()
+    window.location.reload()
 
     }
   return (

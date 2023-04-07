@@ -19,8 +19,8 @@ const WatchScreen = () => {
     const { video, loading } = useSelector(state => state.selectedVideo)
     useEffect(() => {
 
-        dispatch(getVideoById(id))
-        dispatch(getchannelDetails(video?.snippet.channelId))
+        // dispatch(getVideoById(id))
+        // dispatch(getchannelDetails(video?.snippet.channelId))
         dispatch(getRelatedVideos(id))
     }, [dispatch, id])
 
@@ -32,10 +32,7 @@ const WatchScreen = () => {
         snippet: channelSnippet,
         statistics: channelStatistics,
     } = useSelector(state => state.channelDetails.channel || {});
-    const fetchData = () => {
-        dispatch(getRelatedVideos(id))
-
-    }
+    
 
 
     return (
@@ -44,7 +41,7 @@ const WatchScreen = () => {
             <Helmet>
                 <title>{video?.snippet?.title}</title>
             </Helmet>
-            <Col lg={8}>
+            {/* <Col lg={8}>
                 <div className='watchScreen__player'>
                     <iframe src={`https://www.youtube.com/embed/${id}`}
 
@@ -61,27 +58,17 @@ const WatchScreen = () => {
                         : <h6>Loading ...</h6>
                 }
                 <Comments videoId={id} totalComments={video?.statistics?.commentCount} channelName={channelSnippet?.localized?.title } channelIcon={channelSnippet?.thumbnails?.high?.url} />
-            </Col>
+            </Col> */}
             <Col lg={4}>
-            <InfiniteScroll
-                dataLength={videos.length}
-                next={fetchData}
-                hasMore={true}
-                loader={
-                    <div className='spinner-border text-danger d-block mx-auto'></div>
-
-                }
-                className='row'
-            >
+            
                 { (
                     videos
                         ?.filter(video => video.snippet)
                         .map(video => (
-                            <VideoHorizontal video={video} key={video.id.videoId} />
+                            <VideoHorizontal video={video} key={video.id.videoId} WatchScreen />
                         ))
                 )}
 
-                </InfiniteScroll>
 
             </Col>
         </Row>

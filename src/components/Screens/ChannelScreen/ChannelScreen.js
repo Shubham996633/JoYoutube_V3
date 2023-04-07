@@ -81,14 +81,11 @@ const ChannelScreen = () => {
       shortIds.push(video.videoId)
     ))
 
-// console.log(videoIds)
-// console.log(shortIds)
+
 let newList = videoIds.filter(item => !shortIds.includes(item));
-// console.log(newList)
 
 const filteredVideos = videos.filter(video => newList.includes(video.contentDetails.videoId))
 
-console.log(filteredVideos)
 
    const [vshorts, setVshorts] = useState(null);
    const [vlongs, setVlongs] = useState(null);

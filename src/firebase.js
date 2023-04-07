@@ -11,14 +11,13 @@ const firebaseConfig = {
 };
 
 // const firebaseConfig = {
-//     apiKey: api,
-//     authDomain: "jotest-c964a.firebaseapp.com",
-//     projectId: "jotest-c964a",
-//     storageBucket: "jotest-c964a.appspot.com",
-//     messagingSenderId: "843622392006",
-//     appId: "1:843622392006:web:8cc5c02ca045d7779ff7c7"
-// };
-
+//     apiKey: "AIzaSyAgWutJGf9RgouJT9KGQZOC_0yJaT38ht4",
+//     authDomain: "jotest-369.firebaseapp.com",
+//     projectId: "jotest-369",
+//     storageBucket: "jotest-369.appspot.com",
+//     messagingSenderId: "283191561111",
+//     appId: "1:283191561111:web:db0e6e8658bd03f016d2d2"
+//   };
 
 
 firebase.initializeApp(firebaseConfig)
