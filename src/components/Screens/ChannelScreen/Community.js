@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCommunityPost } from '../../../redux/actions/channel.action'
 import './_ChannelScreen.scss'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Spinner } from 'react-bootstrap'
 const Community = ({handle,icon,channelId}) => {
  
 
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCommunityPost(channelId))
-    },[dispatch])
+    },[dispatch,channelId])
 
 
     const {loading, community,nextPageToken} = useSelector(state=>state.getCommunity)
@@ -26,9 +27,10 @@ const Community = ({handle,icon,channelId}) => {
       };
 
       console.log(community)
-      if (loading) {
-        return <p>Loading...</p>
-      }
+      // if (loading) {
+      //   return         <Spinner animation="grow" variant="danger" />
+
+      // }
       console.log(nextPageToken)
       
       const fetchData = () => {
@@ -44,7 +46,8 @@ const Community = ({handle,icon,channelId}) => {
         dataLength={community.length}
         next={fetchData}
         hasMore={true}
-        loader={<div className='spinner-border text-danger d-block mx-auto'></div>}
+        loader={        <Spinner animation="grow" variant="danger" />
+}
         className='row'
         key={community.join()}
       >

@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './video.scss'
 import { useHistory } from 'react-router-dom'
+import {Spinner} from 'react-bootstrap'
 import { getShortsChannel } from '../../../redux/actions/comments.action'
 const ShortsVideos = ({channelId}) => {
     
@@ -56,7 +57,8 @@ const ShortsVideos = ({channelId}) => {
         next={fetchData}
         hasMore={true}
         loader={
-            <div className='spinner-border text-danger d-block mx-auto'></div>
+            <Spinner animation="grow" variant="danger" />
+
         }
         className='row'>
         <Row className=''>

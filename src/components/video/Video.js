@@ -129,6 +129,15 @@ const Video = ({ video, channelScreen }) => {
                 </div>
                 
             )}
+
+            {channelScreen ? (
+                <div className='video__channel' title={channelTitle} onClick={handleChannelClick}>
+
+            <div className='video__title' onClick={handleVideoClick}>{title}</div>
+                </div>
+                
+            ):null}
+
            
             {!channelScreen && (
                 <div className='details'>
@@ -146,6 +155,16 @@ const Video = ({ video, channelScreen }) => {
                 </div>
                 
             )}
+            {channelScreen ? (
+                
+            <div className='video__details' style={{marginleft:'3rem'}} onClick={handleVideoClick}>
+                <span>
+                     {numeral(views)} views • {' '} {' '}{moment(publishedAt).fromNow()} 
+                </span>
+                
+            </div>
+                
+            ):null}
         </div>
     )
 }

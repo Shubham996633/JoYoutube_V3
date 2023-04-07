@@ -6,7 +6,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { getChannels } from '../../../redux/actions/channel.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import {Spinner} from 'react-bootstrap';
 const Channels = ({channelId}) => {
+
  
 const dispatch = useDispatch()
     useEffect(() => {
@@ -14,7 +16,7 @@ const dispatch = useDispatch()
 
 
 
-      }, [dispatch]);
+      }, [dispatch,channelId]);
       
 const {loading, channel} = useSelector(state=>state.getchannel)
 
@@ -37,7 +39,8 @@ const {loading, channel} = useSelector(state=>state.getchannel)
   
 console.log(channel)
 if (loading) {
-    return <p>Loading...</p>
+    return        <Spinner animation="grow" variant="danger" />
+
   }
 
   return (

@@ -10,7 +10,7 @@ import { getchannelDetails } from '../../../redux/actions/channel.action'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Helmet } from 'react-helmet'
 import { useEffect } from 'react'
-const Videos = ({videos}) => {
+const Videos = ({videos,channelScreen}) => {
     const dispatch = useDispatch()
     const { channelId } = useParams()
     

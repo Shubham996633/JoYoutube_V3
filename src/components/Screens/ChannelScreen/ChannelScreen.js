@@ -144,7 +144,7 @@ const filteredVideos = videos.filter(video => newList.includes(video.contentDeta
       
             <Tab eventKey="VIDEOS" title="VIDEOS" className="tab nav-link" onClick={() =>handleTabClick()}>
           
-            <Videos videos = {filteredVideos} />
+            <Videos videos = {filteredVideos} channelScreen/>
         </Tab>
         <Tab eventKey="SHORTS" title="SHORTS" className="tab nav-link" onClick={() =>handleTabClick()} >
       

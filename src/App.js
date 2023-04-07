@@ -18,7 +18,7 @@ import Offline from './Offline'
 import ApiFull from './ApiFull'
 import AuthorizationFail from './AuthorizationFail'
 const Layout = ({ children }) => {
-  const [sidebar, toggleSidebar] = useState(false)
+  const [sidebar, toggleSidebar] = useState(true)
   
   const handleToggleSidebar = () => toggleSidebar(value => !value)
 

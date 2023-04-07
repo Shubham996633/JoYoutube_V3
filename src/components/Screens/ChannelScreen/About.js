@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import moment from 'moment';
 import './video.css'
+import { Spinner } from 'react-bootstrap';
 const About = (
     {channelId}
 ) => {
@@ -77,7 +78,7 @@ console.log(channelData)
           </Row>
         </Container>
       ) : (
-        <p>Loading...</p>
+        <Spinner animation="grow" variant="danger" />
       )}
     </div>
   );

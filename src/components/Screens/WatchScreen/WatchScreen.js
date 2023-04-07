@@ -19,8 +19,8 @@ const WatchScreen = () => {
     const { video, loading } = useSelector(state => state.selectedVideo)
     useEffect(() => {
 
-        // dispatch(getVideoById(id))
-        // dispatch(getchannelDetails(video?.snippet.channelId))
+        dispatch(getVideoById(id))
+        dispatch(getchannelDetails(video?.snippet.channelId))
         dispatch(getRelatedVideos(id))
     }, [dispatch, id])
 
@@ -41,7 +41,7 @@ const WatchScreen = () => {
             <Helmet>
                 <title>{video?.snippet?.title}</title>
             </Helmet>
-            {/* <Col lg={8}>
+            <Col lg={8}>
                 <div className='watchScreen__player'>
                     <iframe src={`https://www.youtube.com/embed/${id}`}
 
@@ -58,8 +58,8 @@ const WatchScreen = () => {
                         : <h6>Loading ...</h6>
                 }
                 <Comments videoId={id} totalComments={video?.statistics?.commentCount} channelName={channelSnippet?.localized?.title } channelIcon={channelSnippet?.thumbnails?.high?.url} />
-            </Col> */}
-            <Col lg={4}>
+            </Col>
+            <Col lg={4} >
             
                 { (
                     videos
