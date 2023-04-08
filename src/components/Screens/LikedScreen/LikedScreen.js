@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import Video from '../../video/Video'
 import { Helmet } from 'react-helmet'
+import Empty from './Empty'
 
 const LikedScreen = () => {
 
@@ -25,8 +26,12 @@ const LikedScreen = () => {
 
     }
     if(!videos){
-        return(null)
+        return(<Empty/>)
     }
+    if(videos.length === 0){
+        return(<Empty/>)
+    }
+
 
 
     return (

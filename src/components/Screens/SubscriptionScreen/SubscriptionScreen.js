@@ -7,6 +7,7 @@ import './_SubscriptionScreen.scss'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import VideoHorizontal from '../../VideoHorizontal/VideoHorizontal'
 import { Helmet } from 'react-helmet'
+import Empty from './Empty'
 
 const SubscriptionScreen = () => {
 
@@ -17,7 +18,16 @@ const SubscriptionScreen = () => {
     }, [dispatch])
 
     const { loading, videos } = useSelector(state => state.subscriptionsChannel)
-    console.log(videos)
+    console.log(videos.length)
+    if(!videos){
+        return null
+    }
+    if(videos.length === 0){
+        return(
+
+            <Empty/>
+        )
+    }
     return (
 
         <Container fluid>

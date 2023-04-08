@@ -9,17 +9,22 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Helmet } from 'react-helmet'
 import { Container, Row, Col } from 'react-bootstrap'
+import Empty from './Empty'
 
 const LibraryScreen = () => {
 
     const history = useHistory()
     const { playlist } = useSelector(state => state.playlistItems)
     const handlePlaylist = (id) => {
-        console.log(id)
         history.push(`/playlist/${id}`)
 
     }
-    console.log(playlist)
+  
+    if(playlist?.length === 0 || !playlist){
+      console.log('no videos')
+
+      return (<Empty/>)
+    }
 
     return (
         <>

@@ -44,7 +44,6 @@ const Video = ({ video, channelScreen }) => {
         const fetchHandle = async () => {
             try {
               const channelHandle = await axios.get(`https://yt.lemnoslife.com/channels?part=status,approval&id=${channelId}&handle=HANDLE`);
-              console.log(channelHandle)
               
               setIsArtist(channelHandle.data.items[0].approval);
             } catch (error) {

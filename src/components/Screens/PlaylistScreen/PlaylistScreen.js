@@ -23,7 +23,6 @@ const PlaylistScreen = ({ item }) => {
 
     const { videos,nextPageToken } = useSelector(state => state.playlistVideos)
     const {details} = useSelector(state=>state.getChannelPlaylistDetails)
-    console.log(details)
     const fetchData = () => {
         if(nextPageToken!=undefined){
 
