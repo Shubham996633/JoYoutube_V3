@@ -18,6 +18,10 @@ const Header = ({ handleToggleSidebar }) => {
 
         history.push(`/search/${input}`)
     }
+    let tagArr = document.getElementsByTagName("input");
+    for (let i = 0; i < tagArr.length; i++) {
+      tagArr[i].autocomplete = 'off';
+    }
 
     const handleHome = e => {
 
@@ -45,6 +49,7 @@ const Header = ({ handleToggleSidebar }) => {
                     type='text'
                     placeholder='Search'
                     value={input}
+                    autocomplete="off"
                     onChange={e => setInput(e.target.value)}
                 />
                 <button type='submit'>
