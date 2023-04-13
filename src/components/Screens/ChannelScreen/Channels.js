@@ -37,7 +37,7 @@ const {loading, channel} = useSelector(state=>state.getchannel)
 
   }
   
-console.log(channel)
+// console.log(channel)
 if (loading) {
     return        <Spinner animation="grow" variant="danger" />
 

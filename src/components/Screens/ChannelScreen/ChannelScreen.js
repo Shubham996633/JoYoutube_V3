@@ -32,7 +32,7 @@ const ChannelScreen = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,about,approval&id=${channelId}&handle=HANDLE`);
-          console.log(response)
+          // console.log(response)
           setAboutData(response.data.items[0].about);
           setIsArtist(response.data.items[0].approval);
         } catch (error) {

@@ -6,6 +6,7 @@ export const commentListReducer = (
         comments: [],
         nextPageToken:null,
         videoId:null,
+        time:false,
     },
     action
 ) => {
@@ -21,6 +22,7 @@ export const commentListReducer = (
             return {
                 ...state,
                 comments: (state.videoId === payload.videoId && payload.nextPageToken!=null)  ? [...state.comments,...payload.comments]: payload.comments,
+                comments :(state.time === payload.time) ? [...state.comments,...payload.comments] :payload.comments ,
                 loading: false,
                 nextPageToken:payload.nextPageToken,
                 videoId:payload.videoId,

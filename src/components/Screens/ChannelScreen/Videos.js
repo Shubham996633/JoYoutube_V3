@@ -22,7 +22,7 @@ const Videos = ({videos,channelScreen}) => {
     }
 
 
-console.log(videos)
+// console.log(videos)
 // if(!videos){
 //     return(<h1>Loading</h1>)
 // }

@@ -26,12 +26,12 @@ const Community = ({handle,icon,channelId}) => {
         return vcount;
       };
 
-      console.log(community)
+      // console.log(community)
       // if (loading) {
       //   return         <Spinner animation="grow" variant="danger" />
 
       // }
-      console.log(nextPageToken)
+      // console.log(nextPageToken)
       
       const fetchData = () => {
         if(nextPageToken!="stop"){

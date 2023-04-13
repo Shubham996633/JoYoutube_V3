@@ -21,7 +21,7 @@ const LibraryScreen = () => {
     }
   
     if(playlist?.length === 0 || !playlist){
-      console.log('no videos')
+      // console.log('no videos')
 
       return (<Empty/>)
     }

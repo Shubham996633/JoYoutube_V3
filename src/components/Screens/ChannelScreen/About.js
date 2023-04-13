@@ -22,10 +22,10 @@ const About = (
       }
     };
     fetchData();
-    console.log(channelData);
+    // console.log(channelData);
   }, [channelId]);
   
-console.log(channelData)
+// console.log(channelData)
 
   return (
     <div>

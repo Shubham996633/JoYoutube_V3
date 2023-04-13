@@ -28,8 +28,8 @@ const ShortsVideos = ({channelId}) => {
             dispatch(getShortsChannel(channelId, nextPageToken))
         }
     }
-    console.log(nextPageToken)
-    console.log(shorts.length)
+    // console.log(nextPageToken)
+    // console.log(shorts.length)
     const numeral = (vcount) => {
         if (vcount > 1000 && vcount < 1000000) {
             vcount = (vcount / 1000).toFixed(0) + 'K'

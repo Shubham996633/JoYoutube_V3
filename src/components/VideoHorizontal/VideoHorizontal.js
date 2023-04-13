@@ -45,7 +45,6 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen,PlaylistS
      else {
         videoIds = id.videoId
     }
-    console.log(channelId)
 
     const _channelId = resourceId?.channelId || channelId
    
@@ -107,7 +106,6 @@ const VideoHorizontal = ({ video, SearchScreen, subScreen, likedScreen,PlaylistS
     }
 
     const thumbnail = !isVideo && 'videoHorizontal__thumbnail-channel'
-console.log(isArtist)
 
     const numeral = (vcount) => {
         if (vcount > 1000 && vcount < 1000000) {

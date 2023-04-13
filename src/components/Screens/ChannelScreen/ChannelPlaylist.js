@@ -12,7 +12,7 @@ const ChannelPlaylist = ({channelId}) => {
         dispatch(getChannelPlaylist(channelId))
     },[dispatch, channelId]);
     const {loading, playlists, nextPageToken} =useSelector(state=>state.getChannelPlaylist)
-    console.log(playlists)
+    // console.log(playlists)
 
   const history = useHistory()
   const handleClick = (id) => {

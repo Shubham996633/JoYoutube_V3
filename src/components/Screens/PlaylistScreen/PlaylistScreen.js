@@ -33,7 +33,7 @@ const PlaylistScreen = ({ item }) => {
     const handleChannelNameClick = (id) => {
         history.push(`/channel/${id}`)
     }
-    console.log(videos)
+    // console.log(videos)
 
     return (
         <Container>

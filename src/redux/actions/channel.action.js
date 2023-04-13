@@ -106,7 +106,7 @@ export const makeLike = (id, act) => async (dispatch, getState) => {
         dispatch({
             type: MAKE_LIKE_SUCCESS,
         })
-        console.log('success')
+        // console.log('success')
         dispatch(getVideoRating(id))
     } catch (error) {
         dispatch({
@@ -132,7 +132,7 @@ export const getVideoRating = id => async (dispatch, getState) => {
                 Authorization: `Bearer ${getState().auth.accessToken}`,
             },
         })
-        console.log(data);
+        // console.log(data);
         dispatch({
             type: GET_RATE_SUCCESS,
             payload: data.items[0].rating,
@@ -207,7 +207,7 @@ export const delSubscribe = (id) => async (dispatch, getState) => {
         dispatch({
             type: DEL_SUBSCRIPTION_SUCCESS,
         })
-        console.log('success')
+        // console.log('success')
         dispatch(checkSubscriptionStatus(id))
     } catch (error) {
         dispatch({
@@ -279,7 +279,7 @@ export const getChannelPlaylist =(id, nextPageToken = null) => async (dispatch, 
         var response = null
         nextPageToken === null ? response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,playlists&id=${id}&handle=HANDLE`) : response = await axios.get(`https://yt.lemnoslife.com/channels?part=status,community&id=${id}&handle=HANDLE&pageToken=${nextPageToken}`)
         const playlists = response.data.items ? response.data.items[0].playlistSections : []
-        console.log(response)
+        // console.log(response)
         dispatch({
             type:GET_CHANNEL_PLAYLIST_SUCCESS,
             payload:{

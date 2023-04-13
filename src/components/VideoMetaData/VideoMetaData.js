@@ -44,7 +44,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
             setOpen(true);
         }
         else {
-            console.log("task to unsubscribe")
+            // console.log("task to unsubscribe")
             dispatch(makeSubscribe(channelId))
         }
     }
@@ -58,7 +58,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
         channelSubId.push(video.id)
 
     })
-    console.log(videos)
+    // console.log(videos)
     const handleClose = () => {
 
         setOpen(false);
@@ -75,7 +75,7 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
 
     const handleUnSubscribe = () => {
         var requiredId = channelSubId[(findListId(channelTitle, channelList))]
-        console.log(requiredId)
+        // console.log(requiredId)
         dispatch(delSubscribe(requiredId))
         setOpen(false)
 

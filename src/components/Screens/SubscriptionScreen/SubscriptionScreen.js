@@ -18,7 +18,7 @@ const SubscriptionScreen = () => {
     }, [dispatch])
 
     const { loading, videos } = useSelector(state => state.subscriptionsChannel)
-    console.log(videos.length)
+    // console.log(videos.length)
     if(!videos){
         return null
     }

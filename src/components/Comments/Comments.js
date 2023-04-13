@@ -11,7 +11,7 @@ const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCommentsOfVideoById(videoId))
+        dispatch(getCommentsOfVideoById(videoId,null,null))
     }, [videoId, dispatch])
 
     const {comments,nextPageToken} = useSelector(state => state.commentList)
@@ -22,8 +22,8 @@ const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
     const _comments = comments?.map(
         comment => comment.snippet.topLevelComment.snippet
     )
-    console.log(nextPageToken)
-    console.log(comments)
+    // console.log(nextPageToken)
+    // console.log(comments)
 
     const handleComment = e => {
         e.preventDefault()
@@ -33,9 +33,9 @@ const Comments = ({ videoId, totalComments,channelIcon, channelName }) => {
         setText('')
     }
     const fetchData = () => {
-        if(nextPageToken){
-            dispatch(getCommentsOfVideoById(videoId,nextPageToken))
-        }
+      
+            dispatch(getCommentsOfVideoById(videoId,nextPageToken,null))
+        
 
     }
     
