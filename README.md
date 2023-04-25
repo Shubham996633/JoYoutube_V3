@@ -36,9 +36,6 @@
          
 
 #### Disclaimer : All the photos are in involved in this Readme are belong their respective owners.
-
-   
-
    
 
  ## Note
