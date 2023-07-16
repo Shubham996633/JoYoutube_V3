@@ -4,12 +4,9 @@
  
  ![image](https://user-images.githubusercontent.com/65014926/217881437-4685abe0-9d85-442f-b976-152f37c48083.png)
 
+ # To Visit Click Here: <a href ="https://joyoutube.netlify.app/">JoYoutube</a>
  
- 
-# To Visit Click Here: <a href ="https://joyoutube.netlify.app/">JoYoutube</a>
- 
-
- ### --> Login with Google
+### --> Login with Google
 
  ![image](https://user-images.githubusercontent.com/65014926/217882059-4b6f7ada-2c7f-4581-8957-151e496c07c9.png)
 
